@@ -9,7 +9,7 @@ if [[ $# -ne 1 ]] ; then
 fi
 export OMP_NUM_THREADS=$1
 
-python make_bins_omp.py
+python make_bins_openmp.py
 time python pair_count_openmp.py
 
 # Add information about run
