@@ -66,7 +66,7 @@ void count_pairs( POINT *data, int n_data, PAIRS *pairs, int N_bins ){
         double counts_private[N_bins];
         for(i=0; i<N_bins; i++) counts_private[i] = 0.0;
 
-        #pragma omp for schedule(dynamic) nowait
+        #pragma omp for schedule(dynamic)
         for(i = 0; i < n_data; i++){
 
             for(j = 0; j < n_data; j++){
@@ -144,7 +144,7 @@ double norm_pairs( POINT *data, int n_data ){
     int i, j;
 
     #pragma omp parallel for default(shared) private(i,j) reduction(+:norm) \
-    schedule(dynamic) nowait
+    schedule(dynamic)
     for( i=0; i<n_data; i++ ){
         for( j=0; j<n_data; j++ ){
             if(i==j) continue;
