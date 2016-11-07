@@ -140,7 +140,7 @@ void count_pairs( POINT *data, int n_data, PAIRS *pairs, int N_bins ){
 /* calculate normalization, the sum of the product of all weights */
 double norm_pairs( POINT *data, int n_data ){
 
-    double norm = 0.0
+    double norm = 0.0;
     int i, j;
 
     #pragma omp parallel for default(shared) private(i,j) reduction(+:norm) \
