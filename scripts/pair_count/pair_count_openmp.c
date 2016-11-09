@@ -208,6 +208,8 @@ int main(int argc, char **argv){
         pairs[k].dd = 0.0;
     }
 
+    fclose(bins_file);
+
     /* load data file */
     int n_data;
     POINT *data;
