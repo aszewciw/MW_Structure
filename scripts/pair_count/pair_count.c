@@ -130,7 +130,7 @@ int main(int argc, char **argv){
       FILE *bins_file;
 
     if((bins_file=fopen(argv[2],"r"))==NULL){
-        fprintf(stderr,"Error: Cannot open file %s \n", argv[1]);
+        fprintf(stderr,"Error: Cannot open file %s \n", argv[2]);
         exit(EXIT_FAILURE);
     }
 
