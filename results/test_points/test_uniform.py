@@ -10,7 +10,7 @@ def main():
     out_dir     = './data/'
 
     if not os.path.isdir(out_dir):
-        sys.stderr.write('{} does not exist Making directory...'.format(out_dir))
+        sys.stderr.write('{} does not exist. Making directory...'.format(out_dir))
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
