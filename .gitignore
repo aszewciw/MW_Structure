@@ -48,6 +48,12 @@ Thumbs.db
 *.png
 *.jpg
 
+# Ignore executables in bin dir #
+# Ignore `bin` dir
+bin/
+# or
+*/bin/*
+
 # Python recommendations #
 # I don't know what these are. Some are already listed above.
 
