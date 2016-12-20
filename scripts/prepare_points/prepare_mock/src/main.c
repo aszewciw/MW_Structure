@@ -139,8 +139,8 @@ int main( int argc, char **argv ){
         generate_stars(thick, &params, 1);
 
         /* Separate stars into appropriate l.o.s. */
-        separate_sample(plist, thin, N_plist, params.N_thin);
-        separate_sample(plist, thick, N_plist, params.N_thick);
+        separate_sample(plist, thin, N_plist, params.N_thin, out_dir);
+        separate_sample(plist, thick, N_plist, params.N_thick, out_dir);
 
         /* Check all l.o.s. to see if we have enough stars */
         for( i=0; i<N_plist; i++ ){
