@@ -113,7 +113,7 @@ int main( int argc, char **argv ){
     params.z0_thin = cl.z0_thin;
     params.r0_thick = cl.r0_thick;
     params.z0_thick = cl.z0_thick;
-    params.ratio_thick_thin = cl.ratio;
+    params.ratio = cl.ratio;
     get_params(&params, N_stars);
 
     /* Allocate arrays for galactic coordinates */
