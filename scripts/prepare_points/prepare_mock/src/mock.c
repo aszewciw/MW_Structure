@@ -134,7 +134,7 @@ void generate_stars( STAR *s, PARAMS *p, int disk_type ){
 
 /* assign stars to the appropriate l.o.s. and output file */
 void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s,
-    char outdir[]){
+    char out_dir[]){
 
     int i;                  /* loop variable for pointings */
     unsigned long int j;    /* loop variable for stars */
