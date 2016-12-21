@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 rm -rf ./mock_data
-mkdir data
+mkdir mock_data
 
 python test_mock.py
 
