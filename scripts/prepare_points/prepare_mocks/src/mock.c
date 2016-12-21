@@ -172,22 +172,14 @@ void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s){
 
             /* check assignment to this pointing */
             if(dot_prod >= plate_cos){
-
                 /* index of stored star */
                 k = p[i].N_mock;
-
-                // snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat",
-                //     out_dir, p[i].ID);
-                // file = fopen(filename, "a");
                 p[i].stars[k].x = s[j].x;
                 p[i].stars[k].y = s[j].y;
                 p[i].stars[k].z = s[j].z;
 
                 /* add 1 to number of stars */
                 p[i].N_mock+=1;
-                /* write star to file */
-                // output_star( file, s[j] );
-                // fclose(file);
 
                 /* resize if necessary */
                 if(p[i].N_mock>=p[i].ssize){
