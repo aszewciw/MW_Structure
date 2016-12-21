@@ -69,7 +69,7 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
     POINTING *p;
     VECTOR *s;  /* store star's xyz for this pointing */
     /* allocate more space than is needed for storing xyz */
-    int ex_sp_buff = 1;
+    int ex_sp_buff = 2;
 
     if((plist_file=fopen(plist_filename,"r"))==NULL){
         fprintf(stderr,"Error: Cannot open file %s \n", plist_filename);

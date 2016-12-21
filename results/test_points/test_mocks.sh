@@ -6,9 +6,9 @@ mkdir mocks_data
 python test_mocks.py
 
 # Add information about run
-info_file='mocka_info.txt';
+info_file='mocks_info.txt';
 rm $info_file
-INFO="test_mocka.sh was most recently run on:";
+INFO="test_mocks.sh was most recently run on:";
 echo $INFO > $info_file
 date >> $info_file
 
