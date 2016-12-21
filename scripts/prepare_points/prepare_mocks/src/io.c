@@ -22,7 +22,7 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
         if ( !strcmp(arg_array[cnt],"-N_s") )
             sscanf(arg_array[++cnt], "%lu", &cl_args.N_stars);
         else if ( !strcmp(arg_array[cnt],"-N_m") )
-            sscanf(arg_array[++cnt], "%lf", &cl_args.N_mocks);
+            sscanf(arg_array[++cnt], "%d", &cl_args.N_mocks);
         else if ( !strcmp(arg_array[cnt],"-rn") )
             sscanf(arg_array[++cnt], "%lf", &cl_args.r0_thin);
         else if ( !strcmp(arg_array[cnt],"-zn") )

@@ -4,6 +4,7 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <mpi.h>
 
 /* radius of a SEGUE plate */
 #define PLATE_RADIUS_DEG 1.49
