@@ -8,6 +8,7 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     /* defaults */
     ARGS cl_args;
     cl_args.N_stars = 1000000;
+    cl_args.N_mocks = 10;
     cl_args.r0_thin = 2.34;
     cl_args.z0_thin = 0.233;
     cl_args.r0_thick = 2.51;
@@ -20,6 +21,8 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     {
         if ( !strcmp(arg_array[cnt],"-N_s") )
             sscanf(arg_array[++cnt], "%lu", &cl_args.N_stars);
+        else if ( !strcmp(arg_array[cnt],"-N_m") )
+            sscanf(arg_array[++cnt], "%lf", &cl_args.N_mocks);
         else if ( !strcmp(arg_array[cnt],"-rn") )
             sscanf(arg_array[++cnt], "%lf", &cl_args.r0_thin);
         else if ( !strcmp(arg_array[cnt],"-zn") )
@@ -59,7 +62,9 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
 
 /* ----------------------------------------------------------------------- */
 /* Load info for different SEGUE plate sky positions */
-void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
+void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[],
+    int rank, int N_mocks, int nprocs)
+{
 
     char plist_filename[256];
     snprintf(plist_filename, 256, "%stodo_list.ascii.dat", todo_dir);
@@ -70,6 +75,7 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
     VECTOR *s;  /* store star's xyz for this pointing */
     /* allocate more space than is needed for storing xyz */
     int ex_sp_buff = 2;
+    int size;
 
     if((plist_file=fopen(plist_filename,"r"))==NULL){
         fprintf(stderr,"Error: Cannot open file %s \n", plist_filename);
@@ -97,8 +103,12 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
         fscanf(plist_file, "%lf", &p[i].z);
         fscanf(plist_file, "%d", &p[i].N_data);
         p[i].N_mock = 0;
+        p[i].N_mock_proc = 0;
+        p[i].N_temp = 0;
         p[i].flag = 0;
-        p[i].ssize = p[i].N_data*ex_sp_buff;
+        size = p[i].N_data*N_mocks*ex_sp_buff/nprocs;
+        p[i].ssize = size;
+        p[i].csize = size;
         s = calloc(p[i].ssize, sizeof(VECTOR));
         p[i].stars = s;
     }
@@ -205,9 +215,9 @@ void get_params( PARAMS *p, unsigned long int N ){
     temp = density_const * thick_term;
     p->N_thick = (unsigned long int)temp + 1;
 
-    fprintf(stderr, "%lu stars in the thin disk. \n", p->N_thin);
-    fprintf(stderr, "%lu stars in the thick disk. \n", p->N_thick);
-    fprintf(stderr, "%lu total stars. \n", p->N_thin + p->N_thick);
+    // fprintf(stderr, "%lu stars in the thin disk. \n", p->N_thin);
+    // fprintf(stderr, "%lu stars in the thick disk. \n", p->N_thick);
+    // fprintf(stderr, "%lu total stars. \n", p->N_thin + p->N_thick);
 }
 
 /* ----------------------------------------------------------------------- */

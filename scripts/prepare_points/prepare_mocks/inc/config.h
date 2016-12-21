@@ -37,6 +37,8 @@ typedef struct {
     double z0_thick;
     /* thick:thin number density ratio */
     double ratio;
+    /* total number of mocks we want */
+    int N_mocks;
 } ARGS;
 
 /* ---------------------------------------------------------------- */
@@ -158,12 +160,18 @@ typedef struct POINTING{
     int N_data;
     /* current number of data points in mock l.o.s. */
     int N_mock;
-    /* Set=0 until N_mock >= N_data. Then set=1 */
+    /* number of data points in mock l.o.s. per process */
+    int N_mock_proc;
+    /* number of points assigned to l.o.s. for current temp gxy */
+    int N_temp;
+    /* Set=0 until N_mock >= N_data*N_mocks. Then set=1 */
     int flag;
     /* x, y, z coordinates of stars belonging to this pointing */
     VECTOR *stars;
-    /* size of struct to store stars (should be larger than N_data) */
+    /* starting size of structure to store stars */
     int ssize;
+    /* current size of structure to store stars */
+    int csize;
 } POINTING;
 
 /* ---------------------------------------------------------------- */
@@ -178,7 +186,7 @@ void eq_to_cart(STAR *s);
 
 /* I/O functions */
 ARGS parse_command_line(int n_args, char ** arg_array);
-void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]);
+void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[], int rank);
 double integrate_Z(double z0, double z_min, double z_max);
 double integrate_R(double r0, double r_min, double r_max);
 void get_params( PARAMS *p, unsigned long int N );
@@ -188,5 +196,5 @@ void output_star( FILE *output_file, VECTOR s );
 double random_gal_Z(double z0, double pdf_norm, double z_min, double z_max);
 double random_gal_R(double r0, double pdf_norm, double r_min, double r_max);
 double dot_product(VECTOR v1, VECTOR v2);
-void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s);
+void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s, int disk_type);
 void generate_stars( STAR *s, PARAMS *p, int disk_type );

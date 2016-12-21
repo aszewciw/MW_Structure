@@ -42,6 +42,12 @@ Note: l.o.s. = "line of sight"; i.e., a SEGUE/SDSS plate/pointing
 
 int main( int argc, char **argv ){
 
+    /* MPI Initialization */
+    int nprocs, rank;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
     /*
     While optional arguments are parsed in the function below, we require info
     on the directory of the todo list (of pointing info) and the output
@@ -95,6 +101,8 @@ int main( int argc, char **argv ){
     /* parse optional command line inputs for starting params and Nstars */
     ARGS cl = parse_command_line( argc, argv );
 
+    if(rank==0) fprintf(stderr, "%lu stars per temporary galaxy.\n", cl.N_stars);
+
     unsigned long int N_stars;
 
     /* different variables used in main */
@@ -106,28 +114,42 @@ int main( int argc, char **argv ){
     time_t t;               /* initialization of random seed */
     int N_mock;             /* # of stars in current mock l.o.s. */
     int N_data;             /* desired # of stars in current l.o.s. */
+    int N_mocks;            /* total number of mocks we want */
+    int N_add_los;          /* total number of stars added across all procs */
+    int N_add_proc;         /* number of stars added by one proc */
     int i;                  /* for loop index */
     int loop_counter;       /* a progress checker */
 
-    /* load info for different pointings */
-    load_pointing_list(&N_plist, &plist, todo_dir);
+    /* have each proc separately load info for different pointings */
+    int current_rank = 0;
+    while ( current_rank < nprocs ){
+        if (current_rank == rank)
+            load_pointing_list(&N_plist, &plist, todo_dir, rank);
+        MPI_Barrier(MPI_COMM_WORLD);
+        current_rank++;
+    }
 
-    /* get info for mock */
-    /* change this to CL input eventually */
+    /* set and get info for mock */
     params.r0_thin = cl.r0_thin;
     params.z0_thin = cl.z0_thin;
     params.r0_thick = cl.r0_thick;
     params.z0_thick = cl.z0_thick;
     params.ratio = cl.ratio;
-    N_stars = cl.N_stars;
+    N_stars = cl.N_stars/nprocs;
+    N_mocks = cl.N_mocks:
     get_params(&params, N_stars);
+
+    if(rank==0){
+        fprintf(stderr, "%d processes each responsible for %lu stars.\n", nprocs, N_stars);
+        fprintf(stderr, "We'll make %d total mocks\n", N_mocks);
+    }
 
     /* Allocate arrays for galactic coordinates */
     STAR * thin  = malloc(params.N_thin * sizeof(STAR));
     STAR * thick = malloc(params.N_thick * sizeof(STAR));
 
-    /* initialize random seed */
-    srand((unsigned) time(&t));
+    /* initialize random seed -- make different for each mock */
+    srand((unsigned) time(&t) + (1+rank));
 
     /* Initialize for while loop */
     loop_flag    = 0;
@@ -145,14 +167,25 @@ int main( int argc, char **argv ){
         generate_stars(thick, &params, 1);
 
         /* Separate stars into appropriate l.o.s. */
-        separate_sample(plist, thin, N_plist, params.N_thin);
-        separate_sample(plist, thick, N_plist, params.N_thick);
+        separate_sample(plist, thin, N_plist, params.N_thin, 0);
+        separate_sample(plist, thick, N_plist, params.N_thick, 1);
 
         /* Check all l.o.s. to see if we have enough stars */
         for( i=0; i<N_plist; i++ ){
 
+            /* set total stars for this temp gxy = 0 */
+            N_add_los = 0;
+
+            /* number of stars added per process */
+            N_add_proc = plist[i].N_temp;
+
+            /* Sum stars across all processes to get pointing's total stars for this temp gxy */
+            MPI_Allreduce(&N_add_proc, &N_add_los, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
+
+            /* Add temp galaxy's stars to total */
+            plist[i].N_mock += N_add_los;
             N_mock = plist[i].N_mock;
-            N_data = plist[i].N_data;
+            N_data = plist[i].N_data*N_mocks;
 
             if(N_mock<N_data){
                 /* indicate that we need more stars */
@@ -168,33 +201,41 @@ int main( int argc, char **argv ){
 
         /* update progress and output results to user */
         loop_counter +=1;
-        fprintf(stderr, "We've run the loop %d times.\n", loop_counter);
-        if (pointings_in_need != 0){
-            fprintf(stderr, "%d pointings need more stars.\n", pointings_in_need);
-            fprintf(stderr, "Making more stars. \n");
+        if(rank==0){
+            fprintf(stderr, "We've run the loop %d times.\n", loop_counter);
+            if (pointings_in_need != 0){
+                fprintf(stderr, "%d pointings need more stars.\n", pointings_in_need);
+                fprintf(stderr, "Making more stars. \n");
+            }
+            else fprintf(stderr, "All pointings have an adequate number of stars. \n");
         }
-        else fprintf(stderr, "All pointings have an adequate number of stars. \n");
     }
-
 
     char filename[256];     /* temp output file name */
     FILE *file;             /* temp output file */
 
     int j;
+
     /* write stars to file */
-    for( i=0; i<N_plist; i++ ){
+    int current_rank = 0;
+    while( current_rank < nprocs ){
+        if(current_rank==rank){
+            for( i=0; i<N_plist; i++ ){
+                snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat", out_dir, plist[i].ID);
+                file = fopen(filename, "a");
 
-        snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat", out_dir, plist[i].ID);
-        file = fopen(filename, "a");
-
-        N_mock = plist[i].N_mock;
-        for( j=0; j<N_mock; j++ ){
-            output_star( file, plist[i].stars[j] );
+                N_mock = plist[i].N_mock;
+                for( j=0; j<N_mock; j++ ){
+                    output_star( file, plist[i].stars[j] );
+                }
+                fclose(file);
+            }
         }
-        fclose(file);
+        MPI_Barrier(MPI_COMM_WORLD);
+        current_rank++;
     }
 
-    for( i=0; i<N_plist; i++){
+    for(i=0; i<N_plist; i++){
         free(plist[i].stars);
     }
 
@@ -203,6 +244,8 @@ int main( int argc, char **argv ){
     free(thick);
     free(plist);
     fprintf(stderr, "Files Written. Arrays deallocated.\n");
+
+    MPI_Finalize();
 
     return 0;
 }

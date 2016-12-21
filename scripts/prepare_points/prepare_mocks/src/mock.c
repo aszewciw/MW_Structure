@@ -133,7 +133,9 @@ void generate_stars( STAR *s, PARAMS *p, int disk_type ){
 /*---------------------------------------------------------------------------*/
 
 /* assign stars to the appropriate l.o.s. and output file */
-void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s){
+void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s,
+    int disk_type)
+{
 
     int i, k;               /* loop variable for pointings */
     unsigned long int j;    /* loop variable for stars */
@@ -146,6 +148,11 @@ void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s){
 
     /* Calculate limit for assigning star to pointing */
     plate_cos = cos( PLATE_RADIUS_DEG * M_PI / 180. );
+
+    /* set each process's count to 0 if we've restarted with the thin disk */
+    if(disk_type==0){
+        for(i=0; i<N_p; i++) p[i].N_temp = 0;
+    }
 
     for(j=0; j<N_s; j++){
 
@@ -173,18 +180,19 @@ void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s){
             /* check assignment to this pointing */
             if(dot_prod >= plate_cos){
                 /* index of stored star */
-                k = p[i].N_mock;
+                k = p[i].N_mock_proc;
                 p[i].stars[k].x = s[j].x;
                 p[i].stars[k].y = s[j].y;
                 p[i].stars[k].z = s[j].z;
 
                 /* add 1 to number of stars */
-                p[i].N_mock+=1;
+                p[i].N_mock_proc+=1;
+                p[i].N_temp +=1;
 
                 /* resize if necessary */
-                if(p[i].N_mock>=p[i].ssize){
-                    p[i].ssize += p[i].N_data;
-                    p[i].stars = realloc(p[i].stars, p[i].ssize * sizeof(VECTOR));
+                if(p[i].N_mock_proc>=p[i].csize){
+                    p[i].csize += p[i].ssize;
+                    p[i].stars = realloc(p[i].stars, p[i].csize * sizeof(VECTOR));
                     fprintf(stderr, "Reallocation occurred for pointing %s\n", p[i].ID);
                 }
             }

@@ -1,5 +1,5 @@
 import numpy as np
-import sys
+import sys, os
 
 #-----------------------------------------------------------------------------#
 '''
@@ -29,15 +29,22 @@ def line_prepender(filename, line):
 
 def main():
 
-    # pass directory names
-    elements_needed = int(3)
+    # pass directory names and number of mocks
+    min_args = int(3)
     args_array = np.array(sys.argv)
     N_args = len(args_array)
-    assert(N_args == elements_needed)
+    assert((N_args == min_args) or (N_args==min_args+1))
     todo_dir = args_array[1]
     out_dir = args_array[2]
 
-    print('Mocks have too many stars. Randomly removing some.\n')
+    if(N_args==min_args):
+        N_mocks = 10
+        print('No number of mocks passed. Using default value of ' + str(N_mocks) )
+    elif(N_args==min_args+1):
+        N_mocks=int(args_array[3])
+        print('Number of mocks: ' + str(N_mocks) )
+
+    print('Randomly shuffling data and outputing different mock samples.\n')
     np.random.seed()
 
     # Load pointing IDs and desired number of stars
@@ -54,27 +61,34 @@ def main():
 
         # Load position data for mock stars
         mock_file = out_dir + 'temp_mock_' + ID_current + '.xyzw.dat'
-        xyz = np.genfromtxt(mock_file)
+        xyzw = np.genfromtxt(mock_file)
 
-        # Randomly cut from mock sample to make it size of SEGUE data
-        N_mock = len(xyz)
-        diff = N_mock - N_data
+        # Check that we have enough stars
+        N_total = len(xyz)
+        diff = N_total - N_data*N_mocks
         if diff < 0:
             print("Oh no! We didn't make enough stars for " + ID_current)
             continue
-        delete_me = np.arange(diff)
-        np.random.shuffle(xyz)
-        xyz = np.delete(xyz, delete_me, 0)
-        if N_data != len(xyz):
-            print("Something went wrong! Incorrect number of stars for " + ID_current)
-            continue
 
-        # Output new data
-        out_file = out_dir + 'mock_' + ID_current + '.xyzw.dat'
-        np.savetxt(out_file, xyz, fmt='%1.6f')
+        # Shuffle stars to mix disks; then assign to different mock realizations
+        np.random.shuffle(xyzw)
 
-        # Add number of elements as first line in file
-        line_prepender(out_file, str(int(N_data)))
+        for j in range(N_mocks):
+            key = str(j)
+            samp_min = j*N_data
+            samp_max = samp_min+N_data
+            sample = xyzw[samp_min:samp_max]
+            sample_dir = out_dir + 'sample_' + str(j) + '/'
+            if not os.path.isdir(sample_dir):
+                sys.stderr.write('{} does not exist Making directory...'.format(sample_dir))
+                cmd = 'mkdir ' + sample_dir
+                os.system(cmd)
+            # Output new data
+            out_file = sample_dir + 'mock_' + ID_current + '.xyzw.dat'
+            np.savetxt(out_file, xyzw, fmt='%1.6f')
+            # Add number of elements as first line in file
+            line_prepender(out_file, str(int(N_data)))
+
 
     print('Data cleaned. Mocks written to {}\n'.format(out_dir))
 
