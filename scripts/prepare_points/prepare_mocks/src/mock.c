@@ -181,7 +181,7 @@ void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s){
                 // file = fopen(filename, "a");
                 p[i].stars[k].x = s[j].x;
                 p[i].stars[k].y = s[j].y;
-                p[i].stars[k].y = s[j].y;
+                p[i].stars[k].z = s[j].z;
 
                 /* add 1 to number of stars */
                 p[i].N_mock+=1;
