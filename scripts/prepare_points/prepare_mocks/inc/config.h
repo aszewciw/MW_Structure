@@ -187,7 +187,8 @@ void eq_to_cart(STAR *s);
 
 /* I/O functions */
 ARGS parse_command_line(int n_args, char ** arg_array);
-void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[], int rank);
+void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[],
+    int rank, int N_mocks, int nprocs);
 double integrate_Z(double z0, double z_min, double z_max);
 double integrate_R(double r0, double r_min, double r_max);
 void get_params( PARAMS *p, unsigned long int N );

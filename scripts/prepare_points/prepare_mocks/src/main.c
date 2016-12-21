@@ -120,14 +120,6 @@ int main( int argc, char **argv ){
     int i;                  /* for loop index */
     int loop_counter;       /* a progress checker */
 
-    /* have each proc separately load info for different pointings */
-    int current_rank = 0;
-    while ( current_rank < nprocs ){
-        if (current_rank == rank)
-            load_pointing_list(&N_plist, &plist, todo_dir, rank);
-        MPI_Barrier(MPI_COMM_WORLD);
-        current_rank++;
-    }
 
     /* set and get info for mock */
     params.r0_thin = cl.r0_thin;
@@ -138,6 +130,15 @@ int main( int argc, char **argv ){
     N_stars = cl.N_stars/nprocs;
     N_mocks = cl.N_mocks:
     get_params(&params, N_stars);
+
+    /* have each proc separately load info for different pointings */
+    int current_rank = 0;
+    while ( current_rank < nprocs ){
+        if (current_rank == rank)
+            load_pointing_list(&N_plist, &plist, todo_dir, rank, N_mocks, nprocs);
+        MPI_Barrier(MPI_COMM_WORLD);
+        current_rank++;
+    }
 
     if(rank==0){
         fprintf(stderr, "%d processes each responsible for %lu stars.\n", nprocs, N_stars);
