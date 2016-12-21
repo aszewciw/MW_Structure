@@ -67,6 +67,9 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
     FILE *plist_file;
     int N;
     POINTING *p;
+    VECTOR *s;  /* store star's xyz for this pointing */
+    /* allocate more space than is needed for storing xyz */
+    int ex_sp_buff = 2;
 
     if((plist_file=fopen(plist_filename,"r"))==NULL){
         fprintf(stderr,"Error: Cannot open file %s \n", plist_filename);
@@ -95,6 +98,9 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
         fscanf(plist_file, "%d", &p[i].N_data);
         p[i].N_mock = 0;
         p[i].flag = 0;
+        p[i].ssize = p[i].N_data*ex_sp_buff;
+        s = calloc(p[i].ssize, sizeof(VECTOR));
+        p[i].stars = s;
     }
 
     fclose(plist_file);
@@ -207,7 +213,7 @@ void get_params( PARAMS *p, unsigned long int N ){
 /* ----------------------------------------------------------------------- */
 
 /* output stars' cartesian coordinates to a file */
-void output_star( FILE *output_file, STAR s){
+void output_star( FILE *output_file, VECTOR s){
     fprintf( output_file, "%lf\t%lf\t%lf\t%lf\n", s.x, s.y, s.z, 1.0 );
 }
 
