@@ -128,7 +128,7 @@ int main( int argc, char **argv ){
     params.z0_thick = cl.z0_thick;
     params.ratio = cl.ratio;
     N_stars = cl.N_stars/nprocs;
-    N_mocks = cl.N_mocks:
+    N_mocks = cl.N_mocks;
     get_params(&params, N_stars);
 
     /* have each proc separately load info for different pointings */
@@ -218,7 +218,7 @@ int main( int argc, char **argv ){
     int j;
 
     /* write stars to file */
-    int current_rank = 0;
+    current_rank = 0;
     while( current_rank < nprocs ){
         if(current_rank==rank){
             for( i=0; i<N_plist; i++ ){
