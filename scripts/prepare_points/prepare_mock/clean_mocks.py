@@ -10,10 +10,6 @@ corresponding SEGUE l.o.s.
 '''
 #-----------------------------------------------------------------------------#
 
-
-# DATA_DIR = '../data/'
-# OUT_DIR = './data/'
-
 ## ------------------------------------------------------------------------- ##
 
 def line_prepender(filename, line):
@@ -33,8 +29,8 @@ def line_prepender(filename, line):
 
 def main():
 
+    # pass directory names
     elements_needed = int(3)
-
     args_array = np.array(sys.argv)
     N_args = len(args_array)
     assert(N_args == elements_needed)
@@ -57,7 +53,7 @@ def main():
         N_data = N_stars[i]
 
         # Load position data for mock stars
-        mock_file = out_dir + 'temp_mock_' + ID_current + '.xyz.dat'
+        mock_file = out_dir + 'temp_mock_' + ID_current + '.xyzw.dat'
         xyz = np.genfromtxt(mock_file)
 
         # Randomly cut from mock sample to make it size of SEGUE data
@@ -74,7 +70,7 @@ def main():
             continue
 
         # Output new data
-        out_file = out_dir + 'mock_' + ID_current + '.xyz.dat'
+        out_file = out_dir + 'mock_' + ID_current + '.xyzw.dat'
         np.savetxt(out_file, xyz, fmt='%1.6f')
 
         # Add number of elements as first line in file

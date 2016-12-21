@@ -14,8 +14,8 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     cl_args.z0_thick = 0.674;
     cl_args.ratio = 0.1;
 
+    /* check all arguments passed via cl */
     int cnt = 1;
-
     while(cnt < n_args)
     {
         if ( !strcmp(arg_array[cnt],"-N_s") )
@@ -57,6 +57,7 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     return cl_args;
 }
 
+/* ----------------------------------------------------------------------- */
 /* Load info for different SEGUE plate sky positions */
 void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[]){
 
@@ -136,10 +137,8 @@ double integrate_R(double r0, double r_min, double r_max){
 /* ----------------------------------------------------------------------- */
 /*
 Get parameters according to the canonical two-disk model
-of those two guys who made a two-disk model...shit, what
-are their names?
 
-Regardless, can check Mao et al., 2015, for the functional
+Can check Mao et al., 2015, for the functional
 form that is used throughout this project.
 */
 void get_params( PARAMS *p, unsigned long int N ){
@@ -156,13 +155,6 @@ void get_params( PARAMS *p, unsigned long int N ){
 
     /* normalization of density */
     double density_const;
-
-    /* Disk params */
-    // p->z0_thin  = 0.233;
-    // p->r0_thin  = 2.34;
-    // p->z0_thick = 0.674;
-    // p->r0_thick = 2.51;
-    // p->ratio    = 0.1;
 
     /* Generous sized geometric sample limits */
     /* Use to make stars only roughly in solar neighbordhood */
@@ -216,7 +208,7 @@ void get_params( PARAMS *p, unsigned long int N ){
 
 /* output stars' cartesian coordinates to a file */
 void output_star( FILE *output_file, STAR s){
-    fprintf( output_file, "%lf\t%lf\t%lf\n", s.x, s.y, s.z );
+    fprintf( output_file, "%lf\t%lf\t%lf\t%lf\n", s.x, s.y, s.z, 1.0 );
 }
 
 /* ----------------------------------------------------------------------- */

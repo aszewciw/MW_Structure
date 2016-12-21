@@ -1,23 +1,39 @@
 #include "config.h"
-
 /*
+Produce a mock Milky Way sample according to a two-disk model. This code
+requires some CL Input and accepts some additional optional CL input. This input
+is passed via the flags listed below (pass --help for more info).
 
-Produces a two-disk mock Milky Way sample according to parameters in io.c
+Required CL Input:
+    -l_od   - length of output directory string
+    -od     - string of output directory
+    -l_td   - length of todo list directory string
+    -td     - string of directory containing todo_list (see io.c)
 
-Produced are a number of files containing sun-centered cartesian positions
-of stars in each SEGUE l.o.s.
+Optional CL Input (see io.c for default values):
+    -N_s    - number of stars in a temporary galaxy
+    -rn     - thin disk scale length
+    -zn     - thin disk scale height
+    -rk     - thick disk scale length
+    -zk     - thick disk scale height
+    -a      - thick/thin number density ratio
 
-Each l.o.s. file has the same number of stars as the corresponding SEGUE
-l.o.s.
+Stars are created in a "temporary galaxy" of a user-defined number. We determine
+how many stars "belong" to each disk, based on the disks' parameters. We then
+create stars first for the thin disk, then for the thick disk. The stars are
+first created w.r.t. the galactic center. Their coordinates are then transfered
+to a sun-centered cartesian system. They are then assigned to the appropriate
+pointing (if applicable) and output to that pointing's file. In other words, one
+file is produced for each pointing. Once we have made all stars in the temporary
+galaxy and separated them into the pointings, we check if we have created
+"enough" stars for all pointings. The threshhold for each pointing is set by the
+todo file. We continue to make temporary galaxies, only adding stars to those
+pointings which need more, until all threshholds are satisfied.
 
-A single mock is produced with a CL input number of stars. It is
-challenging to produce stars in each l.o.s. according to a particular
-galaxy prescription so we instead make a temporary galaxy with a CL input
-number of stars, assign some of the stars to the appropriate l.o.s., then
-re-make galaxies until each l.o.s. has enough stars. Cleaning of the
-l.o.s.'s to have the exact number of stars as SEGUE occurs in a separate
-file. Importantly, for speed purposes, once we have enough stars in a
-particular l.o.s., we no longer attempt to assign stars to that l.o.s.
+This procedure over-produces stars. This is intentional so as to not
+preferentially select stars belonging to the thin disk (since we write those
+stars to file first). Thus, after we run the code "clean_mocks.py" to shuffle
+and cut down the size of our sample.
 
 Note: l.o.s. = "line of sight"; i.e., a SEGUE/SDSS plate/pointing
 */
@@ -65,7 +81,6 @@ int main( int argc, char **argv ){
     /* assign directory names */
     char out_dir[out_dir_length+1];
     char todo_dir[todo_dir_length+1];
-
     cnt = 1;
     while(cnt<argc){
         if (!strcmp(argv[cnt], "-od")){
@@ -79,16 +94,6 @@ int main( int argc, char **argv ){
 
     /* parse optional command line inputs for starting params and Nstars */
     ARGS cl = parse_command_line( argc, argv );
-
-    /* CL input for total number of stars in each mock */
-    // if (argc != 2){
-    //     fprintf( stderr, "Error. Usage: %s num_stars\n", argv[0]);
-    //     exit(EXIT_FAILURE);
-    // }
-    /* total number of stars in temp galaxy */
-    // unsigned long int N_stars;
-    // sscanf(argv[1], "%lu", &N_stars);
-    // fprintf(stderr, "%lu stars per temporary galaxy.\n", N_stars);
 
     unsigned long int N_stars;
 
@@ -176,7 +181,6 @@ int main( int argc, char **argv ){
     free(thick);
     free(plist);
     fprintf(stderr, "Files Written. Arrays deallocated.\n");
-
 
     return 0;
 }

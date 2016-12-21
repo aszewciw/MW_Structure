@@ -175,7 +175,7 @@ void separate_sample(POINTING *p, STAR *s, int N_p, unsigned long int N_s,
             /* check assignment to this pointing */
             if(dot_prod >= plate_cos){
 
-                snprintf(filename, 256, "%stemp_mock_%s.xyz.dat",
+                snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat",
                     out_dir, p[i].ID);
                 file = fopen(filename, "a");
 

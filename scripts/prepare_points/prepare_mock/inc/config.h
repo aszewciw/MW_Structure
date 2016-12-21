@@ -27,12 +27,19 @@ typedef struct VECTOR{
 
 /* Arguments optionally passed via command line */
 typedef struct {
-    unsigned long int N_stars;  /* number of parameters */
-    double r0_thin;             /* thin disk scale length */
-    double z0_thin;             /* thin disk scale height */
-    double r0_thick;            /* thick disk scale length */
-    double z0_thick;            /* thick disk scale height */
-    double ratio;               /* thick:thin number density ratio */
+
+    /* number of parameters */
+    unsigned long int N_stars;
+    /* thin disk scale length */
+    double r0_thin;
+    /* thin disk scale height */
+    double z0_thin;
+    /* thick disk scale length */
+    double r0_thick;
+    /* thick disk scale height */
+    double z0_thick;
+    /* thick:thin number density ratio */
+    double ratio;
 } ARGS;
 
 /* ---------------------------------------------------------------- */
