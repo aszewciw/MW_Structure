@@ -38,7 +38,7 @@ def main():
     out_dir = args_array[2]
 
     if(N_args==min_args):
-        N_mocks = 10
+        N_mocks = 2
         print('No number of mocks passed. Using default value of ' + str(N_mocks) )
     elif(N_args==min_args+1):
         N_mocks=int(args_array[3])
@@ -64,7 +64,7 @@ def main():
         xyzw = np.genfromtxt(mock_file)
 
         # Check that we have enough stars
-        N_total = len(xyz)
+        N_total = len(xyzw)
         diff = N_total - N_data*N_mocks
         if diff < 0:
             print("Oh no! We didn't make enough stars for " + ID_current)

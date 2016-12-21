@@ -8,7 +8,7 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     /* defaults */
     ARGS cl_args;
     cl_args.N_stars = 1000000;
-    cl_args.N_mocks = 10;
+    cl_args.N_mocks = 2;
     cl_args.r0_thin = 2.34;
     cl_args.z0_thin = 0.233;
     cl_args.r0_thick = 2.51;
