@@ -145,8 +145,8 @@ int main( int argc, char **argv ){
         generate_stars(thick, &params, 1);
 
         /* Separate stars into appropriate l.o.s. */
-        separate_sample(plist, thin, N_plist, params.N_thin, out_dir);
-        separate_sample(plist, thick, N_plist, params.N_thick, out_dir);
+        separate_sample(plist, thin, N_plist, params.N_thin);
+        separate_sample(plist, thick, N_plist, params.N_thick);
 
         /* Check all l.o.s. to see if we have enough stars */
         for( i=0; i<N_plist; i++ ){
@@ -189,9 +189,13 @@ int main( int argc, char **argv ){
 
         N_mock = plist[i].N_mock;
         for( j=0; j<N_mock; j++ ){
-            output_star( file, p[i].stars[j] );
+            output_star( file, plist[i].stars[j] );
         }
         fclose(file);
+    }
+
+    for( i=0; i<N_plist; i++){
+        free(plist[i].stars);
     }
 
     /* Deallocate arrays */
