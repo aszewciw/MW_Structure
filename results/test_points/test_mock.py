@@ -27,7 +27,7 @@ def main():
     cmd = 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' ' + out_dir
     os.system(cmd)
 
-    cmd = 'rm ' + mock_dir + 'temp*'
+    cmd = 'rm ' + out_dir + 'temp*'
     os.system(cmd)
 
 if __name__ == '__main__':
