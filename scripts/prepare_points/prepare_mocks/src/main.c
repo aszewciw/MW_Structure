@@ -184,7 +184,7 @@ int main( int argc, char **argv ){
     /* write stars to file */
     for( i=0; i<N_plist; i++ ){
 
-        snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat", out_dir, p[i].ID);
+        snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat", out_dir, plist[i].ID);
         file = fopen(filename, "a");
 
         N_mock = plist[i].N_mock;
