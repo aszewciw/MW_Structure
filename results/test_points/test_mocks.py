@@ -1,6 +1,5 @@
 import mw_utilities_python as mwu
 import sys, pickle, os
-import subprocess
 
 def main():
 
@@ -29,7 +28,9 @@ def main():
         + ' -l_od ' + str(len(out_dir)) + ' -od ' + out_dir )
     # os.system(cmd)
     # subprocess.run(cmd)
-    print(cmd)
+    filename = 'mocks_cmd.txt'
+    with open(filename) as f:
+        f.write(cmd)
 
     # cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
     #     + out_dir + ' ' + str(Nmocks) )
