@@ -7,6 +7,7 @@ script "test_mocks.sh" where passed parameters are specified.
 '''
 import mw_utilities_python as mwu
 import sys, os
+import numpy as np
 
 def main():
 

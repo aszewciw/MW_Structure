@@ -6,6 +6,7 @@ commands used in the mock creation. This script is called by a bash script
 '''
 import mw_utilities_python as mwu
 import sys, os
+import numpy as np
 
 def main():
 
