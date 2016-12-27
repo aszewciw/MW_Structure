@@ -33,8 +33,8 @@ def main():
         os.system(cmd)
 
     # create commands to be executed
-    cmd = ( 'python ' + uniform_dir + 'generate_uniform.py ' + str(star_factor)
-        + ' ' + todo_dir + ' ' + out_dir )
+    cmd = ( 'python ' + uniform_dir + 'generate_uniform.py ' + num_ratio + ' '
+        + todo_dir + ' ' + out_dir )
 
     # Write commands to file
     with open(cfname, 'w') as f:
