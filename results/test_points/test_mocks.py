@@ -16,7 +16,7 @@ def main():
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
-    cfname   = args_array[1]
+    cfname  = args_array[1]
     out_dir = args_array[2]
     nprocs  = args_array[3]
     nmocks  = args_array[4]

@@ -1,17 +1,20 @@
+'''
+Make a set of distance bins. Here we use defaults settings.
+'''
 import mw_utilities_python as mwu
-#------------------------------------------------------------------------------#
-'''
-Make a set of distance bins, and output in different format.
-These will be used for error calculation and mcmc.
-'''
-#------------------------------------------------------------------------------#
+import numpy as np
 
 def main():
 
+    # get out_dir
+    elements_needed = int(2)
+    args_array      = np.array(sys.argv)
+    N_args          = len(args_array)
+    assert(N_args == elements_needed)
+    out_dir = args_array[1]
+
     # Make default radial bins
-    data_dir = './data/'
-    mwu.corr_prep.set_rbins(filepath=data_dir)
+    mwu.corr_prep.set_rbins(filepath=out_dir)
 
 if __name__ == '__main__':
     main()
-
