@@ -1,9 +1,14 @@
 #!/usr/bin/bash
 
-rm -rf ./mock_data
-mkdir mock_data
+cfname='mock_cmd.txt';
+out_dir='./mock_data/';
 
-python test_mock.py
+rm $cfname
+rm -rf $out_dir
+mkdir $out_dir
+
+python test_mock.py $cfname $out_dir
+bash $cfname
 
 # Add information about run
 info_file='mock_info.txt';

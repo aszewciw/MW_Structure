@@ -1,10 +1,16 @@
 #!/usr/bin/bash
 
-rm -rf ./mocks_data
-mkdir mocks_data
+cfname='mocks_cmd.txt';
+out_dir='./mocks_data/';
+nprocs=16;
+nmocks=5;
 
-python test_mocks.py
-bash mocks_cmd.txt
+rm $cfname
+rm -rf $out_dir
+mkdir $out_dir
+
+python test_mocks.py $cfname $out_dir $nprocs $nmocks
+bash $cfname
 
 # Add information about run
 info_file='mocks_info.txt';
