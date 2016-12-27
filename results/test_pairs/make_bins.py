@@ -3,6 +3,7 @@ Make a set of distance bins. Here we use defaults settings.
 '''
 import mw_utilities_python as mwu
 import numpy as np
+import sys
 
 def main():
 
