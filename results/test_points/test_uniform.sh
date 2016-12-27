@@ -4,8 +4,8 @@ cfname='uniform_cmd.txt';
 out_dir='./uniform_data/';
 num_ratio=10; # N_uniform / N_data
 
-rm -rf out_dir
-mkdir out_dir
+rm -rf $out_dir
+mkdir $out_dir
 
 python test_uniform.py $cfname $out_dir $num_ratio
 bash $cfname
