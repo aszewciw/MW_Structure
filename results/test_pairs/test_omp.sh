@@ -10,7 +10,8 @@ fi
 export OMP_NUM_THREADS=$1
 
 python make_bins_openmp.py
-time python pair_count_openmp.py
+python pair_count_openmp.py
+bash openmp_cmd.txt
 
 # Add information about run
 info_file='run_info_omp.txt';

@@ -50,18 +50,22 @@ def main():
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
 
-    for p in todo_list:
+    cmd_filename='openmp_cmd.txt'
+    with open(cmd_filename, 'w') as f:
+        for p in todo_list:
 
-        in_file = cleaned_dir + 'star_' + p.ID + '.xyzw.dat'
+            in_file = cleaned_dir + 'star_' + p.ID + '.xyzw.dat'
 
-        if not os.path.isfile(in_file):
-            sys.stderr.write('Error: ' + in_file + ' does not exist.\n')
-            continue
+            if not os.path.isfile(in_file):
+                sys.stderr.write('Error: ' + in_file + ' does not exist.\n')
+                continue
 
-        output_file = out_dir + 'dd_' + p.ID + '.dat'
+            output_file = out_dir + 'dd_' + p.ID + '.dat'
 
-        cmd = pairs_file + ' ' + in_file + ' ' + bins_file + ' > ' + output_file
-        os.system(cmd)
+            cmd = pairs_file + ' ' + in_file + ' ' + bins_file + ' > ' + output_file
+            # os.system(cmd)
+            f.write(cmd)
+            f.write('\n')
 
 if __name__ == '__main__':
     main()
