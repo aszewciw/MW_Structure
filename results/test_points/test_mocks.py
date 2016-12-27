@@ -29,7 +29,7 @@ def main():
     # os.system(cmd)
     # subprocess.run(cmd)
     filename = 'mocks_cmd.txt'
-    with open(filename) as f:
+    with open(filename, 'w') as f:
         f.write(cmd)
 
     # cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
