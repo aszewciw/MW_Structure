@@ -28,14 +28,15 @@ def main():
         + ' -l_td ' + str(len(todo_dir)) + ' -td ' + todo_dir
         + ' -l_od ' + str(len(out_dir)) + ' -od ' + out_dir )
     # os.system(cmd)
-    subprocess.run(cmd)
+    # subprocess.run(cmd)
+    print(cmd)
 
-    cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
-        + out_dir + ' ' + str(Nmocks) )
-    os.system(cmd)
+    # cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
+    #     + out_dir + ' ' + str(Nmocks) )
+    # os.system(cmd)
 
-    cmd = 'rm ' + out_dir + 'temp*'
-    os.system(cmd)
+    # cmd = 'rm ' + out_dir + 'temp*'
+    # os.system(cmd)
 
 if __name__ == '__main__':
     main()
