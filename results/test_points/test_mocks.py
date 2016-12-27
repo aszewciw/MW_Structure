@@ -10,7 +10,7 @@ def main():
 
     exe_file = mock_dir + 'bin/make_galaxy'
     Nprocs = 16
-    Nmocks = 2
+    Nmocks = 5
 
     if not os.path.isdir(out_dir):
         sys.stderr.write('{} does not exist. Making directory...'.format(out_dir))
@@ -22,22 +22,24 @@ def main():
         cmd = 'make -C ' + mock_dir
         os.system(cmd)
 
-    cmd = ( 'time mpirun -n ' + str(Nprocs) + ' ' + exe_file + ' -N_m '
+    cmd1 = ( 'time mpirun -n ' + str(Nprocs) + ' ' + exe_file + ' -N_m '
         + str(Nmocks)
         + ' -l_td ' + str(len(todo_dir)) + ' -td ' + todo_dir
         + ' -l_od ' + str(len(out_dir)) + ' -od ' + out_dir )
-    # os.system(cmd)
-    # subprocess.run(cmd)
+
+    cmd2 = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
+        + out_dir + ' ' + str(Nmocks) )
+
+    cmd3 = 'rm ' + out_dir + 'temp*'
+
     filename = 'mocks_cmd.txt'
     with open(filename, 'w') as f:
-        f.write(cmd)
-
-    # cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
-    #     + out_dir + ' ' + str(Nmocks) )
-    # os.system(cmd)
-
-    # cmd = 'rm ' + out_dir + 'temp*'
-    # os.system(cmd)
+        f.write(cmd1)
+        f.write('\n')
+        f.write(cmd2)
+        f.write('\n')
+        f.write(cmd3)
+        f.write('\n')
 
 if __name__ == '__main__':
     main()
