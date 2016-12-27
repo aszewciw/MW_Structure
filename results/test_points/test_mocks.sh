@@ -4,6 +4,7 @@ rm -rf ./mocks_data
 mkdir mocks_data
 
 python test_mocks.py
+bash mocks_cmd.txt
 
 # Add information about run
 info_file='mocks_info.txt';
