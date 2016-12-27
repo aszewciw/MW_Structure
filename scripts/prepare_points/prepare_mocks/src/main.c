@@ -225,7 +225,7 @@ int main( int argc, char **argv ){
                 snprintf(filename, 256, "%stemp_mock_%s.xyzw.dat", out_dir, plist[i].ID);
                 file = fopen(filename, "a");
 
-                N_mock = plist[i].N_mock;
+                N_mock = plist[i].N_mock_proc;
                 for( j=0; j<N_mock; j++ ){
                     output_star( file, plist[i].stars[j] );
                 }

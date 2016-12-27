@@ -1,5 +1,6 @@
 import mw_utilities_python as mwu
 import sys, pickle, os
+import subprocess
 
 def main():
 
@@ -9,6 +10,8 @@ def main():
     out_dir     = './mocks_data/'
 
     exe_file = mock_dir + 'bin/make_galaxy'
+    Nprocs = 16
+    Nmocks = 2
 
     if not os.path.isdir(out_dir):
         sys.stderr.write('{} does not exist. Making directory...'.format(out_dir))
@@ -20,11 +23,15 @@ def main():
         cmd = 'make -C ' + mock_dir
         os.system(cmd)
 
-    cmd = ( exe_file + ' -l_td ' + str(len(todo_dir)) + ' -td ' + todo_dir
+    cmd = ( 'time mpirun -n ' + str(Nprocs) + ' ' + exe_file + ' -N_m '
+        + str(Nmocks)
+        + ' -l_td ' + str(len(todo_dir)) + ' -td ' + todo_dir
         + ' -l_od ' + str(len(out_dir)) + ' -od ' + out_dir )
-    os.system(cmd)
+    # os.system(cmd)
+    subprocess.run(cmd)
 
-    cmd = 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' ' + out_dir
+    cmd = ( 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' '
+        + out_dir + ' ' + str(Nmocks) )
     os.system(cmd)
 
     cmd = 'rm ' + out_dir + 'temp*'
