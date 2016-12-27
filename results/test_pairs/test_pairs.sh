@@ -12,9 +12,9 @@ python pair_count.py $cfname $out_dir
 bash $cfname
 
 # Add information about run
-info_file='run_info.txt';
+info_file='pairs_info.txt';
 rm $info_file
-INFO="test.sh was most recently run on:";
+INFO="test_pairs.sh was most recently run on:";
 echo $INFO > $info_file
 date >> $info_file
 

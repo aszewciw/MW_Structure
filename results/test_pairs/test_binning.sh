@@ -1,13 +1,18 @@
 #!/usr/bin/bash
 
-rm -rf ./data
-mkdir data
+cfname='binned_cmd.txt';
+out_dir='./binned_data/'
 
-python make_bins.py
-time python bin_pair_indices.py
+rm $cfname
+rm -rf $out_dir
+mkdir $out_dir
+
+python make_bins.py $out_dir
+python bin_pair_indices.py $cfname $out_dir
+bash $cfname
 
 # Add information about run
-info_file='run_info.txt';
+info_file='binned_info.txt';
 rm $info_file
 INFO="test_binning.sh was most recently run on:";
 echo $INFO > $info_file

@@ -1,20 +1,25 @@
 #!/usr/bin/bash
 
-rm -rf ./data_omp
-mkdir data_omp
-
 if [[ $# -ne 1 ]] ; then
     echo "usage: ./pair_count_openmp num_threads"
     exit 1
 fi
+
+cfname='pairs_cmd_omp.txt';
+out_dir='./pairs_data_omp/'
+
+rm $cfname
+rm -rf $out_dir
+mkdir $out_dir
+
 export OMP_NUM_THREADS=$1
 
-python make_bins_openmp.py
-python pair_count_openmp.py
-bash openmp_cmd.txt
+python make_bins.py $out_dir
+python pair_count_omp.py $cfname $out_dir
+bash $cfname
 
 # Add information about run
-info_file='run_info_omp.txt';
+info_file='pairs_omp_info.txt';
 rm $info_file
 INFO="test_omp.sh was most recently run on:";
 echo $INFO > $info_file
