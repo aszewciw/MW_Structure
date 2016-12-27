@@ -80,12 +80,12 @@ def main():
             sample = xyzw[samp_min:samp_max]
             sample_dir = out_dir + 'sample_' + str(j) + '/'
             if not os.path.isdir(sample_dir):
-                sys.stderr.write('{} does not exist Making directory...'.format(sample_dir))
+                sys.stderr.write('{} does not exist Making directory...\n'.format(sample_dir))
                 cmd = 'mkdir ' + sample_dir
                 os.system(cmd)
             # Output new data
             out_file = sample_dir + 'mock_' + ID_current + '.xyzw.dat'
-            np.savetxt(out_file, xyzw, fmt='%1.6f')
+            np.savetxt(out_file, sample, fmt='%1.6f')
             # Add number of elements as first line in file
             line_prepender(out_file, str(int(N_data)))
 
