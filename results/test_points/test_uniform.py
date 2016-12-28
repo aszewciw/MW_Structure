@@ -24,7 +24,6 @@ def main():
     todo_dir    = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
     uniform_dir = scripts_dir + 'prepare_points/uniform/'
-    out_dir     = './data/'
 
     # Check for dir/file existence
     if not os.path.isdir(out_dir):
