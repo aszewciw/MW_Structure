@@ -34,7 +34,7 @@ def main():
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
-    pairs_file = exe_dir + './bin_pair_indices'
+    pairs_file = exe_dir + 'bin_pair_indices'
 
     if not os.path.isfile(pairs_file):
         sys.stderr.write('{} does not exist. Compiling...\n'.format(pairs_file))
