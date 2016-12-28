@@ -1,5 +1,6 @@
 '''
-Produce files containing the indices of binned pairs
+Produce files containing the indices of binned pairs. Here we do this for a
+uniform sample.
 '''
 import mw_utilities_python as mwu
 import sys, pickle, os
@@ -12,15 +13,17 @@ def main():
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
-    cfname   = args_array[1]
+    cfname  = args_array[1]
     out_dir = args_array[2]
 
+    # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
     pairs_dir   = scripts_dir + 'pair_count/'
     uni_dir = '../test_points/uniform_data/'
     exe_dir = './bin/'
 
+    # Check for dir/file existence
     if not os.path.isdir(exe_dir):
         sys.stderr.write('{} does not exist Making directory...'.format(exe_dir))
         cmd = 'mkdir ' + exe_dir
@@ -48,18 +51,19 @@ def main():
     else:
         sys.stderr.write('Using already compiled file {}'.format(pairs_file))
 
+    # Load todo list
     input_filename = cleaned_dir + 'todo_list.dat'
     sys.stderr.write('Loading from file {} ...\n'.format(input_filename))
     input_file     = open(input_filename, 'rb')
     todo_list      = pickle.load(input_file)
     input_file.close()
 
+    # Load bins file
     bins_file = out_dir + 'rbins.ascii.dat'
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
-
     bins = np.genfromtxt(bins_file, skip_header=1)
-    n_bins = len(bins)
+    nbins = len(bins)
 
     # Write command file
     with open(cfname, 'w') as f:
@@ -77,7 +81,7 @@ def main():
             f.write(cmd)
             f.write('\n')
 
-            for i in range(n_bins):
+            for i in range(nbins):
 
                 pair_file = './pairs_bin_' + str(i) + '.dat'
 
