@@ -9,7 +9,7 @@ import numpy as np
 def main():
 
     # get command filename, out_dir
-    elements_needed = int(3)
+    elements_needed = int(4)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
