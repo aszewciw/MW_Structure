@@ -56,7 +56,7 @@ typedef struct {
 ARGS parse_command_line( int n_args, char ** arg_array );
 void load_pointingID(int *N_plist, POINTING **plist, char in_dir[]);
 int load_Nbins(char in_dir[]);
-void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_dir);
+void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_dir[]);
 void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);
 void load_pairs(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);
 void load_inv_correlation(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);

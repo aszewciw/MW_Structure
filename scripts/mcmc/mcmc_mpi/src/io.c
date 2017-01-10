@@ -131,7 +131,7 @@ int load_Nbins(char in_dir[]){
 /* ----------------------------------------------------------------------- */
 
 /* Load position and density weight data for model stars */
-void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_dir){
+void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_dir[]){
 
     char zrw_filename[256];
     FILE *zrw_file;
@@ -334,7 +334,7 @@ void output_mcmc(int index, ARGS p, FILE *output_file){
     }
 
     fprintf( output_file, "%d\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",
-        index, p.chi2, p.chi2_reduced, p.r0_thin, p.z0_thin,
+        index, p.chi2, p.chi2_red, p.r0_thin, p.z0_thin,
         p.r0_thick, p.z0_thick, p.ratio );
 }
 
