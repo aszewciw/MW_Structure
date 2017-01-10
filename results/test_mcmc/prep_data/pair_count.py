@@ -25,12 +25,12 @@ def main():
 
     # Check for dir/file existence
     if not os.path.isdir(exe_dir):
-        sys.stderr.write('{} does not exist Making directory...'.format(exe_dir))
+        sys.stderr.write('{} does not exist Making directory...\n'.format(exe_dir))
         cmd = 'mkdir ' + exe_dir
         os.system(cmd)
 
     if not os.path.isdir(out_dir):
-        sys.stderr.write('{} does not exist Making directory...'.format(out_dir))
+        sys.stderr.write('{} does not exist Making directory...\n'.format(out_dir))
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
