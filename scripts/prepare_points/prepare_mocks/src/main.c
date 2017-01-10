@@ -39,7 +39,6 @@ Note: l.o.s. = "line of sight"; i.e., a SEGUE/SDSS plate/pointing
 */
 
 /*---------------------------------------------------------------------------*/
-
 int main( int argc, char **argv ){
 
     /* MPI Initialization */

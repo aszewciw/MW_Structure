@@ -20,7 +20,7 @@ def main():
     cleaned_dir = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
     pairs_dir   = scripts_dir + 'pair_count/'
-    uni_dir = '../test_points/uniform_data/'
+    uni_dir = './data/'
     exe_dir = './bin/'
 
     # Check for dir/file existence

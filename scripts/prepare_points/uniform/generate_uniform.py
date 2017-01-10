@@ -1,17 +1,19 @@
-# from config import *
-# import mw_utilities_python as mwu
+'''
+Reads in todo_list containing info about cleaned SEGUE data. For each SEGUE
+pointing a uniform sample of points is produced. The sample contains
+"star_factor" times as many points as are in the SEGUE data sample. Here,
+"star_factor" is passed via the command line. Thus, each pointing will have a
+different number of stars.
+
+The files produced are:
+    uniform_<ID>.ascii.dat - ra,dec,distance,l,b,Z,R,x,y,z,weight(=1)
+    uniform_<ID>.xyzw.dat - x,y,z,weight(=1)
+'''
 import mw_utilities_python.segue_star as seg
 import sys, pickle, math, os, string, random
 import numpy as np
-'''
-Reads in todo_list containing info about cleaned SEGUE data.
-Outputs the following:
 
-( one of these for each pointing )
-1. pickled star list (do I use this anywhere?)
-2. xyzw ascii file for correlation function
-3. ascii file containing all coordinates (used in mcmc/jackknife)
-'''
+#------------------------------------------------------------------------------
 class Point():
     pass
 
@@ -29,7 +31,7 @@ def random_unit(Ntot, pointing):
     RA, Dec, distance, x, y, z, etc.
     """
 
-    plate_size_cos = math.cos(seg.PLATE_RADIUS_RADIANS) # the cos of the plate size
+    plate_size_cos = math.cos(seg.PLATE_RADIUS_RADIANS)
 
     center = (pointing.cartesian_x, pointing.cartesian_y, pointing.cartesian_z)
 
@@ -88,14 +90,11 @@ def random_unit(Ntot, pointing):
     return random_sample
 
 #--------------------------------------------------------------------------
-
 def assign_distance(random_sample, r1, r2):
     """
     Assign distances to random points.
     Random points are distributed uniformly in a shell between [rmin, rmax].
     """
-
-    #
     if r2 <= r1:
         sys.stderr.write("Error: Cannot assign distance. "
                          "Shell parameters error.\n"
@@ -128,7 +127,6 @@ def main():
         todo_dir = directory containing todo_list
         out_dir = directory where we'll place uniform files
     '''
-
     # Parse CL
     elements_needed = int(4)
     args_array      = np.array(sys.argv)
@@ -213,7 +211,7 @@ def main():
         output_file.close()
 
 
-    sys.stderr.write('Done. Random samples output to {} .\n'.format(out_dir))
+    sys.stderr.write('Done. Uniform samples output to {} .\n'.format(out_dir))
 
 if __name__ == '__main__' :
     main()
