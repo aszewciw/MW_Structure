@@ -30,8 +30,8 @@ def main():
 
     # create commands to be executed
     cmd =   (
-            exe_file + ' ' + out_dir + ' ' + todo_dir + ' ' + data_dir + ' '
-            + model_dir + ' ' + stats_dir + ' ' + fid_dir
+            'python ' + exe_file + ' ' + out_dir + ' ' + todo_dir + ' '
+            + data_dir + ' ' + model_dir + ' ' + stats_dir + ' ' + fid_dir
             )
 
     # Write commands to file
