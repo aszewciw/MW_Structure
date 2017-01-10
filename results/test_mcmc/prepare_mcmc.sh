@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cfname='mcmc_cmd.txt';
+cfname='prep_cmd.txt';
 out_dir='./data/';
 data_dir='./prep_data/data/';
 model_dir='./prep_model/data/';
