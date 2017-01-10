@@ -72,7 +72,7 @@ def main():
         out_fname = out_dir + 'mean_std_' + i + '.dat'
         with open(out_fname, 'w') as f:
             for j in range(len(mean)):
-                f.write('{0:.6e}{1:.6e}\n'.format(mean[j], std[j]))
+                f.write('{0:.6e}\t{1:.6e}\n'.format(mean[j], std[j]))
 
         # copy inverse correlation matrix files
         corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
