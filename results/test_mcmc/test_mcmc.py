@@ -41,6 +41,7 @@ def main():
     cmd = (
         'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
         + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -N_s ' + nsteps
+        + ' -cov 1'
         )
 
     # Write commands to file
