@@ -143,7 +143,7 @@ void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_d
     /* Read star data for each poiting */
     for(i = lower_ind; i < upper_ind; i++){
 
-        snprintf(zrw_filename, 256, "%suniform_ZRW_%s.dat", in_dir, plist[i].ID);
+        snprintf(zrw_filename, 256, "%smodel_ZRW_%s.dat", in_dir, plist[i].ID);
         if((zrw_file=fopen(zrw_filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s \n", zrw_filename);
             exit(EXIT_FAILURE);
