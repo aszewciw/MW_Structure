@@ -269,7 +269,7 @@ void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
         update_model(plist, N_bins, lower_ind, upper_ind);
 
         /* Calculate and gather chi2 */
-        chi2 = calculate_chi2(plist, N_bins, lower_ind, upper_ind);
+        chi2 = calculate_chi2(plist, new, N_bins, lower_ind, upper_ind);
         MPI_Barrier(MPI_COMM_WORLD);
         MPI_Allreduce(&chi2, &new.chi2, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
         new.chi2_red = new.chi2 / (double)DOF;
