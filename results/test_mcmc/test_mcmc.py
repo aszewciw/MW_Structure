@@ -29,11 +29,11 @@ def main():
 
     # Check for dir/file existence
     if not os.path.isdir(in_dir):
-        sys.stderr.write('{} does not exist. Please make dir and fill with data.'.format(in_dir))
+        sys.stderr.write('{} does not exist. Please make dir and fill with data.\n'.format(in_dir))
         sys.exit()
 
     if not os.path.isfile(exe_file):
-        sys.stderr.write('{} does not exist. Making...'.format(exe_file))
+        sys.stderr.write('{} does not exist. Making...\n'.format(exe_file))
         cmd = 'make -C ' + mcmc_dir
         os.system(cmd)
 
