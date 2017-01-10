@@ -76,7 +76,7 @@ int main(int argc, char * argv[]){
         fprintf(stderr, "Starting parameters: r0_thin = %lf , z0_thin = %lf , r0_thick = %lf , z0_thick = %lf , ratio = %lf\n",
             init.r0_thin, init.z0_thin, init.r0_thick, init.z0_thick, init.ratio);
         fprintf(stderr, "%d steps in MCMC chain...\n", init.max_steps);
-        fprintf(stderr, "Results will be output to %s\n", init.filename);
+        fprintf(stderr, "Results will be output to %s\n", out_filename);
     }
 
     /* -- Load data from various files --*/
