@@ -10,7 +10,7 @@ import numpy as np
 def main():
 
     # Parse CL
-    elements_needed = int(4)
+    elements_needed = int(7)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -18,7 +18,8 @@ def main():
     todo_dir  = args_array[2]
     data_dir  = args_array[3]
     model_dir = args_array[4]
-    fid_dir   = args_array[5]
+    stats_dir = args_array[5]
+    fid_dir   = args_array[6]
 
     # Check that all passed directories exist and print them.
     for i in args_array:
@@ -28,6 +29,7 @@ def main():
     sys.stderr.write('Todo directory is {}\n'.format(todo_dir))
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
     sys.stderr.write('Model directory is {}\n'.format(model_dir))
+    sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
     sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
 
     # Make ID list from todo file
@@ -65,7 +67,7 @@ def main():
                 f.write('{0:.6e}\n'.format(d))
 
         # get mean and standard deviation files
-        stats_fname = fid_dir + 'stats_' + i + '.dat'
+        stats_fname = stats_dir + 'stats_' + i + '.dat'
         mean, std = np.genfromtxt(stats_fname, usecols=[0,2], unpack=True)
         out_fname = out_dir + 'mean_std_' + i + '.dat'
         with open(out_fname, 'w') as f:
