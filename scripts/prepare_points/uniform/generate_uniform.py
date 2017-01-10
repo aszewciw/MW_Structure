@@ -210,6 +210,16 @@ def main():
                               )
         output_file.close()
 
+        # output ZRw
+        output_filename = out_dir + 'uniform_' + p.ID + '.ZRW.dat'
+        output_file = open(output_filename, "w")
+        # first output the total number of points
+        output_file.write('{}\n'.format(len(random_sample)))
+        for i in random_sample:
+            output_file.write('{0:.6e}\t{1:.6e}\t{2:.6e}\n'
+                              .format(i.galactic_Z, i.galactic_R, i.weight)
+                              )
+        output_file.close()
 
     sys.stderr.write('Done. Uniform samples output to {} .\n'.format(out_dir))
 
