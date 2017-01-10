@@ -45,7 +45,7 @@ def main():
 
     # Check for existence of bins files and load number of bins
     bins_fname = out_dir + 'rbins.ascii.dat'
-    if not(os.path.isfile(bins_file)):
+    if not(os.path.isfile(bins_fname)):
         sys.stderr.write('{} does not exist. Please make before continuing...\n'
                             .format(bins_fname))
         sys.exit()
