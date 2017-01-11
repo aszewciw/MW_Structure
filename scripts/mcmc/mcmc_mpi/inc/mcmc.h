@@ -48,6 +48,7 @@ typedef struct {
   double * Z;           /* array of star heights above gal plane */
   double * R;           /* array of star distances from gal center in gal plane */
   double * weight;      /* star's density weight based on Z, R */
+  double * weight_fid;  /* star's density weight based on Z, R */
   RBIN * rbin;          /* Nbins of these structures */
   INVCOR * invcor_row;  /* Inverted correlation matrix: first index is a row */
 } POINTING;

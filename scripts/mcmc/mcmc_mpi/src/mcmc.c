@@ -32,6 +32,9 @@ void set_weights(ARGS params, POINTING *p, int lower_ind, int upper_ind){
                 + params.ratio *
                 ( sech2( p[i].Z[j] / (2.0 * params.z0_thick) )
                     * exp( -p[i].R[j] / params.r0_thick ) ) );
+
+            /* divide by fiducial */
+            p[i].weight[j] /= p[i].weight_fid[j];
         }
     }
 }
