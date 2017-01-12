@@ -209,7 +209,7 @@ int check_convergence(STD *std){
     std->z0_thick_std = calc_std(std->z0_thick, std->N_steps);
     std->ratio_std    = calc_std(std->ratio, std->N_steps);
 
-    tol = std.tol;
+    tol = std->tol;
 
     /* if we don't meet any of the convergence criteria, multiply flag by 0 */
     diff = fabs(std->r0_thin_std - rthin_std_old)/std->r0_thin_std;
@@ -282,7 +282,7 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
     /* Degrees of freedom never change -- calculate once */
     DOF_proc = degrees_of_freedom(plist, N_bins, lower_ind, upper_ind);
     MPI_Allreduce(&DOF_proc, &DOF, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-    DOF -= initial.N_params;
+    DOF -= args.N_params;
     current.chi2_red = current.chi2 / (double)DOF;
 
     if(rank==0){
