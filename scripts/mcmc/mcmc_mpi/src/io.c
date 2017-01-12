@@ -15,17 +15,17 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     /* defaults */
     ARGS cl_args;
     cl_args.N_params = 5;
-    cl_args.r0_thin = 3.0;
-    cl_args.z0_thin = 0.3;
+    cl_args.r0_thin  = 3.0;
+    cl_args.z0_thin  = 0.3;
     cl_args.r0_thick = 4.0;
     cl_args.z0_thick = 1.2;
-    cl_args.ratio = 0.12;
+    cl_args.ratio    = 0.12;
     cl_args.max_steps = 100000;
+    cl_args.min_steps = 30000;
+    cl_args.std_steps = 10000;
+    cl_args.tol  = 0.1;
     cl_args.frac = 0;
-    cl_args.cov = 0;
-    /* these won't be passed, but we can initialize them here */
-    cl_args.chi2 = 0.0;
-    cl_args.chi2_red = 0.0;
+    cl_args.cov  = 0;
 
     int cnt = 1;
     while(cnt < n_args)
@@ -42,8 +42,14 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
             sscanf(arg_array[++cnt], "%lf", &cl_args.z0_thick);
         else if ( !strcmp(arg_array[cnt],"-a") )
             sscanf(arg_array[++cnt], "%lf", &cl_args.ratio);
-        else if ( !strcmp(arg_array[cnt],"-N_s") )
+        else if ( !strcmp(arg_array[cnt],"-tol") )
+            sscanf(arg_array[++cnt], "%lf", &cl_args.tol);
+        else if ( !strcmp(arg_array[cnt],"-max_s") )
             sscanf(arg_array[++cnt], "%d", &cl_args.max_steps);
+        else if ( !strcmp(arg_array[cnt],"-min_s") )
+            sscanf(arg_array[++cnt], "%d", &cl_args.min_steps);
+        else if ( !strcmp(arg_array[cnt],"-std_s") )
+            sscanf(arg_array[++cnt], "%d", &cl_args.std_steps);
         else if ( !strcmp(arg_array[cnt],"-frac") )
             sscanf(arg_array[++cnt], "%d", &cl_args.frac);
         else if ( !strcmp(arg_array[cnt],"-cov") )
@@ -55,17 +61,17 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
         else if ( !strcmp(arg_array[cnt],"-id") )
             cnt++;
         else if ( !strcmp(arg_array[cnt],"--help") || !strcmp(arg_array[cnt],"-h") ) {
-            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-N_s <max_steps>]\n");
+            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>] [-min_s <min_steps>]\n");
             printf("\t[-rn <r0_thin>] [-zn <z0_thin>] [-rk <r0_thick>] [-zk <z0_thick>] [-frac <frac>] [-cov <cov>]\n");
-            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nN_s=100000\nfrac: 0\ncov: 0\n");
+            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nmin_s=30000\nmax_s=100000\nfrac: 0\ncov: 0\n");
             printf("No directory defaults exist. These must be passed!\n");
             exit(-1);
         }
         else{
             printf("\n***Error: Uncrecognized CL option %s\n\n", arg_array[cnt]);
-            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-N_s <max_steps>]\n");
+            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>] [-min_s <min_steps>]\n");
             printf("\t[-rn <r0_thin>] [-zn <z0_thin>] [-rk <r0_thick>] [-zk <z0_thick>] [-frac <frac>] [-cov <cov>]\n");
-            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nN_s=100000\nfrac: 0\ncov: 0\n");
+            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nmin_s=30000\nmax_s=100000\nfrac: 0\ncov: 0\n");
             printf("No directory defaults exist. These must be passed!\n");
             exit(-1);
         }

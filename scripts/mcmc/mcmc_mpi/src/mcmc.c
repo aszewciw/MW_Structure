@@ -98,7 +98,6 @@ void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind){
             p[i].rbin[j].MM = calculate_MM( p[i].rbin[j].N_pairs,
                 p[i].rbin[j].pair1, p[i].rbin[j].pair2, MM_norm,
                 p[i].weight );
-
         }
     }
 }
@@ -165,6 +164,73 @@ void update_parameters(ARGS c, ARGS *n, gsl_rng * GSL_r){
     n->chi2_red = 0.0;
 }
 
+/* ----------------------------------------------------------------------- */
+
+/* calculate standard deviation of array x of length N */
+double calc_std(double *x, int N){
+    double mean, std, sum;
+    int i;
+    sum = 0.0;
+
+    for(i=0; i<N; i++){
+        sum+=x[i];
+    }
+    mean = sum / N;
+
+    sum = 0.0;
+    for(i=0; i<N; i++){
+        sum += (x[i]-mean) * (x[i]-mean);
+    }
+
+    std = sqrt(sum / (N-1));
+
+    return std;
+}
+
+/* ----------------------------------------------------------------------- */
+
+/* Check whether new vs old standard deviations is less than tolerance */
+int check_convergence(STD *std){
+    double rthin_std_old, zthin_std_old, rthick_std_old, zthick_std_old, ratio_std_old;
+    // double rthin_std_new, zthin_std_new, rthick_std_new, zthick_std_new, ratio_std_new;
+    double diff, tol;
+    int flag = 1;   /* assume convergence */
+
+    /* set old standard deviations to those currently stored in std */
+    rthin_std_old  = std->r0_thin_std;
+    zthin_std_old  = std->z0_thin_std;
+    rthick_std_old = std->r0_thick_std;
+    zthick_std_old = std->z0_thick_std;
+    ratio_std_old  = std->ratio_std;
+
+    /* get new standard deviations */
+    std->r0_thin_std  = calc_std(std->r0_thin, std->N_steps);
+    std->z0_thin_std  = calc_std(std->z0_thin, std->N_steps);
+    std->r0_thick_std = calc_std(std->r0_thick, std->N_steps);
+    std->z0_thick_std = calc_std(std->z0_thick, std->N_steps);
+    std->ratio_std    = calc_std(std->ratio, std->N_steps);
+
+    tol = std.tol;
+
+    /* if we don't meet any of the convergence criteria, multiply flag by 0 */
+    diff = fabs(std->r0_thin_std - rthin_std_old)/std->r0_thin_std;
+    if(diff>tol) flag*=0;
+
+    diff = fabs(std->z0_thin_std - zthin_std_old)/std->z0_thin_std;
+    if(diff>tol) flag*=0;
+
+    diff = fabs(std->r0_thick_std - rthick_std_old)/std->r0_thin_std;
+    if(diff>tol) flag*=0;
+
+    diff = fabs(std->z0_thick_std - zthick_std_old)/std->z0_thick_std;
+    if(diff>tol) flag*=0;
+
+    diff = fabs(std->ratio_std - ratio_std_old)/std->ratio_std;
+    if(diff>tol) flag*=0;
+
+    return flag;
+}
+
 
 /* ----------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------- */
@@ -173,29 +239,35 @@ void update_parameters(ARGS c, ARGS *n, gsl_rng * GSL_r){
 /* ----------------------------------------------------------------------- */
 
 /* Run mcmc chain */
-void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
+void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
     int upper_ind, int rank, int nprocs, char filename[256])
 {
-    int i;                  /* mcmc index */
+    int i=0;                /* mcmc index */
     int eff_counter = 0;    /* number of accepted steps */
     double eff;             /* number accepted / total */
-    ARGS current;           /* current params */
-    ARGS new;               /* new mcmc parameters to test */
+    STEP current;           /* current params */
+    STEP new;               /* new mcmc parameters to test */
     double delta_chi2;      /* new - old chi2 */
     double tmp;             /* temp holder */
     int DOF = 0;            /* total degrees of freedom */
     int DOF_proc;           /* d.o.f. of each process */
     double chi2 = 0.0;      /* chi2 value for each process */
+    STD std;                /* stores info for previous 10000 steps */
+    int std_ind=0;          /* index for storing */
+    int conv_flag=0;        /* set=1 if we meet convergence criteria */
 
     if (rank == 0){
-        fprintf(stderr, "Start MCMC chain. Max steps = %d\n", initial.max_steps);
+        fprintf(stderr, "Start MCMC chain. Max steps = %d\n", args.max_steps);
     }
 
-    /* set first element with initial parameters */
-    current = initial;
-    /* set new to initial so we have correct values for quantities which don't change
-    in mcmc chain */
-    new = initial;
+    /* set first element with initial parameters from cl args */
+    current.r0_thin  = args.r0_thin;
+    current.z0_thin  = args.z0_thin;
+    current.r0_thick = args.r0_thick;
+    current.z0_thick = args.z0_thick;
+    current.ratio    = args.ratio;
+    current.chi2     = 0.0;
+    current.chi2_red = 0.0;
 
     /* set initial weights of model points */
     set_weights(current, plist, lower_ind, upper_ind);
@@ -221,24 +293,20 @@ void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
 
     /* Define MPI type to be communicated */
     MPI_Datatype MPI_STEP;
-    MPI_Datatype type[11] = { MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE,
-        MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_INT, MPI_INT, MPI_INT, MPI_INT };
-    int blocklen[11] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-    MPI_Aint disp[11];
-    disp[0] = offsetof( ARGS, r0_thin );
-    disp[1] = offsetof( ARGS, z0_thin );
-    disp[2] = offsetof( ARGS, r0_thick );
-    disp[3] = offsetof( ARGS, z0_thick );
-    disp[4] = offsetof( ARGS, ratio );
-    disp[5] = offsetof( ARGS, chi2 );
-    disp[6] = offsetof( ARGS, chi2_red );
-    disp[7] = offsetof( ARGS, N_params );
-    disp[8] = offsetof( ARGS, max_steps );
-    disp[9] = offsetof( ARGS, frac );
-    disp[10] = offsetof( ARGS, cov );
+    MPI_Datatype type[7] = { MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE,
+        MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE };
+    int blocklen[7] = { 1, 1, 1, 1, 1, 1, 1 };
+    MPI_Aint disp[7];
+    disp[0] = offsetof( STEP, r0_thin );
+    disp[1] = offsetof( STEP, z0_thin );
+    disp[2] = offsetof( STEP, r0_thick );
+    disp[3] = offsetof( STEP, z0_thick );
+    disp[4] = offsetof( STEP, ratio );
+    disp[5] = offsetof( STEP, chi2 );
+    disp[6] = offsetof( STEP, chi2_red );
 
     /* build derived data type */
-    MPI_Type_create_struct( 11, blocklen, disp, type, &MPI_STEP );
+    MPI_Type_create_struct( 7, blocklen, disp, type, &MPI_STEP );
     /* optimize memory layout of derived datatype */
     MPI_Type_commit(&MPI_STEP);
 
@@ -256,9 +324,22 @@ void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
     GSL_r = gsl_rng_alloc(GSL_T);
     gsl_rng_set(GSL_r, time(NULL));
 
-    /* mcmc */
-    for( i = 0; i < initial.max_steps; i++ ){
+    /* Initialize standard deviation properites */
+    std.N_steps = args.std_steps;
+    std.tol = args.tol;
+    std.r0_thin_std  = 0.0;
+    std.z0_thin_std  = 0.0;
+    std.r0_thick_std = 0.0;
+    std.z0_thick_std = 0.0;
+    std.ratio_std    = 0.0;
+    std.r0_thin  = calloc(std.N_steps, sizeof(double));
+    std.z0_thin  = calloc(std.N_steps, sizeof(double));
+    std.r0_thick = calloc(std.N_steps, sizeof(double));
+    std.z0_thick = calloc(std.N_steps, sizeof(double));
+    std.ratio    = calloc(std.N_steps, sizeof(double));
 
+    /* mcmc */
+    while(i<args.max_steps){
         /* Have only step 0 take random walk and send new params to all procs */
 
         if(rank==0 && i!=0) update_parameters(current, &new, GSL_r);
@@ -308,11 +389,31 @@ void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
             output_mcmc(i, current, output_file);
             if(i % 50 == 0) fflush(output_file);
         }
+
+        /* Check mcmc convergence */
+        if(i>args.min_steps){
+            std.r0_thin[std_ind] = current.r0_thin;
+            std.z0_thin[std_ind] = current.z0_thin;
+            std.r0_thick[std_ind] = current.r0_thick;
+            std.z0_thick[std_ind] = current.z0_thick;
+            std.ratio[std_ind] = current.ratio;
+            std_ind += 1;
+            if(std_ind==std.N_steps){
+                conv_flag = check_convergence(&std);
+                std_ind=0;
+            }
+        }
+
+        if(conv_flag==1){
+            fprintf(stderr, "Convergence criteria met. Exiting on step %d\n", i);
+            break;
+        }
+        i+=1;
     }
 
     /* print lines indicating end of mcmc */
     if(rank==0){
-        eff = (double)eff_counter / (double)initial.max_steps;
+        eff = (double)eff_counter / (double)args.max_steps;
         fclose(output_file);
         fprintf(stderr, "Efficiency of MCMC: %lf\n", eff);
         fprintf(stderr, "End MCMC calculation.\n");

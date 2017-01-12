@@ -11,18 +11,46 @@
 
 /* Arguments optionally passed via command line */
 typedef struct {
-  double r0_thin;     /* thin disk scale length */
-  double z0_thin;     /* thin disk scale height */
-  double r0_thick;    /* thick disk scale length */
-  double z0_thick;    /* thick disk scale height */
-  double ratio;       /* thick:thin number density ratio */
-  double chi2;        /* total chi2 for step */
-  double chi2_red;    /* chi2/DOF */
+  double r0_thin;     /* initial thin disk scale length */
+  double z0_thin;     /* initial thin disk scale height */
+  double r0_thick;    /* initial thick disk scale length */
+  double z0_thick;    /* initial thick disk scale height */
+  double ratio;       /* initial thick:thin number density ratio */
+  double tol;         /* tolerance for ending chain */
   int N_params;       /* number of parameters */
   int max_steps;      /* max steps in MCMC chain */
+  int min_steps;      /* min steps in chain */
+  int std_steps;      /* number of steps over which std are calculated */
   int frac;           /* set=1 if we want to use scaled fractional errors */
   int cov;            /* set=1 if we want to use covariance matrix */
 } ARGS;
+
+/* Store information about each step in the chain */
+typedef struct {
+  double r0_thin;     /* initial thin disk scale length */
+  double z0_thin;     /* initial thin disk scale height */
+  double r0_thick;    /* initial thick disk scale length */
+  double z0_thick;    /* initial thick disk scale height */
+  double ratio;       /* initial thick:thin number density ratio */
+  double chi2;        /* total chi2 for step */
+  double chi2_red;    /* chi2/DOF */
+} STEP;
+
+/* Store the standard deviations for Nsteps */
+typedef struct {
+  int N_steps;          /* number of steps over which std are calculated */
+  double r0_thin_std;   /* std of accepted thin disk scale lengths */
+  double z0_thin_std;   /* std of accepted thin disk scale heights */
+  double r0_thick_std;  /* std of accepted thick disk scale lengths */
+  double z0_thick_std;  /* std of accepted thick disk scale heights */
+  double ratio_std;     /* std of accepted thick:thin ratios */
+  double * r0_thin;     /* arrays of N_steps values of each quantity */
+  double * z0_thin;
+  double * r0_thick;
+  double * z0_thick;
+  double * ratio;
+  double tol;           /* tolerance (fraction) for ending chain */
+} STD;
 
 /* Data for each radial bin */
 typedef struct {

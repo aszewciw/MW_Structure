@@ -17,7 +17,7 @@ Options to add:
 /*---------------------------------------------------------------------------*/
 int main(int argc, char * argv[]){
 
-    /* MPI Initialization */
+    /* MPI initialization */
     int nprocs, rank;
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
@@ -69,13 +69,12 @@ int main(int argc, char * argv[]){
     }
 
     /* parse command line for starting params, steps, and filename */
-    ARGS init = parse_command_line( argc, argv );
+    ARGS cl_args = parse_command_line( argc, argv );
 
     if(rank==0){
-        fprintf(stderr, "N_parameters: %d\n", init.N_params);
+        fprintf(stderr, "N_parameters: %d\n", cl_args.N_params);
         fprintf(stderr, "Starting parameters: r0_thin = %lf , z0_thin = %lf , r0_thick = %lf , z0_thick = %lf , ratio = %lf\n",
-            init.r0_thin, init.z0_thin, init.r0_thick, init.z0_thick, init.ratio);
-        fprintf(stderr, "%d steps in MCMC chain...\n", init.max_steps);
+            cl_args.r0_thin, cl_args.z0_thin, cl_args.r0_thick, cl_args.z0_thick, cl_args.ratio);
         fprintf(stderr, "Results will be output to %s\n", out_filename);
     }
 
@@ -120,7 +119,7 @@ int main(int argc, char * argv[]){
     load_inv_correlation(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
 
     /* Run mcmc */
-    run_mcmc(plist, init, N_bins, lower_ind, upper_ind, rank, nprocs, out_filename);
+    run_mcmc(plist, cl_args, N_bins, lower_ind, upper_ind, rank, nprocs, out_filename);
 
     /* Free allocated values */
     for(i=lower_ind; i<upper_ind; i++){
