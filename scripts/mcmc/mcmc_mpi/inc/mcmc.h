@@ -89,20 +89,20 @@ void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_d
 void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);
 void load_pairs(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);
 void load_inv_correlation(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank, char in_dir[]);
-void output_mcmc(int index, ARGS p, FILE *output_file);
+void output_mcmc(int index, STEP p, FILE *output_file);
 
 /* Stats functions */
-double calculate_chi2(POINTING *p, ARGS c, int N_bins, int lower_ind, int upper_ind);
+double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_ind);
 
 /* MCMC functions */
-void set_weights(ARGS params, POINTING *p, int lower_ind, int upper_ind);
+void set_weights(STEP params, POINTING *p, int lower_ind, int upper_ind);
 double normalize_MM(double *weight, int N_stars);
 double calculate_MM( unsigned int N_pairs, int *pair1, int *pair2, double MM_norm,
   double *weight );
 void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind);
 int degrees_of_freedom(POINTING *p, int N_bins, int lower_ind, int upper_ind);
-void update_parameters(ARGS p, ARGS *n, gsl_rng * GSL_r);
-void run_mcmc(POINTING *plist, ARGS initial, int N_bins, int lower_ind,
+void update_parameters(STEP p, STEP *n, gsl_rng * GSL_r);
+void run_mcmc(POINTING *plist, STEP initial, int N_bins, int lower_ind,
   int upper_ind, int rank, int nprocs, char filename[256]);
 
 /* Other */

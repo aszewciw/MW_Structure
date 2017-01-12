@@ -335,7 +335,7 @@ void load_inv_correlation(POINTING *plist, int N_bins, int lower_ind, int upper_
 /* ----------------------------------------------------------------------- */
 
 /* Output mcmc data to a file */
-void output_mcmc(int index, ARGS p, FILE *output_file){
+void output_mcmc(int index, STEP p, FILE *output_file){
 
     /* Output column headers as first line */
     if(index==0){

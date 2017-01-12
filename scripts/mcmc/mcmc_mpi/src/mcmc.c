@@ -18,7 +18,7 @@ double sech2(double x){
 /* ----------------------------------------------------------------------- */
 
 /* Set weights for all model points based on disk parameters */
-void set_weights(ARGS params, POINTING *p, int lower_ind, int upper_ind){
+void set_weights(STEP params, POINTING *p, int lower_ind, int upper_ind){
 
     int i, j;
 
@@ -122,7 +122,7 @@ int degrees_of_freedom(POINTING *p, int N_bins, int lower_ind, int upper_ind){
 /* ----------------------------------------------------------------------- */
 
 /* Take a random step in parameter space */
-void update_parameters(ARGS c, ARGS *n, gsl_rng * GSL_r){
+void update_parameters(STEP c, STEP *n, gsl_rng * GSL_r){
 
     double delta;
 
@@ -192,7 +192,6 @@ double calc_std(double *x, int N){
 /* Check whether new vs old standard deviations is less than tolerance */
 int check_convergence(STD *std){
     double rthin_std_old, zthin_std_old, rthick_std_old, zthick_std_old, ratio_std_old;
-    // double rthin_std_new, zthin_std_new, rthick_std_new, zthick_std_new, ratio_std_new;
     double diff, tol;
     int flag = 1;   /* assume convergence */
 

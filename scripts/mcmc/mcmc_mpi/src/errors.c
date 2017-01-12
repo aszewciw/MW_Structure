@@ -8,7 +8,7 @@
 /* ----------------------------------------------------------------------- */
 
 /* Calculate chi2 for a process's given slice of pointings */
-double calculate_chi2(POINTING *p, ARGS c, int N_bins, int lower_ind, int upper_ind){
+double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_ind){
 
     int i, j, k;
     double chi2 = 0.0;
