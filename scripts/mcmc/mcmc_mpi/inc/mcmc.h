@@ -103,7 +103,7 @@ double calculate_MM( unsigned int N_pairs, int *pair1, int *pair2, double MM_nor
 void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind);
 int degrees_of_freedom(POINTING *p, int N_bins, int lower_ind, int upper_ind);
 void update_parameters(STEP p, STEP *n, gsl_rng * GSL_r);
-void run_mcmc(POINTING *plist, STEP initial, int N_bins, int lower_ind,
+void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
   int upper_ind, int rank, int nprocs, char filename[256]);
 
 /* Other */
