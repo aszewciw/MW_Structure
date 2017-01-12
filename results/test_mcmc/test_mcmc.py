@@ -19,6 +19,8 @@ def main():
     in_dir = args_array[2]
     ofname = args_array[3]
     nprocs = args_array[4]
+    max_s  = args_array[5]
+    tol    = args_array[6]
 
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
@@ -39,7 +41,8 @@ def main():
     # create commands to be executed
     cmd = (
         'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
-        + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir
+        + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
+        + ' -tol ' + tol
         )
 
     # Write commands to file
