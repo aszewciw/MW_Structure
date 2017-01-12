@@ -8,7 +8,9 @@
 /* ----------------------------------------------------------------------- */
 
 /* Calculate chi2 for a process's given slice of pointings */
-double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_ind){
+double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
+    int lower_ind, int upper_ind)
+{
 
     int i, j, k;
     double chi2 = 0.0;
@@ -33,7 +35,7 @@ double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_
                 if( p[i].rbin[k].MM == 0.0 ) continue;
 
                 /* check if covariance or non-covariance */
-                if(c.cov==0){   /* non-covariance */
+                if(cov==0){   /* non-covariance */
                     if(j!=k){
                         r_jk = 0.0; /* no chi2 contribution */
                     }
@@ -51,7 +53,7 @@ double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_
                 corr_model_k = p[i].rbin[k].MM;
                 corr_data_k  = p[i].rbin[k].DD;
 
-                if(c.frac==0){
+                if(frac==0){
                     /* use fiducial sigmas */
                     sigma_j = p[i].rbin[j].std_fid;
                     sigma_k = p[i].rbin[k].std_fid;

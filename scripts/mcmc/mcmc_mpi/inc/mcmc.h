@@ -92,7 +92,8 @@ void load_inv_correlation(POINTING *plist, int N_bins, int lower_ind, int upper_
 void output_mcmc(int index, STEP p, FILE *output_file);
 
 /* Stats functions */
-double calculate_chi2(POINTING *p, STEP c, int N_bins, int lower_ind, int upper_ind);
+double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
+  int lower_ind, int upper_ind);
 
 /* MCMC functions */
 void set_weights(STEP params, POINTING *p, int lower_ind, int upper_ind);
