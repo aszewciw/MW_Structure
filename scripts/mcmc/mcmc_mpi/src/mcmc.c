@@ -403,10 +403,10 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
             }
         }
 
-        if(conv_flag==1){
-            fprintf(stderr, "Convergence criteria met. Exiting on step %d\n", i);
-            break;
-        }
+        // if(conv_flag==1){
+        //     fprintf(stderr, "Convergence criteria met. Exiting on step %d\n", i);
+        //     break;
+        // }
         i+=1;
     }
 
