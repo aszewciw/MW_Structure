@@ -4,12 +4,11 @@ cfname='mcmc_cmd.txt';
 in_dir='./data/';
 ofname='mcmc_result.dat'
 nprocs=16;
-nsteps=10000;
 
 rm $cfname
 rm $ofname
 
-python test_mcmc.py $cfname $in_dir $ofname $nprocs $nsteps
+python test_mcmc.py $cfname $in_dir $ofname $nprocs
 bash $cfname
 
 # Add information about run
