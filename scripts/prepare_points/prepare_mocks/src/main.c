@@ -100,7 +100,7 @@ int main( int argc, char **argv ){
     /* parse optional command line inputs for starting params and Nstars */
     ARGS cl = parse_command_line( argc, argv );
 
-    if(rank==0) fprintf(stderr, "%lu stars per temporary galaxy.\n", cl.N_stars);
+    if(rank==0) fprintf(stderr, "%lu stars per temporary galaxy.\n", cl.N_stars*nprocs);
 
     unsigned long int N_stars;
 

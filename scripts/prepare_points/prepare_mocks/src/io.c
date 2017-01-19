@@ -119,7 +119,7 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[],
     *N_plist = N;
     *plist = p;
 
-    fprintf(stderr, "%d pointings to do.\n", N);
+    if(rank==0) fprintf(stderr, "%d pointings to do.\n", N);
 }
 
 /* ----------------------------------------------------------------------- */
