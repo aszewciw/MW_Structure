@@ -142,8 +142,8 @@ int main( int argc, char **argv ){
     if(rank==0){
         fprintf(stderr, "%d processes each responsible for %lu stars.\n", nprocs, N_stars);
         fprintf(stderr, "We'll make %d total mocks\n", N_mocks);
-        fprintf(stderr, "Temp galaxy has %d stars in the thin disk\n", params.N_thin);
-        fprintf(stderr, "Temp galaxy has %d stars in the thick disk\n", params.N_thick);
+        fprintf(stderr, "Temp galaxy has %lu stars in the thin disk\n", params.N_thin);
+        fprintf(stderr, "Temp galaxy has %lu stars in the thick disk\n", params.N_thick);
     }
 
     /* Allocate arrays for galactic coordinates */
