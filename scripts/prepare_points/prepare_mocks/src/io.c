@@ -82,7 +82,7 @@ void load_pointing_list(int *N_plist, POINTING **plist, char todo_dir[],
         exit(EXIT_FAILURE);
     }
 
-    fprintf(stderr, "Read pointing list from %s \n", plist_filename);
+    if(rank==0) fprintf(stderr, "Read pointing list from %s \n", plist_filename);
 
     fscanf(plist_file, "%d", &N); /* first read in the length of the list */
 
@@ -211,13 +211,9 @@ void get_params( PARAMS *p, unsigned long int N ){
     p->N_thin = (unsigned long int)temp;
 
     /* get stars in thick disk */
-    /* add 1 to account for int roundoff */
     temp = density_const * thick_term;
-    p->N_thick = (unsigned long int)temp + 1;
+    p->N_thick = (unsigned long int)temp;
 
-    // fprintf(stderr, "%lu stars in the thin disk. \n", p->N_thin);
-    // fprintf(stderr, "%lu stars in the thick disk. \n", p->N_thick);
-    // fprintf(stderr, "%lu total stars. \n", p->N_thin + p->N_thick);
 }
 
 /* ----------------------------------------------------------------------- */
