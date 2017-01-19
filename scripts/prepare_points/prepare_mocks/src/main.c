@@ -100,7 +100,7 @@ int main( int argc, char **argv ){
     /* parse optional command line inputs for starting params and Nstars */
     ARGS cl = parse_command_line( argc, argv );
 
-    if(rank==0) fprintf(stderr, "%lu stars per temporary galaxy.\n", cl.N_stars*nprocs);
+    if(rank==0) fprintf(stderr, "%lu stars per temporary galaxy.\n", cl.N_stars);
 
     unsigned long int N_stars;
 
@@ -142,8 +142,8 @@ int main( int argc, char **argv ){
     if(rank==0){
         fprintf(stderr, "%d processes each responsible for %lu stars.\n", nprocs, N_stars);
         fprintf(stderr, "We'll make %d total mocks\n", N_mocks);
-        fprintf(stderr, "Temp galaxy has %lu stars in the thin disk\n", params.N_thin);
-        fprintf(stderr, "Temp galaxy has %lu stars in the thick disk\n", params.N_thick);
+        fprintf(stderr, "Temp galaxy has %lu stars in the thin disk\n", params.N_thin*nprocs);
+        fprintf(stderr, "Temp galaxy has %lu stars in the thick disk\n", params.N_thick*nprocs);
     }
 
     /* Allocate arrays for galactic coordinates */
