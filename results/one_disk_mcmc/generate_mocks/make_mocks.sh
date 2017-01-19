@@ -3,7 +3,7 @@
 cfname='mocks_cmd.txt';
 out_dir='./data/';
 nprocs=16;
-nmocks=5;
+nmocks=1000;
 rn=2.6;
 zn=0.27;
 a=0.0;
