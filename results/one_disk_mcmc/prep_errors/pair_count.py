@@ -15,7 +15,7 @@ def main():
     cfname    = args_array[1]
     mocks_dir = args_array[2]
     data_dir  = args_array[3]
-    Nmocks    = args_array[4]
+    Nmocks    = int(args_array[4])
 
     # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
@@ -65,7 +65,7 @@ def main():
 
     # Write command file
     with open(cfname, 'w') as f:
-        for i in Nmocks:
+        for i in range(Nmocks):
 
             out_dir = data_dir + 'sample_' + str(i) + '/'
             cmd = 'mkdir ' + out_dir
