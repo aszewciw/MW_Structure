@@ -14,7 +14,7 @@ def main():
     assert(N_args == elements_needed)
     cfname    = args_array[1]
     mocks_dir = args_array[2]
-    pairs_dir = args_array[3]
+    data_dir  = args_array[3]
     Nmocks    = args_array[4]
 
     # get directories of scripts, executables, and star files
@@ -29,9 +29,9 @@ def main():
         cmd = 'mkdir ' + exe_dir
         os.system(cmd)
 
-    if not os.path.isdir(pairs_dir):
-        sys.stderr.write('{} does not exist Making directory...'.format(pairs_dir))
-        cmd = 'mkdir ' + pairs_dir
+    if not os.path.isdir(data_dir):
+        sys.stderr.write('{} does not exist Making directory...'.format(data_dir))
+        cmd = 'mkdir ' + data_dir
         os.system(cmd)
 
     pairs_file = exe_dir + 'pair_count'
@@ -58,7 +58,7 @@ def main():
     input_file.close()
 
     # Load bins file
-    bins_file = pairs_dir + 'rbins.ascii.dat'
+    bins_file = data_dir + 'rbins.ascii.dat'
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
         sys.exit(1)
@@ -67,7 +67,7 @@ def main():
     with open(cfname, 'w') as f:
         for i in Nmocks:
 
-            out_dir = pairs_dir + 'sample_' + str(i) + '/'
+            out_dir = data_dir + 'sample_' + str(i) + '/'
             cmd = 'mkdir ' + out_dir
             f.write(cmd)
             f.write('\n')
