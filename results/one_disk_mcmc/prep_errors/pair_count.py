@@ -29,9 +29,9 @@ def main():
         cmd = 'mkdir ' + exe_dir
         os.system(cmd)
 
-    if not os.path.isdir(out_dir):
-        sys.stderr.write('{} does not exist Making directory...'.format(out_dir))
-        cmd = 'mkdir ' + out_dir
+    if not os.path.isdir(pairs_dir):
+        sys.stderr.write('{} does not exist Making directory...'.format(pairs_dir))
+        cmd = 'mkdir ' + pairs_dir
         os.system(cmd)
 
     pairs_file = exe_dir + 'pair_count'
@@ -58,7 +58,7 @@ def main():
     input_file.close()
 
     # Load bins file
-    bins_file = out_dir + 'rbins.ascii.dat'
+    bins_file = pairs_dir + 'rbins.ascii.dat'
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
         sys.exit(1)
