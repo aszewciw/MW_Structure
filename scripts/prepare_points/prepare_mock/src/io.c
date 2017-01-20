@@ -197,7 +197,7 @@ void get_params( PARAMS *p, unsigned long int N ){
     /* get stars in thick disk */
     /* add 1 to account for int roundoff */
     temp = density_const * thick_term;
-    p->N_thick = (unsigned long int)temp + 1;
+    p->N_thick = (unsigned long int)temp;
 
     fprintf(stderr, "%lu stars in the thin disk. \n", p->N_thin);
     fprintf(stderr, "%lu stars in the thick disk. \n", p->N_thick);

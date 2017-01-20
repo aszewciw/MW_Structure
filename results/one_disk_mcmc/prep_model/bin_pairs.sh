@@ -12,7 +12,7 @@ bash $cfname
 # Add information about run
 info_file='binned_info.txt';
 rm $info_file
-INFO="test_binning.sh was most recently run on:";
+INFO="bin_pairs.sh was most recently run on:";
 echo $INFO > $info_file
 date >> $info_file
 
