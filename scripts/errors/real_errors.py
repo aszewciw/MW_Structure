@@ -60,7 +60,7 @@ def main():
 
         # Load normalized counts
         # Each row is a mock, each column is a bin
-        counts_filename = mocks_1000_dir + 'normed_counts_all_' + ID + '.dat'
+        counts_filename = out_dir + 'normed_counts_all_' + ID + '.dat'
         DD = pd.read_csv(counts_filename, sep='\s+', header=None)
 
         # Calculate correlation matrix
