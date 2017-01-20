@@ -46,7 +46,7 @@ def main():
         dd_all = np.zeros((Nmocks, N_bins))
 
         # loop over all mocks
-        for i in range(N_mocks):
+        for i in range(Nmocks):
 
             # Load counts for a single mock
             counts_file = pairs_dir + 'sample_' + str(i) + '/dd_' + ID + '.dat'
