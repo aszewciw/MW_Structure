@@ -67,12 +67,15 @@ def main():
                 f.write('{0:.6e}\n'.format(d))
 
         # get mean and standard deviation files
-        stats_fname = stats_dir + 'stats_' + i + '.dat'
-        mean, std = np.genfromtxt(stats_fname, usecols=[0,2], unpack=True)
-        out_fname = out_dir + 'mean_std_' + i + '.dat'
-        with open(out_fname, 'w') as f:
-            for j in range(len(mean)):
-                f.write('{0:.6e}\t{1:.6e}\n'.format(mean[j], std[j]))
+        # stats_fname = stats_dir + 'stats_' + i + '.dat'
+        # mean, std = np.genfromtxt(stats_fname, usecols=[0,2], unpack=True)
+        # out_fname = out_dir + 'mean_std_' + i + '.dat'
+        # with open(out_fname, 'w') as f:
+        #     for j in range(len(mean)):
+        #         f.write('{0:.6e}\t{1:.6e}\n'.format(mean[j], std[j]))
+        stats_fname = stats_dir + 'mean_std_' + i + '.dat'
+        cmd = 'cp ' + stats_fname + ' ' + out_dir + 'mean_std_' + i + '.dat'
+        os.system(cmd)
 
         # copy inverse correlation matrix files
         corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
