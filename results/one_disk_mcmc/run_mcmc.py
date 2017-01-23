@@ -25,7 +25,7 @@ def main():
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
-    mcmc_dir = scripts_dir + 'mcmc/mcmc_mpi/'
+    mcmc_dir = scripts_dir + 'mcmc/mcmc_onedisk/'
     exe_file = mcmc_dir + 'bin/run_mcmc'
 
     # Check for dir/file existence

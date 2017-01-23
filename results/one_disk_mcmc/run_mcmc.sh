@@ -4,7 +4,7 @@ cfname='mcmc_cmd.txt';
 in_dir='./data/';
 ofname='mcmc_result.dat'
 nprocs=16;
-max_s=500000;
+max_s=5000;
 tol=0.0;
 
 rm $cfname
