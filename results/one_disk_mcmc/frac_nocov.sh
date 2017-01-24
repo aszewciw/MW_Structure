@@ -2,7 +2,7 @@
 
 cfname='fnc_cmd.txt';
 in_dir='./data/';
-ofname='frac_nocov.dat'
+ofname='frac_nocov.dat';
 nprocs=20;
 max_s=100000;
 frac=1;

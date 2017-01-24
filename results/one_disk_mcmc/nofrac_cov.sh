@@ -2,7 +2,7 @@
 
 cfname='nfc_cmd.txt';
 in_dir='./data/';
-ofname='nofrac_cov.dat'
+ofname='nofrac_cov.dat';
 nprocs=20;
 max_s=100000;
 frac=0;
