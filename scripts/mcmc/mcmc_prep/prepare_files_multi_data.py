@@ -62,9 +62,10 @@ def main():
 
         # get dd counts
         for j in range(Ndata):
-            data_fname = data_dir + 'dd_' + i + '.dat'
+            tmp_dir = data_dir + 'sample_' + str(j) + '/'
+            data_fname = tmp_dir + 'dd_' + i + '.dat'
             dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
-            out_fname = data_dir + 'DD_' + i + '.dat'
+            out_fname = tmp_dir + 'DD_' + i + '.dat'
             with open(out_fname, 'w') as f:
                 for d in dd:
                     f.write('{0:.6e}\n'.format(d))

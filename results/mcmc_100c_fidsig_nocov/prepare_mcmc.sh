@@ -4,8 +4,8 @@ cfname='prep_cmd.txt';
 out_dir='./data/';
 data_dir='./prep_data_samps/data/';
 model_dir='./prep_model/data/';
-stats_dir='./prep_fid_errors/errors_data';
-fid_dir='./prep_fid_errors/errors_data';
+stats_dir='./prep_fid_errors/errors_data/';
+fid_dir='./prep_fid_errors/errors_data/';
 Ndata=100;
 
 rm $cfname
