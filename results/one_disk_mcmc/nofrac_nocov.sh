@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
-cfname='mcmc_cmd.txt';
+cfname='nfnc_cmd.txt';
 in_dir='./data/';
-ofname='mcmc_result.dat'
+ofname='nofrac_nocov.dat'
 nprocs=20;
 max_s=100000;
 frac=0;
@@ -15,9 +15,9 @@ python run_mcmc.py $cfname $in_dir $ofname $nprocs $max_s $frac $cov
 bash $cfname
 
 # Add information about run
-info_file='mcmc_info.txt';
+info_file='nfnc_info.txt';
 rm $info_file
-INFO="run_mcmc.sh was most recently run on:";
+INFO="nofrac_nocov.sh was most recently run on:";
 echo $INFO > $info_file
 date >> $info_file
 
