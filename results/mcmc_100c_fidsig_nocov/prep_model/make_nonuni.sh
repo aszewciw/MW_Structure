@@ -3,10 +3,15 @@
 cfname='nonuni_cmd.txt';
 out_dir='./data/';
 sf=10;
+rn=2.2;
+zn=0.21;
+rk=2.6;
+zk=0.63;
+a=0.1;
 
 rm $cfname
 
-python make_nonuni.py $cfname $out_dir $sf
+python make_nonuni.py $cfname $out_dir $sf $rn $zn $rk $zk $a
 bash $cfname
 
 # Add information about run

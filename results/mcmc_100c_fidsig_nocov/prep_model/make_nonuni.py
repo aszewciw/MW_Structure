@@ -11,13 +11,19 @@ import numpy as np
 def main():
 
     # get command filename, out_dir, nprocs, nmocks
-    elements_needed = int(4)
+    elements_needed = int(9)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
     cfname  = args_array[1]
     out_dir = args_array[2]
     sf = args_array[3]
+    rn = args_array[4]
+    zn = args_array[5]
+    rk = args_array[6]
+    zk = args_array[7]
+    a  = args_array[8]
+
 
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
@@ -39,6 +45,7 @@ def main():
     cmd1 = (
         exe_file + ' -l_td ' + str(len(todo_dir)) + ' -td ' + todo_dir
         + ' -l_od ' + str(len(out_dir)) + ' -od ' + out_dir + ' -sf ' + sf
+        + ' -rn ' + rn + ' -zn ' + zn + ' -rk ' + rk + ' -zk ' + zk + ' -a ' + a
         )
     cmd2 = 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' ' + out_dir + ' ' + sf
     cmd3 = 'rm ' + out_dir + 'temp*'
