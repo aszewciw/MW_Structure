@@ -36,7 +36,7 @@ def main():
     assert(N_args == elements_needed)
     todo_dir = args_array[1]
     out_dir  = args_array[2]
-    star_factor = args_array[3]
+    star_factor = int(args_array[3])
 
     print('Mocks have too many stars. Randomly removing some.\n')
     np.random.seed()
