@@ -33,12 +33,12 @@ def main():
 
     # Check for dir/file existence
     if not os.path.isdir(out_dir):
-        sys.stderr.write('{} does not exist. Making directory...'.format(out_dir))
+        sys.stderr.write('{} does not exist. Making directory...\n'.format(out_dir))
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
     if not os.path.isfile(exe_file):
-        sys.stderr.write('{} does not exist. Making...'.format(exe_file))
+        sys.stderr.write('{} does not exist. Making...\n'.format(exe_file))
         cmd = 'make -C ' + mock_dir
         os.system(cmd)
 
