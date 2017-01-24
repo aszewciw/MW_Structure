@@ -113,7 +113,6 @@ int main( int argc, char **argv ){
     load_pointing_list(&N_plist, &plist, todo_dir);
 
     /* get info for mock */
-    /* change this to CL input eventually */
     params.r0_thin = cl.r0_thin;
     params.z0_thin = cl.z0_thin;
     params.r0_thick = cl.r0_thick;
@@ -152,7 +151,7 @@ int main( int argc, char **argv ){
         for( i=0; i<N_plist; i++ ){
 
             N_mock = plist[i].N_mock;
-            N_data = plist[i].N_data;
+            N_data = plist[i].N_data*cl.star_factor;
 
             if(N_mock<N_data){
                 /* indicate that we need more stars */
