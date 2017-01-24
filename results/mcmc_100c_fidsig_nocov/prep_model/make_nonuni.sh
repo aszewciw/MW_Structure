@@ -2,7 +2,7 @@
 
 cfname='nonuni_cmd.txt';
 out_dir='./data/';
-sf=1;
+sf=10;
 rn=2.2;
 zn=0.21;
 rk=2.6;
