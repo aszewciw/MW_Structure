@@ -22,8 +22,8 @@ def main():
     nmocks  = args_array[4]
     rn = args_array[5]
     zn = args_array[6]
-    rn = args_array[7]
-    zn = args_array[8]
+    rk = args_array[7]
+    zk = args_array[8]
     a  = args_array[9]
 
     # get directories of scripts and executables
