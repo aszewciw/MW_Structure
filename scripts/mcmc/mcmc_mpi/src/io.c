@@ -60,6 +60,10 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
             cnt++;
         else if ( !strcmp(arg_array[cnt],"-id") )
             cnt++;
+        else if ( !strcmp(arg_array[cnt],"-l_dd") )
+            cnt++;
+        else if ( !strcmp(arg_array[cnt],"-dd") )
+            cnt++;
         else if ( !strcmp(arg_array[cnt],"--help") || !strcmp(arg_array[cnt],"-h") ) {
             printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>] [-min_s <min_steps>]\n");
             printf("\t[-rn <r0_thin>] [-zn <z0_thin>] [-rk <r0_thick>] [-zk <z0_thick>] [-frac <frac>] [-cov <cov>]\n");
@@ -187,7 +191,7 @@ void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_d
 
 /* Load data for each bin from a variety of files */
 void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank,
-    char in_dir[])
+    char in_dir[], char dd_dir[])
 {
 
     char filename[256];
@@ -203,7 +207,7 @@ void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
 
         /* First load DD counts */
         /* Also assign Bin ID */
-        snprintf(filename, 256, "%sdd_%s.dat", in_dir, plist[i].ID);
+        snprintf(filename, 256, "%sdd_%s.dat", dd_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);

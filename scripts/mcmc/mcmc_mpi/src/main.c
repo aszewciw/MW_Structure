@@ -32,6 +32,7 @@ int main(int argc, char * argv[]){
     */
     int sanity_flag=0;
     int in_dir_length;
+    int dd_dir_length;
     int cnt=1;
 
     /* check that we have directory names and string lengths */
@@ -45,11 +46,17 @@ int main(int argc, char * argv[]){
         }
         else if ( !strcmp(argv[cnt], "-id") )
             sanity_flag++;
+        else if ( !strcmp(argv[cnt], "-l_dd") ){
+            sanity_flag++;
+            sscanf(argv[++cnt], "%d", &dd_dir_length);
+        }
+        else if ( !strcmp(argv[cnt], "-dd") )
+            sanity_flag++;
         cnt++;
     }
 
     /* exit if we don't have directory info */
-    if (sanity_flag!=3){
+    if (sanity_flag!=5){
         fprintf(stderr, "Error! Check to make sure input and output directories (and the directory string lengths) are being passed.\n");
         exit(EXIT_FAILURE);
     }
@@ -57,6 +64,7 @@ int main(int argc, char * argv[]){
     /* assign directory names */
     char out_filename[256];
     char in_dir[in_dir_length+1];
+    char dd_dir[dd_dir_length+1];
     cnt = 1;
     while(cnt<argc){
         if (!strcmp(argv[cnt], "-fn")){
@@ -64,6 +72,9 @@ int main(int argc, char * argv[]){
         }
         else if (!strcmp(argv[cnt], "-id")){
             snprintf(in_dir, in_dir_length+1, "%s", argv[++cnt]);
+        }
+        else if (!strcmp(argv[cnt], "-dd")){
+            snprintf(dd_dir, dd_dir_length+1, "%s", argv[++cnt]);
         }
         cnt++;
     }
@@ -114,7 +125,7 @@ int main(int argc, char * argv[]){
 
     /* Each process now loads data for its slice only */
     load_ZRW(plist, lower_ind, upper_ind, rank, in_dir);
-    load_rbins(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
+    load_rbins(plist, N_bins, lower_ind, upper_ind, rank, in_dir, dd_dir);
     load_pairs(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
     load_inv_correlation(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
 
