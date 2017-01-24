@@ -16,7 +16,7 @@ corresponding SEGUE l.o.s.
 def main():
 
     # pass directory names
-    elements_needed = int(4)
+    elements_needed = int(3)
     args_array = np.array(sys.argv)
     N_args = len(args_array)
     assert(N_args == elements_needed)
