@@ -68,9 +68,10 @@ def main():
         for i in range(Nmocks):
 
             out_dir = data_dir + 'sample_' + str(i) + '/'
-            cmd = 'mkdir ' + out_dir
-            f.write(cmd)
-            f.write('\n')
+            if not os.path.isdir(out_dir):
+                cmd = 'mkdir ' + out_dir
+                f.write(cmd)
+                f.write('\n')
 
             samp_dir = mocks_dir + 'sample_' + str(i) + '/'
 
