@@ -5,10 +5,6 @@ out_dir='./data/';
 mocks_dir='./data/';
 Nmocks=100;
 
-rm $cfname
-rm -rf $out_dir
-mkdir $out_dir
-
 python make_bins.py $out_dir
 python pair_count.py $cfname $mocks_dir $out_dir $Nmocks
 bash $cfname
