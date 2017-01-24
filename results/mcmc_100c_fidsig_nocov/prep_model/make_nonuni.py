@@ -49,6 +49,7 @@ def main():
         )
     cmd2 = 'python ' + mock_dir + '/clean_mocks.py ' + todo_dir + ' ' + out_dir + ' ' + sf
     cmd3 = 'rm ' + out_dir + 'temp*'
+    cmd4 = 'python ' + mock_dir + '/xyzw_to_ZRW.py ' + todo_dir + ' ' + out_dir
 
     # Write commands to file
     with open(cfname, 'w') as f:
@@ -57,6 +58,8 @@ def main():
         f.write(cmd2)
         f.write('\n')
         f.write(cmd3)
+        f.write('\n')
+        f.write(cmd4)
         f.write('\n')
 
 if __name__ == '__main__':
