@@ -207,7 +207,7 @@ void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
 
         /* First load DD counts */
         /* Also assign Bin ID */
-        snprintf(filename, 256, "%sdd_%s.dat", dd_dir, plist[i].ID);
+        snprintf(filename, 256, "%sDD_%s.dat", dd_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);
