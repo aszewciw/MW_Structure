@@ -71,7 +71,7 @@ def main():
             continue
 
         # Output new data
-        out_file = out_dir + 'mock_' + ID_current + '.xyzw.dat'
+        out_file = out_dir + 'nonuniform_' + ID_current + '.xyzw.dat'
         np.savetxt(out_file, xyz, fmt='%1.6e')
 
         # Add number of elements as first line in file
