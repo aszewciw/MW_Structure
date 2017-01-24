@@ -23,9 +23,9 @@ def main():
     Ndata     = int(args_array[7])
 
     # Check that all passed directories exist and print them.
-    for i in args_array:
-        if not(os.path.isdir(i)):
-            sys.stderr.write('{} does not exist. Exiting...\n'.format(i))
+    for i in range(len(args_array)-1):
+        if not(os.path.isdir(args_array[i])):
+            sys.stderr.write('{} does not exist. Exiting...\n'.format(args_array[i]))
     sys.stderr.write('Output directory is {}\n'.format(out_dir))
     sys.stderr.write('Todo directory is {}\n'.format(todo_dir))
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
