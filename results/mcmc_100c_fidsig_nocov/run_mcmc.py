@@ -59,7 +59,7 @@ def main():
             cmd = (
                 'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
                 + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
-                + ' -tol ' + tol + ' -dd ' + dd_dir
+                + ' -tol ' + tol + ' -dd ' + dd_dir + ' -l_dd ' + str(len(dd_dir))
                 )
             f.write(cmd)
             f.write('\n')
