@@ -10,9 +10,8 @@ tol=0.0;
 Ndata=3;
 
 rm $cfname
-rm $ofname
 
-python run_mcmc.py $cfname $indir $datdir $oudir $nprocs $max_s $tol $Ndata
+python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $tol $Ndata
 bash $cfname
 
 # Add information about run
