@@ -5,9 +5,9 @@ indir='./data/';
 datdir='./prep_data_samps/data/';
 outdir='./out_data/';
 nprocs=16;
-max_s=1000;
+max_s=50000;
 tol=0.0;
-Ndata=3;
+Ndata=1;
 
 rm $cfname
 

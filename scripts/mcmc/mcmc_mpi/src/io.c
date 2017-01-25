@@ -15,11 +15,11 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     /* defaults */
     ARGS cl_args;
     cl_args.N_params = 5;
-    cl_args.r0_thin  = 3.0;
-    cl_args.z0_thin  = 0.3;
-    cl_args.r0_thick = 4.0;
-    cl_args.z0_thick = 1.2;
-    cl_args.ratio    = 0.12;
+    cl_args.r0_thin  = 2.027;
+    cl_args.z0_thin  = 0.234;
+    cl_args.r0_thick = 2.397;
+    cl_args.z0_thick = 0.675;
+    cl_args.ratio    = 0.053;
     cl_args.max_steps = 100000;
     cl_args.min_steps = 30000;
     cl_args.std_steps = 10000;
@@ -234,7 +234,7 @@ void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
         plist[i].rbin = b;
     }
     if(rank==0){
-        fprintf(stderr, "DD counts loaded from %s\n", in_dir);
+        fprintf(stderr, "DD counts loaded from %s\n", dd_dir);
         fprintf(stderr, "Mean and standard deviation loaded from %s\n", in_dir);
     }
 }
