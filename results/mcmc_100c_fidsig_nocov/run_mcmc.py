@@ -53,8 +53,8 @@ def main():
     with open(cfname, 'w') as f:
 
         for i in range(Ndata):
-            ofname = out_dir + 'results_' + i + '.dat'
-            dd_dir = data_dir + 'sample_' + i + '/'
+            ofname = out_dir + 'results_' + str(i) + '.dat'
+            dd_dir = data_dir + 'sample_' + str(i) + '/'
 
             cmd = (
                 'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
