@@ -37,6 +37,8 @@ def main():
 
     # Load results of each chain and compute stats
     for i in range(Nfiles):
+        if(i%10==0):
+            sys.stderr.write('On result #{} of {}\n'.format(i,Nfiles))
         fname = data_dir + 'results_' + str(i) + '.dat'
         if not os.path.isfile(fname):
             sys.stderr.write('{} does not exist\n'.format(fname))
@@ -65,17 +67,17 @@ def main():
     plt.subplot(321)
     n, bins, patches = plt.hist(STATS['r0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$r_{0,thin}$', fontsize=16)
+    # plt.title(r'$r_{0,thin}$', fontsize=16)
 
     plt.subplot(322)
     n, bins, patches = plt.hist(STATS['z0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$z_{0,thin}$', fontsize=16)
+    # plt.title(r'$z_{0,thin}$', fontsize=16)
 
     plt.subplot(323)
     n, bins, patches = plt.hist(STATS['r0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$r_{0,thick}$', fontsize=16)
+    # plt.title(r'$r_{0,thick}$', fontsize=16)
 
     plt.subplot(324)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
@@ -86,6 +88,8 @@ def main():
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.title(r'$\frac{n_{0,thick}}{n_{0,thin}}$', fontsize=16)
+
+    plt.tight_layout()
 
     plt.savefig('hist_100chains.png')
 
