@@ -14,7 +14,7 @@ import numpy as np
 
 def main():
 
-    Nfiles=20
+    Nfiles=80
     data_dir='./out_data/'
 
     # Make a dictionary to store statistics calculated for each chain
@@ -66,18 +66,18 @@ def main():
 
     plt.subplot(321)
     n, bins, patches = plt.hist(STATS['r0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
-    plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    # plt.title(r'$r_{0,thin}$', fontsize=16)
+    # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
+    plt.title(r'$r_{0,thin}$', fontsize=16)
 
     plt.subplot(322)
     n, bins, patches = plt.hist(STATS['z0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
-    plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    # plt.title(r'$z_{0,thin}$', fontsize=16)
+    # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
+    plt.title(r'$z_{0,thin}$', fontsize=16)
 
     plt.subplot(323)
     n, bins, patches = plt.hist(STATS['r0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
-    plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    # plt.title(r'$r_{0,thick}$', fontsize=16)
+    # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
+    plt.title(r'$r_{0,thick}$', fontsize=16)
 
     plt.subplot(324)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
