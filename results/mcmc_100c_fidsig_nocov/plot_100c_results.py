@@ -89,7 +89,7 @@ def main():
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.title(r'$n_{0,thick}/n_{0,thin}$', fontsize=16)
 
-    plt.tight_layout()
+    # plt.tight_layout()
 
     plt.savefig('hist_100chains.png')
 
