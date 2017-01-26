@@ -87,7 +87,7 @@ def main():
     plt.subplot(325)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$n_{0,thick}/n_{0,thin$', fontsize=16)
+    plt.title(r'$n_{0,thick}/n_{0,thin}$', fontsize=16)
 
     plt.tight_layout()
 
