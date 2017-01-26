@@ -53,9 +53,9 @@ def main():
             t = STATS[j]['true']
             d = (m - t) / s
 
-            STATS[j]['mean']=m
-            STATS[j]['std']=s
-            STATS[j]['normdiff']=d
+            STATS[j]['mean'][i]=m
+            STATS[j]['std'][i]=s
+            STATS[j]['normdiff'][i]=d
 
 
     # plot results
@@ -65,22 +65,22 @@ def main():
     plt.subplot(321)
     n, bins, patches = plt.hist(STATS['r0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$r0_{thin}$', fontsize=16)
+    plt.title(r'$r_{0,thin}$', fontsize=16)
 
     plt.subplot(322)
     n, bins, patches = plt.hist(STATS['z0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$z0_{thin}$', fontsize=16)
+    plt.title(r'$z_{0,thin}$', fontsize=16)
 
     plt.subplot(323)
     n, bins, patches = plt.hist(STATS['r0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$r0_{thick}$', fontsize=16)
+    plt.title(r'$r_{0,thick}$', fontsize=16)
 
     plt.subplot(324)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.title(r'$z0_{thick}$', fontsize=16)
+    plt.title(r'$z_{0,thick}$', fontsize=16)
 
     plt.subplot(325)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
