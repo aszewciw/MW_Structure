@@ -14,7 +14,7 @@ import numpy as np
 
 def main():
 
-    Nfiles=80
+    Nfiles=100
     data_dir='./out_data/'
 
     # Make a dictionary to store statistics calculated for each chain
