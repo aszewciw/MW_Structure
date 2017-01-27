@@ -83,9 +83,12 @@ def main():
     n, b, patches = plt.hist(STATS['r0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['r0_thin']['normdiff'])
     std = np.std(STATS['r0_thin']['normdiff'])
+    mean_err = std/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
     plt.axvline(mean+std, color='r', linestyle='solid')
     plt.axvline(mean-std, color='r', linestyle='solid')
+    plt.axvline(mean+mean_err, color='r', linestyle='--')
+    plt.axvline(mean-mean_err, color='r', linestyle='--')
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thin}$)')
 
