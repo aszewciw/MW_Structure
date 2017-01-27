@@ -106,7 +106,7 @@ def main():
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)')
 
-    plt.tight_layout()
+    # plt.tight_layout()
 
     plt.savefig('hist_100chains.png')
 
