@@ -12,6 +12,16 @@ import mw_utilities_python as mwu
 import sys, os
 import numpy as np
 
+def make_bins(x, bwidth):
+
+    bin_min=int(min(x))
+    bin_max=int(max(x))+1
+
+    bins=np.arange(bin_min,bin_max,bwidth)
+
+    return bins
+
+
 def main():
 
     Nfiles=100
@@ -64,28 +74,35 @@ def main():
     plt.clf()
     plt.figure(1)
 
+    bwidth=1
+
     plt.subplot(321)
-    n, bins, patches = plt.hist(STATS['r0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
+    bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
+    n, b, patches = plt.hist(STATS['r0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thin}$)')
 
     plt.subplot(322)
-    n, bins, patches = plt.hist(STATS['z0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
+    bins = make_bins(STATS['z0_thin']['normdiff'], bwidth)
+    n, b, patches = plt.hist(STATS['z0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($z_{0,thin}$)')
 
     plt.subplot(323)
-    n, bins, patches = plt.hist(STATS['r0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
+    bins = make_bins(STATS['r0_thick']['normdiff'], bwidth)
+    n, b, patches = plt.hist(STATS['r0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thick}$)')
 
     plt.subplot(324)
-    n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
+    bins = make_bins(STATS['z0_thick']['normdiff'], bwidth)
+    n, b, patches = plt.hist(STATS['z0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($z_{0,thick}$)')
 
     plt.subplot(325)
-    n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
+    bins = make_bins(STATS['ratio']['normdiff'], bwidth)
+    n, b, patches = plt.hist(STATS['ratio']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)')
 
