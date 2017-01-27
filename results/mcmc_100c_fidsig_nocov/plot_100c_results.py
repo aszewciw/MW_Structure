@@ -74,7 +74,7 @@ def main():
     plt.clf()
     plt.figure(1)
 
-    bwidth=1
+    bwidth=0.5
 
     plt.subplot(321)
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
