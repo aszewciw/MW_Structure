@@ -67,27 +67,27 @@ def main():
     plt.subplot(321)
     n, bins, patches = plt.hist(STATS['r0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.ylabel(r'N ($r_{0,thin}$)', fontsize=16)
+    plt.ylabel(r'N ($r_{0,thin}$)')
 
     plt.subplot(322)
     n, bins, patches = plt.hist(STATS['z0_thin']['normdiff'], 10, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.ylabel(r'N ($z_{0,thin}$)', fontsize=16)
+    plt.ylabel(r'N ($z_{0,thin}$)')
 
     plt.subplot(323)
     n, bins, patches = plt.hist(STATS['r0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.ylabel(r'N ($r_{0,thick}$)', fontsize=16)
+    plt.ylabel(r'N ($r_{0,thick}$)')
 
     plt.subplot(324)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.ylabel(r'N ($z_{0,thick}$)', fontsize=16)
+    plt.ylabel(r'N ($z_{0,thick}$)')
 
     plt.subplot(325)
     n, bins, patches = plt.hist(STATS['z0_thick']['normdiff'], 10, facecolor='green', alpha=0.7)
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
-    plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)', fontsize=16)
+    plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)')
 
     plt.tight_layout()
 
