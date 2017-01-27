@@ -70,6 +70,8 @@ def main():
             STATS[j]['normdiff'][i]=d
 
 
+    nd_stats = {}
+
     # plot results
     plt.clf()
     plt.figure(1)
@@ -78,7 +80,12 @@ def main():
 
     plt.subplot(321)
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
+    mean = np.mean(STATS['r0_thin']['normdiff'])
+    std = np.std(STATS['r0_thin']['normdiff'])
     n, b, patches = plt.hist(STATS['r0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
+    plt.axvline(mean, 'k', linestyle='solid')
+    plt.axvline(mean+std, 'r', linestyle='solid')
+    plt.axvline(mean-std, 'r', linestyle='solid')
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thin}$)')
 
@@ -109,6 +116,8 @@ def main():
     # plt.tight_layout()
 
     plt.savefig('hist_100chains.png')
+
+
 
 if __name__ == '__main__':
     main()
