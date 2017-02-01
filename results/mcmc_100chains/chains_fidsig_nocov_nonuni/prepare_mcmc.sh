@@ -11,7 +11,7 @@ Ndata=100;
 
 rm $cfname
 
-python prepare_mcmc.py $cfname $out_dir $data_dir $model_dir $stats_dir $fid_dir $Ndata
+python prepare_mcmc.py $cfname $out_dir $data_dir $model_dir $stats_dir $fid_dir $bins_dir $Ndata
 bash $cfname
 
 # Add information about run
