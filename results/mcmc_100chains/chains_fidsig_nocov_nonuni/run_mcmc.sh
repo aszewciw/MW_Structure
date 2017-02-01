@@ -2,7 +2,7 @@
 
 cfname='mcmc_cmd.txt';
 indir='./data/';
-datdir='./prep_data_samps/data/';
+datdir='../prep_data_samps/data/';
 outdir='./out_data/';
 nprocs=16;
 max_s=100000;
