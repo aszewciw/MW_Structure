@@ -2,10 +2,10 @@
 
 cfname='prep_cmd.txt';
 out_dir='./data/';
-data_dir='./prep_data_samps/data/';
-model_dir='./prep_model/data/';
-stats_dir='./prep_fid_errors/errors_data/';
-fid_dir='./prep_fid_errors/errors_data/';
+data_dir='../prep_data_samps/data/';
+model_dir='../prep_model_nonuniform/data/';
+stats_dir='../prep_fid_errors/errors_data/';
+fid_dir='../prep_fid_errors/errors_data/';
 bins_dir='../prep_bins/';
 Ndata=100;
 
