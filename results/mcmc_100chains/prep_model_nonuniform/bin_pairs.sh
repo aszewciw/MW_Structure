@@ -2,11 +2,11 @@
 
 cfname='binned_cmd.txt';
 out_dir='./data/';
+bins_dir='../prep_bins/';
 
 rm $cfname
 
-python make_bins.py $out_dir
-python bin_pair_indices.py $cfname $out_dir
+python bin_pairs.py $cfname $out_dir $bins_dir
 bash $cfname
 
 # Add information about run

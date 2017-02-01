@@ -9,12 +9,13 @@ import numpy as np
 def main():
 
     # get command filename, out_dir
-    elements_needed = int(3)
+    elements_needed = int(4)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
     cfname  = args_array[1]
     out_dir = args_array[2]
+    bins_dir = args_array[3]
 
     # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
@@ -59,9 +60,10 @@ def main():
     input_file.close()
 
     # Load bins file
-    bins_file = out_dir + 'rbins.ascii.dat'
+    bins_file = bins_dir + 'rbins.ascii.dat'
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
+        sys.exit(1)
     bins = np.genfromtxt(bins_file, skip_header=1)
     nbins = len(bins)
 

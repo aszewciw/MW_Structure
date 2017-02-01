@@ -8,14 +8,15 @@ import numpy as np
 def main():
 
     # get command filename, out_dir
-    elements_needed = int(5)
+    elements_needed = int(6)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
     cfname    = args_array[1]
     mocks_dir = args_array[2]
-    data_dir  = args_array[3]
-    Nmocks    = int(args_array[4])
+    bins_dir  = args_array[3]
+    data_dir  = args_array[4]
+    Nmocks    = int(args_array[5])
 
     # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
@@ -58,7 +59,7 @@ def main():
     input_file.close()
 
     # Load bins file
-    bins_file = data_dir + 'rbins.ascii.dat'
+    bins_file = bins_dir + 'rbins.ascii.dat'
     if not os.path.isfile(bins_file):
         sys.stderr.write('Error: ' + bins_file + ' does not exist.\n')
         sys.exit(1)

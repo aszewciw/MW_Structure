@@ -3,12 +3,12 @@
 cfname='pairs_cmd.txt';
 out_dir='./data/';
 mocks_dir='./data/';
+bins_dir='../prep_bins/';
 Nmocks=100;
 
 rm $cfname
 
-python make_bins.py $out_dir
-python pair_count.py $cfname $mocks_dir $out_dir $Nmocks
+python pair_count.py $cfname $mocks_dir $bins_dir $out_dir $Nmocks
 bash $cfname
 
 # Add information about run

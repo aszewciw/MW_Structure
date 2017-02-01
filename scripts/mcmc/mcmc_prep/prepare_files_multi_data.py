@@ -10,7 +10,7 @@ import numpy as np
 def main():
 
     # Parse CL
-    elements_needed = int(8)
+    elements_needed = int(9)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -20,7 +20,8 @@ def main():
     model_dir = args_array[4]
     stats_dir = args_array[5]
     fid_dir   = args_array[6]
-    Ndata     = int(args_array[7])
+    bins_dir  = args_array[7]
+    Ndata     = int(args_array[8])
 
     # Check that all passed directories exist and print them.
     for i in range(len(args_array)-1):
@@ -46,13 +47,17 @@ def main():
             f.write('\n')
 
     # Check for existence of bins files and load number of bins
-    bins_fname = out_dir + 'rbins.ascii.dat'
+    bins_fname = bins_dir + 'rbins.ascii.dat'
     if not(os.path.isfile(bins_fname)):
         sys.stderr.write('{} does not exist. Please make before continuing...\n'
                             .format(bins_fname))
         sys.exit()
     bins = np.genfromtxt(bins_fname, unpack=True, usecols=[0], skip_header=1)
     nbins = len(bins)
+
+    # Also, copy bins file to out_dir
+    cmd = 'cp ' + bins_fname + ' ' + out_dir
+    os.system(cmd)
 
     # Prepare data for each l.o.s.
     for i in ID:
@@ -100,13 +105,12 @@ def main():
         cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
         os.system(cmd)
 
-        # Check that pair files exist
+        # Copy pair files
         for j in range(nbins):
-            pair_fname = out_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
-            if not(os.path.isfile(pair_fname)):
-                sys.stderr.write('{} does not exist. Please make before continuing...\n'
-                                    .format(pair_fname))
-                sys.exit()
+            pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
+            cmd = 'cp ' + pair_fname + ' ' + out_dir
+            os.system(cmd)
+
 
     sys.stderr.write('The folder {} has all data ready to run an mcmc.\n'
                         .format(out_dir))

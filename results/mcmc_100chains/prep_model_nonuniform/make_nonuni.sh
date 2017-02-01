@@ -3,11 +3,18 @@
 cfname='nonuni_cmd.txt';
 out_dir='./data/';
 sf=10;
-rn=2.2;
-zn=0.21;
-rk=2.6;
+rn=2.3;
+zn=0.25;
+rk=2.5;
 zk=0.63;
-a=0.1;
+a=0.08;
+
+# Old values I'd used when I wanted these to be different than fid errors
+# rn=2.2;
+# zn=0.21;
+# rk=2.6;
+# zk=0.63;
+# a=0.1;
 
 rm $cfname
 
