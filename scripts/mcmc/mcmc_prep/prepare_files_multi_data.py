@@ -35,6 +35,10 @@ def main():
     sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
+    if not(os.path.isdir(out_dir)):
+        cmd = 'make ' + out_dir
+        os.system(cmd)
+
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
     ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
