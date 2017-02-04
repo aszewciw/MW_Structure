@@ -36,7 +36,7 @@ def main():
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     if not(os.path.isdir(out_dir)):
-        cmd = 'make ' + out_dir
+        cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
     # Make ID list from todo file
