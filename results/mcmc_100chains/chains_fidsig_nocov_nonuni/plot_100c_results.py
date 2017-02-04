@@ -150,7 +150,7 @@ def main():
 
     # plt.tight_layout()
 
-    plt.savefig('hist_100chains.png')
+    plt.savefig(data_dir + 'hist_100chains.png')
 
 
 
