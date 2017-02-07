@@ -58,16 +58,16 @@ def main():
         # Get stats
         median = mc.median(axis=0)
         # std = mc.std(axis=0)
-        # lower_std = mc.quantile(q=0.16, axis=0)
-        # upper_std = mc.quantile(q=0.84, axis=0)
-        lower_std = mc.std(axis=0)
-        upper_std = mc.std(axis=0)
+        lower_std = mc.quantile(q=0.16, axis=0)
+        upper_std = mc.quantile(q=0.84, axis=0)
+        # lower_std = mc.std(axis=0)
+        # upper_std = mc.std(axis=0)
 
         for j in pd_keys:
             m = median[j]
             t = STATS[j]['true']
-            s_l = lower_std[j]
-            s_u = upper_std[j]
+            s_l = median[j]-lower_std[j]
+            s_u = upper_std[j]-median[j]
             if m > t:
                 s = s_u
             else:
@@ -85,7 +85,7 @@ def main():
     plt.clf()
     plt.figure(1)
 
-    bwidth=0.2
+    bwidth=0.5
 
     plt.subplot(321)
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
