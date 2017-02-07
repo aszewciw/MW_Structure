@@ -57,20 +57,25 @@ def main():
 
         # Get stats
         mean = mc.mean(axis=0)
-        std = mc.std(axis=0)
+        # std = mc.std(axis=0)
+        lower_std = mc.quantile(q=0.16, axis=0)
+        upper_std = mc.quantile(q=0.84, axis=0)
 
         for j in pd_keys:
             m = mean[j]
-            s = std[j]
             t = STATS[j]['true']
+            s_l = lower_std[j]
+            s_u = upper_std[j]
+            if m > t:
+                s = s_u
+            else:
+                s = s_l
             d = (m - t) / s
 
             STATS[j]['mean'][i]=m
             STATS[j]['std'][i]=s
             STATS[j]['normdiff'][i]=d
 
-
-    nd_stats = {}
 
     # plot results
     plt.clf()
@@ -82,13 +87,21 @@ def main():
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['r0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['r0_thin']['normdiff'])
-    std = np.std(STATS['r0_thin']['normdiff'])
-    mean_err = std/np.sqrt(Nfiles)
+    # std = np.std(STATS['r0_thin']['normdiff'])
+    std_minus = np.percentile(STATS['r0_thin']['normdiff'], q=0.16)
+    std_plus = np.percentile(STATS['r0_thin']['normdiff'], q=0.84)
+    # mean_err = std/np.sqrt(Nfiles)
+    mean_err_minus = std_minus/np.sqrt(Nfiles)
+    mean_err_plus = std_plus/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
-    plt.axvline(mean+std, color='r', linestyle='solid')
-    plt.axvline(mean-std, color='r', linestyle='solid')
-    plt.axvline(mean+mean_err, color='r', linestyle='--')
-    plt.axvline(mean-mean_err, color='r', linestyle='--')
+    # plt.axvline(mean+std, color='r', linestyle='solid')
+    # plt.axvline(mean-std, color='r', linestyle='solid')
+    # plt.axvline(mean+mean_err, color='r', linestyle='--')
+    # plt.axvline(mean-mean_err, color='r', linestyle='--')
+    plt.axvline(std_minus, color='r', linestyle='solid')
+    plt.axvline(std_plus, color='r', linestyle='solid')
+    plt.axvline(mean_err_minus, color='r', linestyle='--')
+    plt.axvline(mean_err_plus, color='r', linestyle='--')
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thin}$)')
 
@@ -96,13 +109,21 @@ def main():
     bins = make_bins(STATS['z0_thin']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['z0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['z0_thin']['normdiff'])
-    std = np.std(STATS['z0_thin']['normdiff'])
-    mean_err = std/np.sqrt(Nfiles)
+    # std = np.std(STATS['z0_thin']['normdiff'])
+    std_minus = np.percentile(STATS['z0_thin']['normdiff'], q=0.16)
+    std_plus = np.percentile(STATS['z0_thin']['normdiff'], q=0.84)
+    # mean_err = std/np.sqrt(Nfiles)
+    mean_err_minus = std_minus/np.sqrt(Nfiles)
+    mean_err_plus = std_plus/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
-    plt.axvline(mean+std, color='r', linestyle='solid')
-    plt.axvline(mean-std, color='r', linestyle='solid')
-    plt.axvline(mean+mean_err, color='r', linestyle='--')
-    plt.axvline(mean-mean_err, color='r', linestyle='--')
+    # plt.axvline(mean+std, color='r', linestyle='solid')
+    # plt.axvline(mean-std, color='r', linestyle='solid')
+    # plt.axvline(mean+mean_err, color='r', linestyle='--')
+    # plt.axvline(mean-mean_err, color='r', linestyle='--')
+    plt.axvline(std_minus, color='r', linestyle='solid')
+    plt.axvline(std_plus, color='r', linestyle='solid')
+    plt.axvline(mean_err_minus, color='r', linestyle='--')
+    plt.axvline(mean_err_plus, color='r', linestyle='--')
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($z_{0,thin}$)')
 
@@ -110,13 +131,21 @@ def main():
     bins = make_bins(STATS['r0_thick']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['r0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['r0_thick']['normdiff'])
-    std = np.std(STATS['r0_thick']['normdiff'])
-    mean_err = std/np.sqrt(Nfiles)
+    # std = np.std(STATS['r0_thick']['normdiff'])
+    std_minus = np.percentile(STATS['r0_thick']['normdiff'], q=0.16)
+    std_plus = np.percentile(STATS['r0_thick']['normdiff'], q=0.84)
+    # mean_err = std/np.sqrt(Nfiles)
+    mean_err_minus = std_minus/np.sqrt(Nfiles)
+    mean_err_plus = std_plus/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
-    plt.axvline(mean+std, color='r', linestyle='solid')
-    plt.axvline(mean-std, color='r', linestyle='solid')
-    plt.axvline(mean+mean_err, color='r', linestyle='--')
-    plt.axvline(mean-mean_err, color='r', linestyle='--')
+    # plt.axvline(mean+std, color='r', linestyle='solid')
+    # plt.axvline(mean-std, color='r', linestyle='solid')
+    # plt.axvline(mean+mean_err, color='r', linestyle='--')
+    # plt.axvline(mean-mean_err, color='r', linestyle='--')
+    plt.axvline(std_minus, color='r', linestyle='solid')
+    plt.axvline(std_plus, color='r', linestyle='solid')
+    plt.axvline(mean_err_minus, color='r', linestyle='--')
+    plt.axvline(mean_err_plus, color='r', linestyle='--')
     # plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thick}$)')
 
@@ -124,13 +153,21 @@ def main():
     bins = make_bins(STATS['z0_thick']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['z0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['z0_thick']['normdiff'])
-    std = np.std(STATS['z0_thick']['normdiff'])
-    mean_err = std/np.sqrt(Nfiles)
+    # std = np.std(STATS['z0_thick']['normdiff'])
+    std_minus = np.percentile(STATS['z0_thick']['normdiff'], q=0.16)
+    std_plus = np.percentile(STATS['z0_thick']['normdiff'], q=0.84)
+    # mean_err = std/np.sqrt(Nfiles)
+    mean_err_minus = std_minus/np.sqrt(Nfiles)
+    mean_err_plus = std_plus/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
-    plt.axvline(mean+std, color='r', linestyle='solid')
-    plt.axvline(mean-std, color='r', linestyle='solid')
-    plt.axvline(mean+mean_err, color='r', linestyle='--')
-    plt.axvline(mean-mean_err, color='r', linestyle='--')
+    # plt.axvline(mean+std, color='r', linestyle='solid')
+    # plt.axvline(mean-std, color='r', linestyle='solid')
+    # plt.axvline(mean+mean_err, color='r', linestyle='--')
+    # plt.axvline(mean-mean_err, color='r', linestyle='--')
+    plt.axvline(std_minus, color='r', linestyle='solid')
+    plt.axvline(std_plus, color='r', linestyle='solid')
+    plt.axvline(mean_err_minus, color='r', linestyle='--')
+    plt.axvline(mean_err_plus, color='r', linestyle='--')
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($z_{0,thick}$)')
 
@@ -138,13 +175,21 @@ def main():
     bins = make_bins(STATS['ratio']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['ratio']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     mean = np.mean(STATS['ratio']['normdiff'])
-    std = np.std(STATS['ratio']['normdiff'])
-    mean_err = std/np.sqrt(Nfiles)
+    # std = np.std(STATS['ratio']['normdiff'])
+    std_minus = np.percentile(STATS['ratio']['normdiff'], q=0.16)
+    std_plus = np.percentile(STATS['ratio']['normdiff'], q=0.84)
+    # mean_err = std/np.sqrt(Nfiles)
+    mean_err_minus = std_minus/np.sqrt(Nfiles)
+    mean_err_plus = std_plus/np.sqrt(Nfiles)
     plt.axvline(mean, color='r', linestyle='solid')
-    plt.axvline(mean+std, color='r', linestyle='solid')
-    plt.axvline(mean-std, color='r', linestyle='solid')
-    plt.axvline(mean+mean_err, color='r', linestyle='--')
-    plt.axvline(mean-mean_err, color='r', linestyle='--')
+    # plt.axvline(mean+std, color='r', linestyle='solid')
+    # plt.axvline(mean-std, color='r', linestyle='solid')
+    # plt.axvline(mean+mean_err, color='r', linestyle='--')
+    # plt.axvline(mean-mean_err, color='r', linestyle='--')
+    plt.axvline(std_minus, color='r', linestyle='solid')
+    plt.axvline(std_plus, color='r', linestyle='solid')
+    plt.axvline(mean_err_minus, color='r', linestyle='--')
+    plt.axvline(mean_err_plus, color='r', linestyle='--')
     plt.xlabel(r'$\frac{mean-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)')
 
