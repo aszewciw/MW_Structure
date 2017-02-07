@@ -24,12 +24,20 @@ def make_bins(x, bwidth):
 
 def main():
 
-    Nfiles=100
+    # Optional cl input
+    # Pass any files that we wish to exclude
+    args_array = np.array(sys.argv)
+    Nskip = len(args_array)-1
+    sys.stderr.write('Not including data for {} files.\n'.format(Nskip))
+
+    bad_files = []
+    for i in range(Nskip):
+        j = int(args_array[i])
+        bad_files.append(j)
+        sys.stderr.write('Skipping file {} \n', j)
+
+    Nfiles=100 - Nskip
     data_dir='./out_data/'
-
-    shit_files = [68]
-
-    Nfiles-=len(shit_files)
 
     # Make a dictionary to store statistics calculated for each chain
     pd_keys=['r0_thin', 'z0_thin', 'r0_thick', 'z0_thick', 'ratio']
@@ -51,7 +59,7 @@ def main():
 
     # Load results of each chain and compute stats
     for i in range(Nfiles):
-        if (i in shit_files):
+        if (i in badfiles):
             continue
         if(i%10==0):
             sys.stderr.write('On result #{} of {}\n'.format(i,Nfiles))
@@ -63,11 +71,9 @@ def main():
 
         # Get stats
         median = mc.median(axis=0)
-        # std = mc.std(axis=0)
         lower_std = mc.quantile(q=0.16, axis=0)
         upper_std = mc.quantile(q=0.84, axis=0)
-        # lower_std = mc.std(axis=0)
-        # upper_std = mc.std(axis=0)
+
 
         for j in pd_keys:
             m = median[j]
@@ -83,12 +89,6 @@ def main():
             STATS[j]['median'][i]=m
             STATS[j]['std'][i]=s
             STATS[j]['normdiff'][i]=d
-            if (j=='ratio') and (d<-20):
-                print(d, i)
-                print(m, s)
-
-            # sys.stderr.write('{}\t-- Median: {},\tstd: {},\td: {}\n'.format(j, m, s, d))
-
 
     # plot results
     plt.clf()
@@ -100,83 +100,56 @@ def main():
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['r0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     median = np.median(STATS['r0_thin']['normdiff'])
-    # std = np.std(STATS['r0_thin']['normdiff'])
     std_minus = np.percentile(STATS['r0_thin']['normdiff'], q=16)
     std_plus = np.percentile(STATS['r0_thin']['normdiff'], q=84)
-    # median_err = std/np.sqrt(Nfiles)
     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
     plt.axvline(median, color='r', linestyle='solid')
-    # plt.axvline(median+std, color='r', linestyle='solid')
-    # plt.axvline(median-std, color='r', linestyle='solid')
-    # plt.axvline(median+median_err, color='r', linestyle='--')
-    # plt.axvline(median-median_err, color='r', linestyle='--')
     plt.axvline(std_minus, color='r', linestyle='solid')
     plt.axvline(std_plus, color='r', linestyle='solid')
     plt.axvline(median - median_err_minus, color='r', linestyle='--')
     plt.axvline(median + median_err_plus, color='r', linestyle='--')
-    # plt.xlabel(r'$\frac{median-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thin}$)')
 
     plt.subplot(322)
     bins = make_bins(STATS['z0_thin']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['z0_thin']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     median = np.median(STATS['z0_thin']['normdiff'])
-    # std = np.std(STATS['z0_thin']['normdiff'])
     std_minus = np.percentile(STATS['z0_thin']['normdiff'], q=16)
     std_plus = np.percentile(STATS['z0_thin']['normdiff'], q=84)
-    # median_err = std/np.sqrt(Nfiles)
     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
     plt.axvline(median, color='r', linestyle='solid')
-    # plt.axvline(median+std, color='r', linestyle='solid')
-    # plt.axvline(median-std, color='r', linestyle='solid')
-    # plt.axvline(median+median_err, color='r', linestyle='--')
-    # plt.axvline(median-median_err, color='r', linestyle='--')
     plt.axvline(std_minus, color='r', linestyle='solid')
     plt.axvline(std_plus, color='r', linestyle='solid')
     plt.axvline(median - median_err_minus, color='r', linestyle='--')
     plt.axvline(median + median_err_plus, color='r', linestyle='--')
-    # plt.xlabel(r'$\frac{median-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($z_{0,thin}$)')
 
     plt.subplot(323)
     bins = make_bins(STATS['r0_thick']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['r0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     median = np.median(STATS['r0_thick']['normdiff'])
-    # std = np.std(STATS['r0_thick']['normdiff'])
     std_minus = np.percentile(STATS['r0_thick']['normdiff'], q=16)
     std_plus = np.percentile(STATS['r0_thick']['normdiff'], q=84)
-    # median_err = std/np.sqrt(Nfiles)
     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
     plt.axvline(median, color='r', linestyle='solid')
-    # plt.axvline(median+std, color='r', linestyle='solid')
-    # plt.axvline(median-std, color='r', linestyle='solid')
-    # plt.axvline(median+median_err, color='r', linestyle='--')
-    # plt.axvline(median-median_err, color='r', linestyle='--')
     plt.axvline(std_minus, color='r', linestyle='solid')
     plt.axvline(std_plus, color='r', linestyle='solid')
     plt.axvline(median - median_err_minus, color='r', linestyle='--')
     plt.axvline(median + median_err_plus, color='r', linestyle='--')
-    # plt.xlabel(r'$\frac{median-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($r_{0,thick}$)')
 
     plt.subplot(324)
     bins = make_bins(STATS['z0_thick']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['z0_thick']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     median = np.median(STATS['z0_thick']['normdiff'])
-    # std = np.std(STATS['z0_thick']['normdiff'])
     std_minus = np.percentile(STATS['z0_thick']['normdiff'], q=16)
     std_plus = np.percentile(STATS['z0_thick']['normdiff'], q=84)
-    # median_err = std/np.sqrt(Nfiles)
     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
     plt.axvline(median, color='r', linestyle='solid')
-    # plt.axvline(median+std, color='r', linestyle='solid')
-    # plt.axvline(median-std, color='r', linestyle='solid')
-    # plt.axvline(median+median_err, color='r', linestyle='--')
-    # plt.axvline(median-median_err, color='r', linestyle='--')
     plt.axvline(std_minus, color='r', linestyle='solid')
     plt.axvline(std_plus, color='r', linestyle='solid')
     plt.axvline(median - median_err_minus, color='r', linestyle='--')
@@ -188,17 +161,11 @@ def main():
     bins = make_bins(STATS['ratio']['normdiff'], bwidth)
     n, b, patches = plt.hist(STATS['ratio']['normdiff'], bins=bins, facecolor='green', alpha=0.7)
     median = np.median(STATS['ratio']['normdiff'])
-    # std = np.std(STATS['ratio']['normdiff'])
     std_minus = np.percentile(STATS['ratio']['normdiff'], q=16)
     std_plus = np.percentile(STATS['ratio']['normdiff'], q=84)
-    # median_err = std/np.sqrt(Nfiles)
     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
     plt.axvline(median, color='r', linestyle='solid')
-    # plt.axvline(median+std, color='r', linestyle='solid')
-    # plt.axvline(median-std, color='r', linestyle='solid')
-    # plt.axvline(median+median_err, color='r', linestyle='--')
-    # plt.axvline(median-median_err, color='r', linestyle='--')
     plt.axvline(std_minus, color='r', linestyle='solid')
     plt.axvline(std_plus, color='r', linestyle='solid')
     plt.axvline(median - median_err_minus, color='r', linestyle='--')
@@ -206,10 +173,7 @@ def main():
     plt.xlabel(r'$\frac{median-true}{\sigma}$', fontsize=16)
     plt.ylabel(r'N ($n_{0,thick}/n_{0,thin}$)')
 
-    # plt.tight_layout()
-
     plt.savefig(data_dir + 'hist_100chains.png')
-
 
 
 if __name__ == '__main__':
