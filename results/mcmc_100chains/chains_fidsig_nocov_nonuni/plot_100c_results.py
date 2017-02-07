@@ -76,14 +76,14 @@ def main():
             STATS[j]['std'][i]=s
             STATS[j]['normdiff'][i]=d
 
-            sys.stderr.write('{}\t-- Median: {},\tstd: {},\td: {}\n'.format(j, m, s, d))
+            # sys.stderr.write('{}\t-- Median: {},\tstd: {},\td: {}\n'.format(j, m, s, d))
 
 
     # plot results
     plt.clf()
     plt.figure(1)
 
-    bwidth=0.5
+    bwidth=0.2
 
     plt.subplot(321)
     bins = make_bins(STATS['r0_thin']['normdiff'], bwidth)
