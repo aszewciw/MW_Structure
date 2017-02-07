@@ -59,7 +59,7 @@ def main():
 
     # Load results of each chain and compute stats
     for i in range(Nfiles):
-        if (i in badfiles):
+        if (i in bad_files):
             continue
         if(i%10==0):
             sys.stderr.write('On result #{} of {}\n'.format(i,Nfiles))
