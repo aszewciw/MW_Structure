@@ -58,8 +58,10 @@ def main():
         # Get stats
         median = mc.median(axis=0)
         # std = mc.std(axis=0)
-        lower_std = mc.quantile(q=0.16, axis=0)
-        upper_std = mc.quantile(q=0.84, axis=0)
+        # lower_std = mc.quantile(q=0.16, axis=0)
+        # upper_std = mc.quantile(q=0.84, axis=0)
+        lower_std = mc.std(axis=0)
+        upper_std = mc.std(axis=0)
 
         for j in pd_keys:
             m = median[j]
