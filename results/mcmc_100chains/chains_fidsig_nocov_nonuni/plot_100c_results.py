@@ -34,7 +34,7 @@ def main():
     for i in range(Nskip):
         j = int(args_array[i+1])
         bad_files.append(j)
-        sys.stderr.write('Skipping file {} \n', j)
+        sys.stderr.write('Skipping file {} \n'.format(j))
 
     Nfiles=100 - Nskip
     data_dir='./out_data/'
