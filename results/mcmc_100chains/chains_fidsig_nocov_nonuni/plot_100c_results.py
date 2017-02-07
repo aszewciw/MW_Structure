@@ -27,6 +27,10 @@ def main():
     Nfiles=100
     data_dir='./out_data/'
 
+    shit_files = [68]
+
+    Nfiles-=len(shit_files)
+
     # Make a dictionary to store statistics calculated for each chain
     pd_keys=['r0_thin', 'z0_thin', 'r0_thick', 'z0_thick', 'ratio']
     STATS={}
@@ -47,6 +51,8 @@ def main():
 
     # Load results of each chain and compute stats
     for i in range(Nfiles):
+        if (i in shit_files):
+            continue
         if(i%10==0):
             sys.stderr.write('On result #{} of {}\n'.format(i,Nfiles))
         fname = data_dir + 'results_' + str(i) + '.dat'
