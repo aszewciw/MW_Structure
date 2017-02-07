@@ -77,8 +77,9 @@ def main():
             STATS[j]['median'][i]=m
             STATS[j]['std'][i]=s
             STATS[j]['normdiff'][i]=d
-            if (j=='ratio') and (d<-5):
+            if (j=='ratio') and (d<-20):
                 print(d, i)
+                print(m, s)
 
             # sys.stderr.write('{}\t-- Median: {},\tstd: {},\td: {}\n'.format(j, m, s, d))
 
