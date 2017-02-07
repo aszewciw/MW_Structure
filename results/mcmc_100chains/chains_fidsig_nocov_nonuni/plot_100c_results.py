@@ -96,9 +96,9 @@ def main():
 
     bwidth=0.5
 
-    # stats_type = 'std'
+    stats_type = 'std'
     # stats_type = 'median'
-    stats_type = 'normdiff'
+    # stats_type = 'normdiff'
 
     if stats_type == 'std':
         axis_label = 'std'
