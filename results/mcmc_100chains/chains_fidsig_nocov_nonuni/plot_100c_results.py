@@ -32,7 +32,7 @@ def main():
 
     bad_files = []
     for i in range(Nskip):
-        j = int(args_array[i])
+        j = int(args_array[i+1])
         bad_files.append(j)
         sys.stderr.write('Skipping file {} \n', j)
 
