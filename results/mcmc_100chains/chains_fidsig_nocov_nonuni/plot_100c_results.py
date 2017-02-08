@@ -48,7 +48,7 @@ def main():
         # Distribution median and standard deviation
         STATS[i]['median']=np.zeros(Nfiles)
         STATS[i]['std']=np.zeros(Nfiles)
-        # (median-true)/std
+        # (true-median)/std
         STATS[i]['normdiff']=np.zeros(Nfiles)
 
     STATS['r0_thin']['true']=2.027
@@ -81,11 +81,11 @@ def main():
             t = STATS[j]['true']
             s_l = median[j]-lower_std[j]
             s_u = upper_std[j]-median[j]
-            if m > t:
+            if t < m:
                 s = s_l
             else:
                 s = s_u
-            d = (m - t) / s
+            d = (t - m) / s
 
             STATS[j]['median'][i]=m
             STATS[j]['std'][i]=s
@@ -102,7 +102,7 @@ def main():
     elif stats_type == 'median':
         axis_label = 'median'
     elif stats_type == 'normdiff':
-        axis_label = r'$\frac{median-true}{\sigma}$'
+        axis_label = r'$\frac{true-median}{\sigma}$'
 
 
     # plot results
