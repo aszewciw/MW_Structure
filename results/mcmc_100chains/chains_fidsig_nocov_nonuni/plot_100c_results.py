@@ -82,9 +82,9 @@ def main():
             s_l = median[j]-lower_std[j]
             s_u = upper_std[j]-median[j]
             if m > t:
-                s = s_u
-            else:
                 s = s_l
+            else:
+                s = s_u
             d = (m - t) / s
 
             STATS[j]['median'][i]=m
