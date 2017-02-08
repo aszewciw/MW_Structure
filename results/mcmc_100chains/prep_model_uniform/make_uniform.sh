@@ -7,7 +7,7 @@ num_ratio=10; # N_uniform / N_data
 rm -rf $out_dir
 mkdir $out_dir
 
-python test_uniform.py $cfname $out_dir $num_ratio
+python make_uniform.py $cfname $out_dir $num_ratio
 bash $cfname
 
 # Add information about run
