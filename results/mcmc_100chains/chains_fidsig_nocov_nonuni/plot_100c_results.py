@@ -129,6 +129,9 @@ def main():
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
         plt.ylabel(labels[i])
+        if i==3 or i==4:
+            plt.xlabel(axis_label, fontsize=16)
+
 
 
 
