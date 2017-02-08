@@ -137,7 +137,7 @@ void update_parameters(STEP c, STEP *n, gsl_rng * GSL_r){
     double z0_thin_sigma = 0.005;
     double r0_thick_sigma = 0.1;
     double z0_thick_sigma = 0.005;
-    double ratio_thick_thin_sigma = 0.02;
+    double ratio_sigma = 0.02;
 
     /* change the position based on Gaussian distributions.  */
     delta = gsl_ran_gaussian(GSL_r, r0_thin_sigma);
