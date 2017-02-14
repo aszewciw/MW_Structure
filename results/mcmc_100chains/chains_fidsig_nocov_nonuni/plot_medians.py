@@ -133,8 +133,8 @@ def main():
         if i==3 or i==4:
             plt.xlabel(axis_label, fontsize=16)
 
-        std_median = np.median(STATS[key]['std'])
-        sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
+        median_median = np.median(STATS[key]['median'])
+        sys.stderr.write('Median median for {} is {}\n'.format(key,median_median))
 
     plt.savefig(data_dir + stats_type + '.png')
 
