@@ -2,7 +2,7 @@
 
 cfname='prep_cmd.txt';
 out_dir='./data/';
-data_dir='../prep_data_samps/data/';
+data_dir='../prep_data_samps_bestfit/data/';
 model_dir='../prep_model_nonuniform/data/';
 stats_dir='../prep_fid_errors/errors_data/';
 fid_dir='../prep_fid_errors/errors_data/';
