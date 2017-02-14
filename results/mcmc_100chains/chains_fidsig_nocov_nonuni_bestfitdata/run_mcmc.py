@@ -11,7 +11,7 @@ import numpy as np
 def main():
 
     # get command filename, out_dir, nprocs, nmocks
-    elements_needed = int(9)
+    elements_needed = int(14)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -23,6 +23,11 @@ def main():
     max_s    = args_array[6]
     tol      = args_array[7]
     Ndata    = int(args_array[8])
+    rn = args_array[9]
+    zn = args_array[10]
+    rk = args_array[11]
+    zk = args_array[12]
+    a  = args_array[13]
 
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
@@ -60,6 +65,7 @@ def main():
                 'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
                 + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
                 + ' -tol ' + tol + ' -dd ' + dd_dir + ' -l_dd ' + str(len(dd_dir))
+                + ' -rn ' + rn + ' -zn ' + zn + ' -rk ' + rk + ' -zk ' + zk + ' -a ' + a
                 )
             f.write(cmd)
             f.write('\n')
