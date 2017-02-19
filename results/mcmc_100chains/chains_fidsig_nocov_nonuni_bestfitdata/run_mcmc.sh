@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cfname='mcmc_cmd.txt';
+cfname='mcmc_cmd_alt.txt';
 indir='./data/';
 datdir='../prep_data_samps_bestfit/data/';
 outdir='./out_data/';
@@ -21,7 +21,7 @@ $rn $zn $rk $zk $a
 bash $cfname
 
 # Add information about run
-info_file='mcmc_info.txt';
+info_file='mcmc_info_alt.txt';
 rm $info_file
 INFO="run_mcmc.sh was most recently run on:";
 echo $INFO > $info_file
