@@ -23,10 +23,15 @@ def main():
     bins_dir  = args_array[7]
     Ndata     = int(args_array[8])
 
+    if not(os.path.isdir(out_dir)):
+        cmd = 'mkdir ' + out_dir
+        os.system(cmd)
+
     # Check that all passed directories exist and print them.
     for i in range(len(args_array)-1):
         if not(os.path.isdir(args_array[i])):
             sys.stderr.write('{} does not exist. Exiting...\n'.format(args_array[i]))
+            sys.exit()
     sys.stderr.write('Output directory is {}\n'.format(out_dir))
     sys.stderr.write('Todo directory is {}\n'.format(todo_dir))
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
@@ -34,10 +39,6 @@ def main():
     sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
     sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
-
-    if not(os.path.isdir(out_dir)):
-        cmd = 'mkdir ' + out_dir
-        os.system(cmd)
 
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
