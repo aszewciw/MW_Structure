@@ -12,7 +12,7 @@ cov=1;
 
 rm $cfname
 
-python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $tol $Ndata $cov
+python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $tol $cov $Ndata
 bash $cfname
 
 # Add information about run
