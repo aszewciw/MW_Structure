@@ -1,0 +1,1 @@
+# Compare jackknife errors to errors from mocks (not sure how many to use yet)

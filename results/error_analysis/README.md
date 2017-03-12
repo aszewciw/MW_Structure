@@ -1,0 +1,1 @@
+# Direct analysis of errors calculated in various ways (no mcmc chains)
