@@ -11,8 +11,6 @@ zk=0.675;
 a=0.053;
 
 rm $cfname
-rm -rf $out_dir
-mkdir $out_dir
 
 python make_mocks.py $cfname $out_dir $nprocs $nmocks $rn $zn $rk $zk $a
 bash $cfname
