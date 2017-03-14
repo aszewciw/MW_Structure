@@ -137,6 +137,7 @@ def main():
         std_median = np.median(STATS[key]['std'])
         sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
 
+    plt.tight_layout()
     plt.savefig(data_dir + stats_type + '.png')
 
 
