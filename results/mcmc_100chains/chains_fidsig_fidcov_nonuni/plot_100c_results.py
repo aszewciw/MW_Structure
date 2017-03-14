@@ -106,8 +106,8 @@ def main():
         axis_label = r'$\frac{true-median}{\sigma}$'
 
 
-    print(STATS['r0_thin']['normdiff'], q=16)
-    print(STATS['r0_thin']['normdiff'], q=84)
+    print(np.percentile(STATS['r0_thin']['normdiff'], q=16))
+    print(np.percentile(STATS['r0_thin']['normdiff'], q=84))
 
     # # plot results
     # plt.clf()
