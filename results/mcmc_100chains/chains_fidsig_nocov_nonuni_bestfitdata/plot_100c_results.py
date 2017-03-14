@@ -14,7 +14,7 @@ import numpy as np
 
 def make_bins(x, bwidth):
 
-    bin_min=int(min(x))
+    bin_min=int(min(x))-1
     bin_max=int(max(x))+1
 
     bins=np.arange(bin_min,bin_max,bwidth)
