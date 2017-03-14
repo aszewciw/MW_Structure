@@ -109,6 +109,13 @@ def main():
     print(np.percentile(STATS['r0_thin']['normdiff'], q=16))
     print(np.percentile(STATS['r0_thin']['normdiff'], q=84))
 
+    fname='tmp.dat'
+    stuff=STATS['r0_thin']['normdiff']
+    with open(fname,'w') as f:
+        for i in range(len(stuff)):
+            f.write(stuff[i])
+
+
     # # plot results
     # plt.clf()
     # plt.figure(1)
