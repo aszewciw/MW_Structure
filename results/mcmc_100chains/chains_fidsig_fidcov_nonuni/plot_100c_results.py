@@ -14,7 +14,7 @@ import numpy as np
 
 def make_bins(x, bwidth):
 
-    bin_min=int(min(x))
+    bin_min=int(min(x))-1
     bin_max=int(max(x))+1
 
     bins=np.arange(bin_min,bin_max,bwidth)
@@ -106,48 +106,38 @@ def main():
         axis_label = r'$\frac{true-median}{\sigma}$'
 
 
-    print(np.percentile(STATS['r0_thin']['normdiff'], q=16))
-    print(np.percentile(STATS['r0_thin']['normdiff'], q=84))
+    # plot results
+    plt.clf()
+    plt.figure(1)
 
-    fname='tmp.dat'
-    stuff=STATS['r0_thin']['normdiff']
-    with open(fname,'w') as f:
-        for i in range(len(stuff)):
-            f.write('{}\n'.format(stuff[i]))
+    # this is a good bin width for normdiff, but it doesn't work for the others
+    bwidth=0.5
 
+    spnum = 321
 
-    # # plot results
-    # plt.clf()
-    # plt.figure(1)
+    for i in range(len(pd_keys)):
+        key = pd_keys[i]
+        plt.subplot(spnum+i)
+        bins = make_bins(STATS[key][stats_type], bwidth)
+        n, b, patches = plt.hist(STATS[key][stats_type], bins=bins, facecolor='green', alpha=0.7)
+        median = np.median(STATS[key][stats_type])
+        std_minus = np.percentile(STATS[key][stats_type], q=16)
+        std_plus = np.percentile(STATS[key][stats_type], q=84)
+        median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
+        median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
+        plt.axvline(median, color='r', linestyle='solid')
+        plt.axvline(std_minus, color='r', linestyle='solid')
+        plt.axvline(std_plus, color='r', linestyle='solid')
+        plt.axvline(median - median_err_minus, color='r', linestyle='--')
+        plt.axvline(median + median_err_plus, color='r', linestyle='--')
+        plt.ylabel(labels[i])
+        if i==3 or i==4:
+            plt.xlabel(axis_label, fontsize=16)
 
-    # # this is a good bin width for normdiff, but it doesn't work for the others
-    # bwidth=0.5
+        std_median = np.median(STATS[key]['std'])
+        sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
 
-    # spnum = 321
-
-    # for i in range(len(pd_keys)):
-    #     key = pd_keys[i]
-    #     plt.subplot(spnum+i)
-    #     bins = make_bins(STATS[key][stats_type], bwidth)
-    #     n, b, patches = plt.hist(STATS[key][stats_type], bins=bins, facecolor='green', alpha=0.7)
-    #     median = np.median(STATS[key][stats_type])
-    #     std_minus = np.percentile(STATS[key][stats_type], q=16)
-    #     std_plus = np.percentile(STATS[key][stats_type], q=84)
-    #     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
-    #     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
-    #     plt.axvline(median, color='r', linestyle='solid')
-    #     plt.axvline(std_minus, color='r', linestyle='solid')
-    #     plt.axvline(std_plus, color='r', linestyle='solid')
-    #     plt.axvline(median - median_err_minus, color='r', linestyle='--')
-    #     plt.axvline(median + median_err_plus, color='r', linestyle='--')
-    #     plt.ylabel(labels[i])
-    #     if i==3 or i==4:
-    #         plt.xlabel(axis_label, fontsize=16)
-
-    #     std_median = np.median(STATS[key]['std'])
-    #     sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
-
-    # plt.savefig(data_dir + stats_type + '.png')
+    plt.savefig(data_dir + stats_type + '.png')
 
 
 if __name__ == '__main__':
