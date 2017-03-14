@@ -113,7 +113,7 @@ def main():
     stuff=STATS['r0_thin']['normdiff']
     with open(fname,'w') as f:
         for i in range(len(stuff)):
-            f.write(stuff[i])
+            f.write('{}\n'.format(stuff[i]))
 
 
     # # plot results
