@@ -37,7 +37,7 @@ def main():
         sys.stderr.write('Skipping file {} \n'.format(j))
 
     # Nfiles=100 - Nskip
-    Nfiles=94 - Nskip
+    Nfiles=95 - Nskip
     data_dir='./out_data/'
 
     # Make a dictionary to store statistics calculated for each chain
