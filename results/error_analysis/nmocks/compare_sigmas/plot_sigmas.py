@@ -18,7 +18,7 @@ def main():
     if N_args < 7:
         sys.stderr.write("Not enough arguments were passed.\n")
         sys.exit()
-    pairs_dir = args_array[1]
+    errors_dir = args_array[1]
     out_dir   = args_array[2]
     bins_dir  = args_array[3]
     nsubsets  = int(args_array[4])
@@ -32,8 +32,8 @@ def main():
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
-    if not os.path.isdir(pairs_dir):
-        sys.stderr.write('{} does not exist. Exiting...\n'.format(pairs_dir))
+    if not os.path.isdir(errors_dir):
+        sys.stderr.write('{} does not exist. Exiting...\n'.format(errors_dir))
         sys.exit()
 
     # Load list of pointing IDs
@@ -57,7 +57,7 @@ def main():
 
     # Load all data into dictionary
     for n in nmocks_array:
-        data_dir = pairs_dir + n
+        data_dir = errors_dir + n
         for i in range(N_los):
             std_file = data_dir + '/mean_std_' + ID_list[i] + '.dat'
             if not os.path.isfile(std_file):
