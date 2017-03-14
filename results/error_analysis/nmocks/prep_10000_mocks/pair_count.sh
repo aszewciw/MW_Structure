@@ -3,7 +3,7 @@
 cfname=pairs_cmd.txt;
 mocks_dir=../../data/;
 out_dir=../../data_pairs/;
-bins_dir=../prep_bins/;
+bins_dir=../../prep_bins/;
 Nmocks=10000;
 
 rm $cfname
