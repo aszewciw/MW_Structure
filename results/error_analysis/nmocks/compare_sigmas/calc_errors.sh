@@ -2,7 +2,7 @@
 
 cfname=errors_cmd.txt;
 pairs_dir=./data_pairs/;
-out_dir=./data_errors/;
+out_dir=./data_errors;
 nmocks='100 200 500 1000 2000 5000 10000';
 arraylen=7;
 

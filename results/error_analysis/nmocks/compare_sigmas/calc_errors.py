@@ -39,8 +39,15 @@ def main():
     # Write command file
     with open(cfname, 'w') as f:
         for n in nmocks_array:
-            cmd = ( 'python ' + exe_file + ' ' + cleaned_dir + ' ' + pairs_dir + ' '
-                + out_dir + ' ' + n )
+            tmp_dir = out_dir + n + '/'
+            if not os.path.isdir(tmp_dir):
+                sys.stderr.write('{} does not exist. Making directory...\n'
+                    .format(tmp_dir))
+                cmd = 'mkdir ' + tmp_dir
+                os.system(cmd)
+
+            cmd = ( 'python ' + exe_file + ' ' + cleaned_dir + ' ' + pairs_dir
+                + ' ' + tmp_dir + ' ' + n )
             f.write(cmd)
             f.write('\n')
 
