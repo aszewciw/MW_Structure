@@ -51,11 +51,11 @@ def main():
         # (true-median)/std
         STATS[i]['normdiff']=np.zeros(Nfiles)
 
-    STATS['r0_thin']['true']=2.027
-    STATS['z0_thin']['true']=0.234
-    STATS['r0_thick']['true']=2.397
-    STATS['z0_thick']['true']=0.675
-    STATS['ratio']['true']=0.053
+    STATS['r0_thin']['true']=2.55
+    STATS['z0_thin']['true']=0.225
+    STATS['r0_thick']['true']=2.50
+    STATS['z0_thick']['true']=0.653
+    STATS['ratio']['true']=0.098
 
 
     # Load results of each chain and compute stats
