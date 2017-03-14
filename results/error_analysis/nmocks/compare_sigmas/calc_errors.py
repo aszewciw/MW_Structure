@@ -19,7 +19,7 @@ def main():
     nsubsets  = int(args_array[4])
     nmocks_array = []
     for i in range(nsubsets):
-        nmocks_array.append(args_array[4+i])
+        nmocks_array.append(args_array[5+i])
 
     # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
