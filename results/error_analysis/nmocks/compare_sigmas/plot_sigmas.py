@@ -24,7 +24,7 @@ def main():
     nsubsets  = int(args_array[4])
     nmocks_array = []
     for i in range(nsubsets):
-        nmocks_array.append(args_array[4+i])
+        nmocks_array.append(args_array[5+i])
 
     # Check for dir/file existence
     if not os.path.isdir(out_dir):
