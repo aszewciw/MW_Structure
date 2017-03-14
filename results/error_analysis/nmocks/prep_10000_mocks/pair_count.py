@@ -49,7 +49,7 @@ def main():
             raise ValueError('Unrecognized system...\n')
         os.system(cmd)
     else:
-        sys.stderr.write('Using already compiled file {}'.format(pairs_file))
+        sys.stderr.write('Using already compiled file {}\n'.format(pairs_file))
 
     # Load todo list
     input_filename = cleaned_dir + 'todo_list.dat'
