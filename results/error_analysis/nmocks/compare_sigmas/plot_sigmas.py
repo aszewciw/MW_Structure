@@ -59,7 +59,7 @@ def main():
     for n in nmocks_array:
         data_dir = out_dir + n
         for i in range(N_los):
-            std_file = data_dir + '/mean_std_' + ID[i] + '.dat'
+            std_file = data_dir + '/mean_std_' + ID_list[i] + '.dat'
             if not os.path.isfile(std_file):
                 sys.stderr.write('Error: {} does not exist\n'.format(std_file))
                 sys.exit()
