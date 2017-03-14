@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-pairs_dir=../../data_pairs/;
+pairs_dir=../../data_pairs;
 out_dir=./plots/;
 bins_dir=../../prep_bins/;
 nmocks='100 200 500 1000 2000 5000 10000';
