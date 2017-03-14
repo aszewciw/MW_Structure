@@ -53,7 +53,7 @@ def main():
 
     std_dict={}
     for n in nmocks_array:
-        std_dict[n]=np.zeros((Nbins, Nbins))
+        std_dict[n]=np.zeros((N_los, Nbins))
 
     # Load all data into dictionary
     for n in nmocks_array:
