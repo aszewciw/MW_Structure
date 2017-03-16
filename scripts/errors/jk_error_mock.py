@@ -72,8 +72,8 @@ def main():
     for p in todo_list:
 
         # counting pairs for the whole sample
-        data_filename = data_dir + 'mock_' + p.ID + '.xyzw.dat'
-        counts_filename = data_dir + 'mock_' + p.ID + '_jk_all.ddcounts.dat'
+        data_filename = jk_dir + 'mock_' + p.ID + '.xyzw.dat'
+        counts_filename = jk_dir + 'mock_' + p.ID + '_jk_all.ddcounts.dat'
         cmd = (pairs_file + ' ' + data_filename + ' ' + bins_filename
                + ' > ' + counts_filename)
         os.system(cmd)
@@ -86,8 +86,8 @@ def main():
 
         # counting pairs for each jackknife sample and load pairs into array
         for i in range(N_jackknife):
-            jackknife_filename = data_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.dat'
-            counts_filename = data_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.ddcounts.dat'
+            jackknife_filename = jk_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.dat'
+            counts_filename = jk_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.ddcounts.dat'
             cmd = (pairs_file + ' ' + jackknife_filename + ' ' + bins_filename
                    + ' > ' + counts_filename)
             os.system(cmd)
@@ -96,7 +96,7 @@ def main():
 
         jk_std  = np.std(counts_jk, axis=0) * np.sqrt(N_jackknife-1)
 
-        output_filename = data_dir + 'mock_' + p.ID + '_jk_error.dat'
+        output_filename = jk_dir + 'mock_' + p.ID + '_jk_error.dat'
         np.savetxt(output_filename, jk_std, fmt='%1.6f')
 
 
