@@ -127,9 +127,7 @@ int main(int argc, char * argv[]){
     load_ZRW(plist, lower_ind, upper_ind, rank, in_dir);
     load_rbins(plist, N_bins, lower_ind, upper_ind, rank, in_dir, dd_dir);
     load_pairs(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
-    if(cl_args.cov==1){
-        load_inv_correlation(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
-    }
+    load_inv_correlation(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
 
     /* Run mcmc */
     run_mcmc(plist, cl_args, N_bins, lower_ind, upper_ind, rank, nprocs, out_filename);

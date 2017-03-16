@@ -8,10 +8,9 @@ Arguments:
     data_dir    - contains data samples which we'll use in chains
     model_dir   - MM points
     stats_dir   - contains mean and std files
-    fid_dir     - contains inv correlation matrices (unless cov=0)
+    fid_dir     - contains inv correlation matrices
     bins_dir    - contains rbins
     Ndata       - number of data samples (usually 100)
-    cov         - 0 if we don't use corr matrix, 1 if we do
 '''
 import sys, os
 import numpy as np
@@ -19,7 +18,7 @@ import numpy as np
 def main():
 
     # Parse CL
-    elements_needed = int(10)
+    elements_needed = int(9)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -31,24 +30,22 @@ def main():
     fid_dir   = args_array[6]
     bins_dir  = args_array[7]
     Ndata     = int(args_array[8])
-    cov       = int(args_array[9])
 
     if not(os.path.isdir(out_dir)):
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
     # Check that all passed directories exist and print them.
-    # for i in range(1, len(args_array)-1):
-    #     if not(os.path.isdir(args_array[i])):
-    #         sys.stderr.write('{} does not exist. Exiting...\n'.format(args_array[i]))
-    #         sys.exit()
+    for i in range(1, len(args_array)-1):
+        if not(os.path.isdir(args_array[i])):
+            sys.stderr.write('{} does not exist. Exiting...\n'.format(args_array[i]))
+            sys.exit()
     sys.stderr.write('Output directory is {}\n'.format(out_dir))
     sys.stderr.write('Todo directory is {}\n'.format(todo_dir))
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
     sys.stderr.write('Model directory is {}\n'.format(model_dir))
     sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
-    if cov==1:
-        sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
+    sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     # Make ID list from todo file
@@ -103,10 +100,9 @@ def main():
         os.system(cmd)
 
         # copy inverse correlation matrix files
-        if cov==1:
-            corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
-            cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
-            os.system(cmd)
+        corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
+        cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
+        os.system(cmd)
 
         # Copy and rename zrw file
         uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
