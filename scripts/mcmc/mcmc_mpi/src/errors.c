@@ -66,7 +66,7 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
                         * p[i].rbin[k].MM );
                 }
 
-                if(sigma_j==0 or sigma_k==0){
+                if(sigma_j==0 || sigma_k==0){
                     chi2_temp=0.0;
                 }
                 else{
