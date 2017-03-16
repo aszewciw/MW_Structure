@@ -6,7 +6,7 @@ import numpy as np
 
 def main():
     # Parse CL
-    elements_needed = int(5)
+    elements_needed = int(6)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -14,6 +14,7 @@ def main():
     bins_dir = args_array[2]
     jk_dir   = args_array[3]
     out_dir  = args_array[4]
+    Nsamp    = int(args_array[5])
 
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
