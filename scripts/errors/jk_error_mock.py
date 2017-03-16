@@ -71,16 +71,6 @@ def main():
     # Main loop
     for p in todo_list:
 
-        # counting pairs for the whole sample
-        data_filename = jk_dir + 'mock_' + p.ID + '.xyzw.dat'
-        counts_filename = jk_dir + 'mock_' + p.ID + '_jk_all.ddcounts.dat'
-        cmd = (pairs_file + ' ' + data_filename + ' ' + bins_filename
-               + ' > ' + counts_filename)
-        os.system(cmd)
-
-        # load dd counts, weighted and normalized
-        counts_all = np.genfromtxt(counts_filename, unpack=True, usecols=[4])
-
         # Make array to store dd counts for different jackknife samples
         counts_jk = np.zeros((N_jackknife, N_rbins))
 
@@ -97,7 +87,7 @@ def main():
         jk_std  = np.std(counts_jk, axis=0) * np.sqrt(N_jackknife-1)
 
         output_filename = jk_dir + 'mock_' + p.ID + '_jk_error.dat'
-        np.savetxt(output_filename, jk_std, fmt='%1.6f')
+        np.savetxt(output_filename, jk_std, fmt='%1.6e')
 
 
 if __name__ == '__main__':
