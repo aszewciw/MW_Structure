@@ -1,3 +1,7 @@
+'''
+for an xyzw file, create jackknife samples for pair counting
+'''
+
 import mw_utilities_python.segue_star as seg
 import sys, pickle, math, os, string, random
 import numpy as np

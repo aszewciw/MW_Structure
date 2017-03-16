@@ -1,3 +1,6 @@
+'''
+calcualte errors in dd for jk on a mock
+'''
 import mw_utilities_python as mwu
 import sys, pickle, math, os, string, random
 import numpy as np
