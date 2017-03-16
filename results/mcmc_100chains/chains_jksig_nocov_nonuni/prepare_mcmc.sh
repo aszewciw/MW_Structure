@@ -5,15 +5,14 @@ out_dir='./data/';
 data_dir='../prep_data_samps/data/';
 model_dir='../prep_model_nonuniform/data/';
 stats_dir='../prep_jk_errors/data/sample_0/';
-fid_dir=None;
+fid_dir=../prep_fid_errors/errors_data/;
 bins_dir='../prep_bins/';
 Ndata=100;
-cov=0;
 
 rm $cfname
 
 python prepare_mcmc.py $cfname $out_dir $data_dir $model_dir $stats_dir \
-$fid_dir $bins_dir $Ndata $cov
+$fid_dir $bins_dir $Ndata
 bash $cfname
 
 # Add information about run
