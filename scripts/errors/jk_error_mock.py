@@ -86,11 +86,12 @@ def main():
             os.system(cmd)
             counts_jk[i,:] = np.genfromtxt(counts_filename, unpack=True, usecols=[4])
 
-
+        jk_mean = np.mean(counts_jk, axis=0)
         jk_std  = np.std(counts_jk, axis=0) * np.sqrt(N_jackknife-1)
+        jk_data = np.column_stack((jk_mean,jk_std))
 
-        output_filename = jk_dir + 'mock_' + p.ID + '_jk_error.dat'
-        np.savetxt(output_filename, jk_std, fmt='%1.6e')
+        output_filename = jk_dir + 'mean_std_' + p.ID + '.dat'
+        np.savetxt(output_filename, jk_data, fmt='%1.6e')
 
 
 if __name__ == '__main__':

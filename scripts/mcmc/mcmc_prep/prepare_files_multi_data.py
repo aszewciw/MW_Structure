@@ -2,7 +2,16 @@
 Prepares files to be read in to mcmc code. See ../mcmc_mpi/src/io.c for more
 detail on what files we need.
 
-Certain directories must be passed.
+Arguments:
+    out_dir     - moving all data to this folder; mcmc will read from here only
+    todo_dir    - contains todo_list (info about data)
+    data_dir    - contains data samples which we'll use in chains
+    model_dir   - MM points
+    stats_dir   - contains mean and std files
+    fid_dir     - contains inv correlation matrices (unless cov=0)
+    bins_dir    - contains rbins
+    Ndata       - number of data samples (usually 100)
+    cov         - 0 if we don't use corr matrix, 1 if we do
 '''
 import sys, os
 import numpy as np
@@ -10,7 +19,7 @@ import numpy as np
 def main():
 
     # Parse CL
-    elements_needed = int(9)
+    elements_needed = int(10)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -22,6 +31,7 @@ def main():
     fid_dir   = args_array[6]
     bins_dir  = args_array[7]
     Ndata     = int(args_array[8])
+    cov       = int(args_array[9])
 
     if not(os.path.isdir(out_dir)):
         cmd = 'mkdir ' + out_dir
@@ -37,7 +47,8 @@ def main():
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
     sys.stderr.write('Model directory is {}\n'.format(model_dir))
     sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
-    sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
+    if cov==1:
+        sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     # Make ID list from todo file
@@ -92,9 +103,10 @@ def main():
         os.system(cmd)
 
         # copy inverse correlation matrix files
-        corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
-        cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
-        os.system(cmd)
+        if cov==1:
+            corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
+            cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
+            os.system(cmd)
 
         # Copy and rename zrw file
         uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
