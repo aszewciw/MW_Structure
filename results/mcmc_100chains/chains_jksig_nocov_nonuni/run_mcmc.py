@@ -58,6 +58,8 @@ def main():
     with open(cfname, 'w') as f:
 
         for i in range(Ndata):
+            if i<2:
+                continue
             ofname = out_dir + 'results_' + str(i) + '.dat'
             dd_dir = data_dir + 'sample_' + str(i) + '/'
             std_dir = stats_dir + 'sample_' + str(i) + '/'
