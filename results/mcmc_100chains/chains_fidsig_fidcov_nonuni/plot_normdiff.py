@@ -89,7 +89,14 @@ def main():
         plt.ylabel(labels[i])
         if i==3 or i==4:
             plt.xlabel(axis_label, fontsize=16)
-        plt.legend(loc='upper right', fontsize=6)
+        # Decide where to place legend
+        left = median - np.min(STATS[key]['normdiff'])
+        right = np.max(STATS[key]['normdiff']) - median
+        if left>right:
+            loc='upper left'
+        else:
+            loc='upper right'
+        plt.legend(loc=loc, fontsize=6)
 
     plt.savefig(data_dir + 'normdiff' + '.png')
 
