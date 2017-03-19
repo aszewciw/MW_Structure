@@ -74,7 +74,7 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
                     chi2_temp = ( ( ( corr_data_j - corr_model_j ) / sigma_j )
                         * ( ( corr_data_k - corr_model_k ) / sigma_k ) * r_jk );
                 }
-                if fabs(chi2_temp)>10000{
+                if(fabs(chi2_temp)>10000.0){
                     fprintf(stderr, "Chi2: %lf\t, sigma: %lf\t, ID: %lf, bin: %d\n",
                         chi2_temp, sigma_k, p[i].ID, k);
                 }
