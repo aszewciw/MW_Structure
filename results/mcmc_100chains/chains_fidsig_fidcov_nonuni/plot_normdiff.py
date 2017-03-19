@@ -25,6 +25,19 @@ def make_bins(x, bwidth):
 def main():
 
     # Optional cl input
+    # Pass any files that we wish to exclude
+    args_array = np.array(sys.argv)
+    Nskip = len(args_array)-1
+    sys.stderr.write('Not including data for {} files.\n'.format(Nskip))
+
+    bad_files = []
+    for i in range(Nskip):
+        j = int(args_array[i+1])
+        bad_files.append(j)
+        sys.stderr.write('Skipping file {} \n'.format(j))
+
+    Nfiles=100 - Nskip
+
     stats_fname='./out_data/normdiff_100chains.dat'
     if not os.path.isfile(stats_fname):
         sys.stderr.write('Error: {} does not exist.\n')
