@@ -35,10 +35,11 @@ def main():
     STATS={}
 
     # Load each column of the file into this dictionary
-    for i in pd_keys:
-        STATS[i]={}
+    for i in range(len(pd_keys)):
+        key = pd_keys[i]
+        STATS[key]={}
         # (true-median)/std
-        STATS[i]['normdiff']=np.genfromtxt(stats_fname)
+        STATS[key]['normdiff']=np.genfromtxt(stats_fname, unpack=True, usecols=i)
 
     axis_label = r'$\frac{true-median}{\sigma}$'
 
@@ -51,6 +52,8 @@ def main():
 
     for i in range(len(pd_keys)):
         key = pd_keys[i]
+        if key=='chi2':
+            continue
         plt.subplot(spnum+i)
         bins = make_bins(STATS[key]['normdiff'], bwidth)
         n, b, patches = plt.hist(STATS[key]['normdiff'], bins=bins, facecolor='green', alpha=0.7)
