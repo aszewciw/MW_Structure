@@ -5,9 +5,9 @@ indir='./data/';
 datdir='../prep_data_samps/data/';
 outdir='./out_data/';
 nprocs=8;
-max_s=100000;
+max_s=10;
 tol=0.0;
-Ndata=100;
+Ndata=3;
 stats_dir='../prep_jk_errors/data/';
 
 rm $cfname
