@@ -36,8 +36,7 @@ def main():
         bad_files.append(j)
         sys.stderr.write('Skipping file {} \n'.format(j))
 
-    # Nfiles=100 - Nskip
-    Nfiles=95 - Nskip
+    Nfiles=100 - Nskip
     data_dir='./out_data/'
 
     # Make a dictionary to store statistics calculated for each chain
@@ -58,6 +57,7 @@ def main():
     STATS['z0_thick']['true']=0.675
     STATS['ratio']['true']=0.053
 
+    best_chi2 = np.zeros(Nfiles)
 
     # Load results of each chain and compute stats
     for i in range(Nfiles):
@@ -92,6 +92,7 @@ def main():
             STATS[j]['std'][i]=s
             STATS[j]['normdiff'][i]=d
 
+
     # These don't really work because of binning
 
     # stats_type = 'std'
@@ -125,15 +126,18 @@ def main():
         std_plus = np.percentile(STATS[key][stats_type], q=84)
         median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
         median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
-        plt.axvline(median, color='r', linestyle='solid')
-        plt.axvline(std_minus, color='r', linestyle='solid')
+        med_label = 'med='+str(np.round(median,2))
+        std_plt = np.round((std_plus-std_minus)/2.0, 2)
+        std_label = r'$\sigma$='+str(std_plt)
+        plt.axvline(median, color='r', linestyle='solid', label=med_label)
+        plt.axvline(std_minus, color='r', linestyle='solid', label=std_label)
         plt.axvline(std_plus, color='r', linestyle='solid')
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
         plt.ylabel(labels[i])
         if i==3 or i==4:
             plt.xlabel(axis_label, fontsize=16)
-
+        plt.legend(loc='upper right')
         std_median = np.median(STATS[key]['std'])
         sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
 
