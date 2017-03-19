@@ -98,37 +98,40 @@ def main():
     stats_fname = data_dir + 'normdiff_100chains.dat'
     with open(stats_fname, 'w') as f:
         # Write keys as first line
+        f.write('# ')
         for i in pd_keys:
             f.write('{}\t'.format(i))
         f.write('best_chi2\n')
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['normdiff']))
+                f.write('{}\t'.format(STATS[j]['normdiff'][i]))
             f.write('{}\n'.format(best_chi2[i]))
 
     stats_fname = data_dir + 'stds_100chains.dat'
     with open(stats_fname, 'w') as f:
         # Write keys as first line
+        f.write('# ')
         for i in pd_keys:
             f.write('{}\t'.format(i))
         f.write('best_chi2\n')
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['std']))
+                f.write('{}\t'.format(STATS[j]['std'][i]))
             f.write('{}\n'.format(best_chi2[i]))
 
     stats_fname = data_dir + 'medians_100chains.dat'
     with open(stats_fname, 'w') as f:
         # Write keys as first line
+        f.write('# ')
         for i in pd_keys:
             f.write('{}\t'.format(i))
         f.write('best_chi2\n')
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['median']))
+                f.write('{}\t'.format(STATS[j]['median'][i]))
             f.write('{}\n'.format(best_chi2[i]))
 
 
