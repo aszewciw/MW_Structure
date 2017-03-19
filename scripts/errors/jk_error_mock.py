@@ -1,5 +1,8 @@
 '''
 calcualte errors in dd for jk on a mock
+
+Note: I find rounding errors when I don't use raw pair counts. Idk why, but I'm
+going to find the jk stdev using raw pair counts and then just do the normalization.
 '''
 import mw_utilities_python as mwu
 import sys, pickle, math, os, string, random
@@ -74,8 +77,10 @@ def main():
     # Main loop
     for p in todo_list:
 
-        # Make array to store dd counts for different jackknife samples
+        # Make array to store raw dd counts for different jackknife samples
         counts_jk = np.zeros((N_jackknife, N_rbins))
+        # Each file will have the exact same norm b/c same N
+        norm = np.zeros(N_rbins)
 
         # counting pairs for each jackknife sample and load pairs into array
         for i in range(N_jackknife):
@@ -84,10 +89,14 @@ def main():
             cmd = (pairs_file + ' ' + jackknife_filename + ' ' + bins_filename
                    + ' > ' + counts_filename)
             os.system(cmd)
-            counts_jk[i,:] = np.genfromtxt(counts_filename, unpack=True, usecols=[4])
+            counts_jk[i,:], norm = np.genfromtxt(counts_filename, unpack=True, usecols=[5, 6])
 
         jk_mean = np.mean(counts_jk, axis=0)
         jk_std  = np.std(counts_jk, axis=0) * np.sqrt(N_jackknife-1)
+
+        # Normalize counts
+        jk_mean /= norm
+        jk_std  /= norm
         jk_data = np.column_stack((jk_mean,jk_std))
 
         output_filename = jk_dir + 'mean_std_' + p.ID + '.dat'
