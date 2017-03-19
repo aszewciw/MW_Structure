@@ -12,6 +12,9 @@ import mw_utilities_python as mwu
 import sys, os
 import numpy as np
 
+data_dir='./out_data/'
+
+
 def make_bins(x, bwidth):
 
     bin_min=int(min(x))-1
