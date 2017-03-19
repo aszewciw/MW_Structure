@@ -72,7 +72,8 @@ def main():
             continue
         plt.subplot(spnum+i)
         bins = make_bins(STATS[key]['normdiff'], bwidth)
-        n, b, patches = plt.hist(STATS[key]['normdiff'], bins=bins, facecolor='green', alpha=0.7)
+        n, b, patches = plt.hist(STATS[key]['normdiff'], bins=bins,
+            facecolor='green', alpha=0.7, label=labels[i])
         median = np.median(STATS[key]['normdiff'])
         std_minus = np.percentile(STATS[key]['normdiff'], q=16)
         std_plus = np.percentile(STATS[key]['normdiff'], q=84)
@@ -86,9 +87,9 @@ def main():
         plt.axvline(std_plus, color='b', linestyle='solid')
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
-        plt.ylabel(labels[i])
+        # plt.ylabel(labels[i])
         if i==3 or i==4:
-            plt.xlabel(axis_label, fontsize=16)
+            plt.xlabel(axis_label, fontsize=12)
         # Decide where to place legend
         left = median - np.min(STATS[key]['normdiff'])
         right = np.max(STATS[key]['normdiff']) - median
