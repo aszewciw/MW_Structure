@@ -91,7 +91,6 @@ def main():
             plt.xlabel(axis_label, fontsize=16)
         plt.legend(loc='upper right', fontsize=6)
 
-    plt.tight_layout()
     plt.savefig(data_dir + 'normdiff' + '.png')
 
 
