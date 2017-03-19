@@ -99,6 +99,7 @@ def main():
         else:
             loc='upper right'
         plt.legend(loc=loc, fontsize=6)
+        sys.stderr.write('Key: {}, min: {}, max: {}\n'.format(key, np.min(STATS[key]['normdiff']), np.min(STATS[key]['normdiff']) ) )
 
     plt.savefig(data_dir + 'normdiff' + '.png')
 
