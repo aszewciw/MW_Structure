@@ -88,7 +88,7 @@ def main():
         plt.axvline(std_plus, color='b', linestyle='solid')
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
-        plt.axis([min(bins), max(bins),0,50])
+        plt.axis([min(bins), max(bins), min(n), max(n)])
         # plt.ylabel(labels[i])
         if i==3 or i==4:
             plt.xlabel(axis_label, fontsize=12)
