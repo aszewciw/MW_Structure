@@ -105,11 +105,6 @@ def main():
     # plt.savefig(data_dir + 'normdiff' + '.png')
 
 
-    for i in range(len(STATS['chi2']['normdiff'])):
-        print(i, STATS['chi2']['normdiff'])
-
-
-
     for i in range(len(pd_keys)):
         key = pd_keys[i]
         if key=='chi2':
