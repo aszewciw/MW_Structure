@@ -57,7 +57,7 @@ def main():
         # (true-median)/std
         STATS[key]=np.genfromtxt(stats_fname, unpack=True, usecols=i)
 
-    axis_label = r'$\frac{true-median}{\sigma}$ or min($\chi^2$)'
+    axis_label = r'$\frac{true-median}{\sigma}$ or $min(\chi^2)$'
 
     # plot results
     plt.clf()
