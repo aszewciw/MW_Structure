@@ -64,14 +64,13 @@ def main():
     plt.figure(1)
 
     spnum = 321
-    bwdith=0.5
 
     for i in range(len(pd_keys)):
         key = pd_keys[i]
         if key=='chi2':
             bwidth = 50
         else:
-            bwdith = 0.5
+            bwidth = 0.5
         plt.subplot(spnum+i)
         bins = make_bins(STATS[key], bwidth)
         n, b, patches = plt.hist(STATS[key], bins=bins,
