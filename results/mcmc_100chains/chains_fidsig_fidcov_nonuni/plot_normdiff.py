@@ -20,8 +20,6 @@ def make_bins(x, bwidth):
     bin_min=int(min(x))-1
     bin_max=int(max(x))+1+bwidth
 
-    if bin_min
-
     bins=np.arange(bin_min,bin_max,bwidth)
 
     return bins
