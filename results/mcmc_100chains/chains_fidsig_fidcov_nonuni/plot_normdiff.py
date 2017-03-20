@@ -105,6 +105,8 @@ def main():
     # plt.savefig(data_dir + 'normdiff' + '.png')
 
 
+    for i in range(len(STATS['chi2']['normdiff'])):
+        print(i, STATS['chi2']['normdiff'])
 
 
 
@@ -132,7 +134,7 @@ def main():
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
         plt.axis([min(bins), max(bins), 0, 1.1*max(n)])
-        if i==3 or i==5:
+        if i==4 or i==5:
             plt.xlabel(axis_label, fontsize=12)
         # Decide where to place legend
         left = median - np.min(STATS[key]['normdiff'])
@@ -142,7 +144,6 @@ def main():
         else:
             loc='upper right'
         plt.legend(loc=loc, fontsize=6)
-        sys.stderr.write('Key: {}, min: {}, max: {}\n'.format(key, np.min(STATS[key]['normdiff']), np.max(STATS[key]['normdiff']) ) )
 
     plt.savefig(data_dir + 'normdiff' + '.png')
 
