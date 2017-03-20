@@ -50,11 +50,12 @@ def main():
     best_chi2 = np.zeros(Nfiles)
 
     # Load results of each chain and compute stats
+    k = 0
     for i in range(100):
         if (i in bad_files):
             continue
         if(i%10==0):
-            sys.stderr.write('On result #{} of {}\n'.format(i,Nfiles))
+            sys.stderr.write('On result #{} of {}\n'.format(i,100))
         fname = data_dir + 'results_' + str(i) + '.dat'
         if not os.path.isfile(fname):
             sys.stderr.write('{} does not exist\n'.format(fname))
@@ -78,11 +79,12 @@ def main():
                 s = s_u
             d = (t - m) / s
 
-            STATS[j]['median'][i]=m
-            STATS[j]['std'][i]=s
-            STATS[j]['normdiff'][i]=d
+            STATS[j]['median'][k]=m
+            STATS[j]['std'][k]=s
+            STATS[j]['normdiff'][k]=d
 
-        best_chi2[i] = min(mc['chi2'])
+        best_chi2[k] = min(mc['chi2'])
+        k+=1
 
 
     stats_fname = data_dir + 'normdiff_100chains.dat'
