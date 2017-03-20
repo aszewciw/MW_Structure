@@ -18,7 +18,7 @@ data_dir='./out_data/'
 def make_bins(x, bwidth):
 
     bin_min=int(min(x))-1
-    bin_max=int(max(x))+1
+    bin_max=int(max(x))+1+bwidth
 
     bins=np.arange(bin_min,bin_max,bwidth)
 
@@ -88,7 +88,7 @@ def main():
         plt.axvline(std_plus, color='b', linestyle='solid')
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
-        plt.axis([min(bins), max(bins)+bwidth, 0, 1.1*max(n)])
+        plt.axis([min(bins), max(bins), 0, 1.1*max(n)])
         print(min(bins), max(bins))
         # plt.ylabel(labels[i])
         if i==3 or i==4:
