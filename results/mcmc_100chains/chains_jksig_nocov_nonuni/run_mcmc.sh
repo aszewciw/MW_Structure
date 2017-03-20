@@ -7,7 +7,7 @@ outdir='./out_data/';
 nprocs=16;
 max_s=100000;
 tol=0.0;
-Ndata=3;
+Ndata=100;
 stats_dir='../prep_jk_errors/data/';
 
 rm $cfname

@@ -59,6 +59,9 @@ def main():
 
         for i in range(Ndata):
 
+            if i < 3:
+                continue
+
             ofname = out_dir + 'results_' + str(i) + '.dat'
             dd_dir = data_dir + 'sample_' + str(i) + '/'
             std_dir = stats_dir + 'sample_' + str(i) + '/'
