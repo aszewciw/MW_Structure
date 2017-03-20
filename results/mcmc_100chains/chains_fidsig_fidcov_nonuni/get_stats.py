@@ -12,16 +12,6 @@ import mw_utilities_python as mwu
 import sys, os
 import numpy as np
 
-def make_bins(x, bwidth):
-
-    bin_min=int(min(x))-1
-    bin_max=int(max(x))+1
-
-    bins=np.arange(bin_min,bin_max,bwidth)
-
-    return bins
-
-
 def main():
 
     # Optional cl input
@@ -60,7 +50,7 @@ def main():
     best_chi2 = np.zeros(Nfiles)
 
     # Load results of each chain and compute stats
-    for i in range(Nfiles):
+    for i in range(100):
         if (i in bad_files):
             continue
         if(i%10==0):
