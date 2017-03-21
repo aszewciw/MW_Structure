@@ -85,12 +85,13 @@ def main():
 
         plt.clf()
         plt.figure(1)
-        spnum = 431
+        spnum = 0
         bwidth=1
 
         for j in range(N_bins):
             label=str(np.round(bins_mid,3)) + ' kpc'
-            plt.subplot(spnum+j)
+            # plt.subplot(spnum+j)
+            plt.subplot(4,3,spnum+j)
             DD = DD_raw_all[:,j]
             hist_bins = make_hist_bins(DD, bwidth)
             n, b, patches = plt.hist(DD, bins=hist_bins, facecolor='green',
