@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-N_mocks=1000;
+N_mocks=10000;
 pairs_dir=/fs1/szewciw/MW_Structure/results/error_analysis/data_pairs/;
 out_dir=./plots/;
 bins_dir=../prep_bins/;

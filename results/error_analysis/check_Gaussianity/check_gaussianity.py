@@ -90,8 +90,6 @@ def main():
 
     for i in range(N_los):
         ID = ID_list[i]
-        if ID != '27' and ID !='0' and ID != '7':
-            continue
         sys.stderr.write('On pointing {}\n'.format(ID))
 
         for j in range(N_mocks):
