@@ -89,7 +89,7 @@ def main():
         bwidth=1
 
         for j in range(N_bins):
-            label=str(np.round(bins_mid,3)) + ' kpc'
+            label=str(np.round(bins_mid[j],3)) + ' kpc'
             # plt.subplot(spnum+j)
             fig1.add_subplot(4,3,j+1)
             DD = DD_raw_all[:,j]
