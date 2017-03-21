@@ -76,6 +76,9 @@ def main():
         sys.stderr.write('On pointing {}\n'.format(ID))
 
         for j in range(N_mocks):
+
+            if j%500==0:
+                sys.stderr.write('Loading file {} of {}\n'.format(j, N_mocks))
             dd_fname = pairs_dir + 'sample_' + str(j) + '/dd_' + ID + '.dat'
             DD_raw_all[j,:] = np.genfromtxt(dd_fname, unpack=True, comments='#',
                 usecols=[5])
