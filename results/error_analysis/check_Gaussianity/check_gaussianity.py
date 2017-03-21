@@ -90,7 +90,7 @@ def main():
 
     for i in range(N_los):
         ID = ID_list[i]
-        if ID != '27' or ID !='0' or ID != '7':
+        if ID != '27' and ID !='0' and ID != '7':
             continue
         sys.stderr.write('On pointing {}\n'.format(ID))
 
@@ -125,7 +125,7 @@ def main():
         sys.stderr.write('Plots finished.\n')
 
     gif_name= out_dir + 'pair_hist.gif'
-    # GIF_MOVIE(png_list, gif_name, delay=120)
+    GIF_MOVIE(png_list, gif_name, delay=120)
 
 
 
