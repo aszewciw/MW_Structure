@@ -77,12 +77,11 @@ def main():
 
         for j in range(N_mocks):
 
-            if j%500==0:
-                sys.stderr.write('Loading file {} of {}\n'.format(j, N_mocks))
             dd_fname = pairs_dir + 'sample_' + str(j) + '/dd_' + ID + '.dat'
             DD_raw_all[j,:] = np.genfromtxt(dd_fname, unpack=True, comments='#',
                 usecols=[5])
 
+        sys.stderr.write('Data loaded. Making plots.\n')
 
         plt.clf()
         plt.figure(1)
@@ -91,7 +90,7 @@ def main():
 
         for j in range(N_bins):
             label=str(np.round(bins_mid,3)) + ' kpc'
-            plt.subplot(spnum+i)
+            plt.subplot(spnum+j)
             DD = DD_raw_all[:,j]
             hist_bins = make_hist_bins(DD, bwidth)
             n, b, patches = plt.hist(DD, bins=hist_bins, facecolor='green',
@@ -100,6 +99,8 @@ def main():
 
         figname=out_dir + 'pair_hist_' + ID + '.png'
         plt.savefig(figname)
+
+        sys.stderr.write('Plots finished.\n')
 
 
 
