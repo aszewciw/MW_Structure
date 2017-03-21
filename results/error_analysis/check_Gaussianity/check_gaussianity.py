@@ -125,7 +125,7 @@ def main():
         sys.stderr.write('Plots finished.\n')
 
     gif_name= out_dir + 'pair_hist.gif'
-    GIF_MOVIE(png_list, gif_name, delay=120)
+    # GIF_MOVIE(png_list, gif_name, delay=120)
 
 
 
