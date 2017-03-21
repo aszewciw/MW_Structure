@@ -28,7 +28,24 @@ def make_hist_bins(x, bwidth):
 
     return bins
 
+def GIF_MOVIE(files, output_gif, delay=60, repeat=True, removef=False):
+    """
+    Given a list if 'files', it creates a gif file, and deletes temp files.
 
+    Parameters
+    ----------
+    files: array_like
+            List of abs. paths to temporary figures
+
+    output_gif: str
+            Absolute path to output gif file.
+    """
+    loop = -1 if repeat else 0
+    os.system('convert -delay %d -loop %d %s %s' %( delay,loop," ".join(files), \
+        output_gif) )
+
+    if removef:
+        for fname in files: os.remove(fname)
 
 
 def main():
@@ -69,9 +86,11 @@ def main():
 
     DD_raw_all = np.zeros((N_mocks, N_bins))
 
+    png_list=[]
+
     for i in range(N_los):
         ID = ID_list[i]
-        if ID != '27':
+        if ID != '27' or ID !='0' or ID != '7':
             continue
         sys.stderr.write('On pointing {}\n'.format(ID))
 
@@ -101,9 +120,12 @@ def main():
         figname=out_dir + 'pair_hist_' + ID + '.png'
         plt.savefig(figname)
 
+        png_list.append(figname)
+
         sys.stderr.write('Plots finished.\n')
 
-
+    gif_name= plots_dir + 'pair_hist.gif'
+    GIF_MOVIE(png_list, gif_name, delay=120)
 
 
 
