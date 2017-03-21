@@ -94,8 +94,8 @@ def main():
             plt.subplot(spnum+i)
             DD = DD_raw_all[:,j]
             hist_bins = make_hist_bins(DD, bwidth)
-            n, b, patches = plt.hist(STATS[key], bins=hist_bins,
-                facecolor='green', alpha=0.7, label=label)
+            n, b, patches = plt.hist(DD, bins=hist_bins, facecolor='green',
+                alpha=0.7, label=label)
             plt.legend(loc='upper right', fontsize=6)
 
         figname=out_dir + 'pair_hist_' + ID + '.png'
