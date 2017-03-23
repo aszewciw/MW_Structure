@@ -106,14 +106,14 @@ def main():
 
         plt.clf()
         fig1=plt.figure(1)
-        plt.title('Pair Histograms from 10000 mocks, l.o.s. ' + ID)
-        spnum = 0
+        fig1.suptitle('Pair Histograms from 10000 mocks, l.o.s. ' + ID)
         bwidth=1
 
         for j in range(N_bins):
             label=str(np.round(bins_mid[j],3)) + ' kpc'
-            # plt.subplot(spnum+j)
             fig1.add_subplot(4,3,j+1)
+            fig1.set_xticklabels(fontsize='small')
+            fig1.set_yticklabels(fontsize='small')
             DD = DD_raw_all[:,j]
             hist_bins = make_hist_bins(DD, bwidth)
             n, b, patches = plt.hist(DD, bins=hist_bins, facecolor='green',
