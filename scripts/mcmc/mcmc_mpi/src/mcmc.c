@@ -113,7 +113,7 @@ int degrees_of_freedom(POINTING *p, int N_bins, int lower_ind, int upper_ind){
     for(i = lower_ind; i < upper_ind; i++){
         for(j = 0; j < N_bins; j++){
             if( p[i].rbin[j].DD == 0.0 ) continue;
-            if( p[i].rbin[j].std_Fid == 0.0 ) continue;
+            if( p[i].rbin[j].std_fid == 0.0 ) continue;
 
             // temp line to ignore first bin
             if(j==0) continue;
