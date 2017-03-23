@@ -93,9 +93,6 @@ def main():
         ID = ID_list[i]
         sys.stderr.write('On pointing {}\n'.format(ID))
 
-        if ID!='27' and ID!='30':
-            continue
-
         for j in range(N_mocks):
 
             dd_fname = pairs_dir + 'sample_' + str(j) + '/dd_' + ID + '.dat'
