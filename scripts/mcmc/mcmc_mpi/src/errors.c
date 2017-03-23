@@ -35,8 +35,8 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
                     if( p[i].rbin[j].MM == 0.0 ) continue;
                     if( p[i].rbin[k].DD == 0.0 ) continue;
                     if( p[i].rbin[k].MM == 0.0 ) continue;
-                    if( p[i].rbin[j]std_fid == 0.0 ) continue;
-                    if( p[i].rbin[k]std_fid == 0.0 ) continue;
+                    if( p[i].rbin[j].std_fid == 0.0 ) continue;
+                    if( p[i].rbin[k].std_fid == 0.0 ) continue;
 
                     // tmp line to skip first bin
                     if( j==0 || k==0 ) continue;
