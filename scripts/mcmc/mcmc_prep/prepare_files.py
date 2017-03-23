@@ -10,7 +10,7 @@ import numpy as np
 def main():
 
     # Parse CL
-    elements_needed = int(7)
+    elements_needed = int(8)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -20,17 +20,21 @@ def main():
     model_dir = args_array[4]
     stats_dir = args_array[5]
     fid_dir   = args_array[6]
+    bins_dir  = args_array[7]
 
     # Check that all passed directories exist and print them.
-    for i in args_array:
-        if not(os.path.isdir(i)):
-            sys.stderr.write('{} does not exist. Exiting...\n'.format(i))
+    for i in range(1, len(args_array)-1):
+        if not(os.path.isdir(args_array[i])):
+            sys.stderr.write('{} does not exist. Exiting...\n'.format(args_array[i]))
+            sys.exit()
     sys.stderr.write('Output directory is {}\n'.format(out_dir))
     sys.stderr.write('Todo directory is {}\n'.format(todo_dir))
     sys.stderr.write('Data directory is {}\n'.format(data_dir))
     sys.stderr.write('Model directory is {}\n'.format(model_dir))
     sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
     sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
+    sys.stderr.write('Bins directory is {}\n'.format(bins_dir))
+
 
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
@@ -44,13 +48,17 @@ def main():
             f.write('\n')
 
     # Check for existence of bins files and load number of bins
-    bins_fname = out_dir + 'rbins.ascii.dat'
+    bins_fname = bins_dir + 'rbins.ascii.dat'
     if not(os.path.isfile(bins_fname)):
         sys.stderr.write('{} does not exist. Please make before continuing...\n'
                             .format(bins_fname))
         sys.exit()
     bins = np.genfromtxt(bins_fname, unpack=True, usecols=[0], skip_header=1)
     nbins = len(bins)
+
+    # Also, copy bins file to out_dir
+    cmd = 'cp ' + bins_fname + ' ' + out_dir
+    os.system(cmd)
 
     # Prepare data for each l.o.s.
     for i in ID:
@@ -61,10 +69,14 @@ def main():
         # get dd counts
         data_fname = data_dir + 'dd_' + i + '.dat'
         dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
-        out_fname = out_dir + 'dd_' + i + '.dat'
-        with open(out_fname, 'w') as f:
-            for d in dd:
-                f.write('{0:.6e}\n'.format(d))
+        out_fname = data_dir + 'DD_' + i + '.dat'
+        # Can Check if I've already made this file
+        if os.path.isfile(out_fname):
+            sys.stderr.write('Note: {} already exists. Not re-writing it.\n'.format(out_fname))
+        else:
+            with open(out_fname, 'w') as f:
+                for d in dd:
+                    f.write('{0:.6e}\n'.format(d))
 
         # get mean and standard deviation files
         # stats_fname = stats_dir + 'stats_' + i + '.dat'
@@ -96,13 +108,11 @@ def main():
         cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
         os.system(cmd)
 
-        # Check that pair files exist
+        # Copy pair files
         for j in range(nbins):
-            pair_fname = out_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
-            if not(os.path.isfile(pair_fname)):
-                sys.stderr.write('{} does not exist. Please make before continuing...\n'
-                                    .format(pair_fname))
-                sys.exit()
+            pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
+            cmd = 'cp ' + pair_fname + ' ' + out_dir
+            os.system(cmd)
 
     sys.stderr.write('The folder {} has all data ready to run an mcmc.\n'
                         .format(out_dir))

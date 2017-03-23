@@ -46,6 +46,7 @@ def main():
     sys.stderr.write('Model directory is {}\n'.format(model_dir))
     sys.stderr.write('Stats directory is {}\n'.format(stats_dir))
     sys.stderr.write('Fiducial directory is {}\n'.format(fid_dir))
+    sys.stderr.write('Bins directory is {}\n'.format(bins_dir))
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     # Make ID list from todo file
