@@ -112,7 +112,7 @@ def main():
         for j in range(N_bins):
             label=str(np.round(bins_mid[j],3)) + ' kpc'
             subp = fig1.add_subplot(4,3,j+1)
-            subp.tick_params(labelsize=4)
+            subp.tick_params(labelsize=5)
             DD = DD_raw_all[:,j]
             hist_bins = make_hist_bins(DD, bwidth)
             n, b, patches = plt.hist(DD, bins=hist_bins, facecolor='green',
