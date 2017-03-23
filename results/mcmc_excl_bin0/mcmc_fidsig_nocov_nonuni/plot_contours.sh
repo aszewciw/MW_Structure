@@ -3,7 +3,7 @@
 data1=/fs1/szewciw/MW_Structure/results/mcmc_100chains/chains_fidsig_nocov_nonuni/out_data/results_0.dat;
 pltname1=contours_fidsig_nocov_nonuni.png
 
-data2=/out_data/results.dat;
+data2=./out_data/results.dat;
 pltname2=contours_fidsig_nocov_nonuni_exclbin0.png;
 
 cut_frac=0.05;
