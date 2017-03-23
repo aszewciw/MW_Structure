@@ -6,14 +6,27 @@ import sys,os
 
 def main():
 
-    fname = './out_data/results.dat'
-    plot_name = 'fidsig_nocov_nonuni_exclbin0.png'
-    cut_frac  = '0.05'
-    z0_thin_true  = '0.234'
-    r0_thin_true  = '2.027'
-    z0_thick_true = '0.675'
-    r0_thick_true = '2.397'
-    ratio_true    = '0.053'
+    elements_needed = int(9)
+    args_array      = np.array(sys.argv)
+    N_args          = len(args_array)
+    assert(N_args == elements_needed)
+    fname  = args_array[1]
+    plot_name = args_array[2]
+    cut_frac  = args_array[3]
+    z0_thin_true  = args_array[4]
+    r0_thin_true  = args_array[5]
+    z0_thick_true = args_array[6]
+    r0_thick_true = args_array[7]
+    ratio_true    = args_array[8]
+
+    # fname = './out_data/results.dat'
+    # plot_name = 'contours_fidsig_nocov_nonuni_exclbin0.png'
+    # cut_frac  = '0.05'
+    # z0_thin_true  = '0.234'
+    # r0_thin_true  = '2.027'
+    # z0_thick_true = '0.675'
+    # r0_thick_true = '2.397'
+    # ratio_true    = '0.053'
 
     if not os.path.isfile(fname):
         sys.stderr.write('Error: {} does not exist.\n'.format(fname))
