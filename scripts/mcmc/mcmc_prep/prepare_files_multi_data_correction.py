@@ -15,6 +15,7 @@ Arguments:
 import sys, os
 import numpy as np
 import pandas as pd
+from scipy import linalg
 
 def main():
 
