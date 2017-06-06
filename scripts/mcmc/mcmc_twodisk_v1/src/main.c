@@ -92,7 +92,6 @@ int main(int argc, char * argv[]){
     /* -- Load data from various files --*/
     int i, j;
     int N_plist;
-    int N_bins;
     POINTING *plist;
 
     /* have each process separately access these files */
@@ -101,8 +100,6 @@ int main(int argc, char * argv[]){
         if (current_rank == rank){
             load_pointingID(&N_plist, &plist, in_dir);
             if(rank == 0) fprintf(stderr, "%d pointings to do\n", N_plist);
-            N_bins = load_Nbins(in_dir);
-            if(rank == 0) fprintf(stderr, "%d bins per pointing\n", N_bins);
         }
         MPI_Barrier(MPI_COMM_WORLD);
         current_rank++;
@@ -125,16 +122,16 @@ int main(int argc, char * argv[]){
 
     /* Each process now loads data for its slice only */
     load_ZRW(plist, lower_ind, upper_ind, rank, in_dir);
-    load_rbins(plist, N_bins, lower_ind, upper_ind, rank, in_dir, dd_dir);
-    load_pairs(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
-    load_inv_correlation(plist, N_bins, lower_ind, upper_ind, rank, in_dir);
+    load_rbins(plist, lower_ind, upper_ind, rank, in_dir, dd_dir);
+    load_pairs(plist, lower_ind, upper_ind, rank, in_dir);
+    load_inv_correlation(plist, lower_ind, upper_ind, rank, in_dir);
 
     /* Run mcmc */
-    run_mcmc(plist, cl_args, N_bins, lower_ind, upper_ind, rank, nprocs, out_filename);
+    run_mcmc(plist, cl_args, lower_ind, upper_ind, rank, nprocs, out_filename);
 
     /* Free allocated values */
     for(i=lower_ind; i<upper_ind; i++){
-        for(j=0; j<N_bins; j++){
+        for(j=0; j<plist[i].N_bins; j++){
             free(plist[i].rbin[j].pair1);
             free(plist[i].rbin[j].pair2);
         }

@@ -83,7 +83,7 @@ double calculate_MM( unsigned int N_pairs, int *pair1, int *pair2,
 /* ----------------------------------------------------------------------- */
 
 /* Updates normalized values of MM for current model */
-void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind){
+void update_model(POINTING *p, int lower_ind, int upper_ind){
 
     int i, j;
     double MM_norm;
@@ -93,7 +93,7 @@ void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind){
 
         MM_norm = normalize_MM(p[i].weight, p[i].N_stars);
 
-        for(j = 0; j < N_bins; j++){
+        for(j = 0; j < p[i].N_bins; j++){
 
             p[i].rbin[j].MM = calculate_MM( p[i].rbin[j].N_pairs,
                 p[i].rbin[j].pair1, p[i].rbin[j].pair2, MM_norm,
@@ -105,18 +105,15 @@ void update_model(POINTING *p, int N_bins, int lower_ind, int upper_ind){
 /* ----------------------------------------------------------------------- */
 
 /* Calculate degrees of freedom -- only do once */
-int degrees_of_freedom(POINTING *p, int N_bins, int lower_ind, int upper_ind){
+int degrees_of_freedom(POINTING *p, int lower_ind, int upper_ind){
 
     int dof = 0;
     int i, j;
 
     for(i = lower_ind; i < upper_ind; i++){
-        for(j = 0; j < N_bins; j++){
+        for(j = 0; j < p[i].N_bins; j++){
             if( p[i].rbin[j].DD == 0.0 ) continue;
-            if( p[i].rbin[j].std_fid == 0.0 ) continue;
-
-            // temp line to ignore first bin
-            if(j==0) continue;
+            // if( p[i].rbin[j].std_fid == 0.0 ) continue;
             dof++;
         }
     }
@@ -192,59 +189,14 @@ double calc_std(double *x, int N){
 }
 
 /* ----------------------------------------------------------------------- */
-
-/* Check whether new vs old standard deviations is less than tolerance */
-int check_convergence(STD *std){
-    double rthin_std_old, zthin_std_old, rthick_std_old, zthick_std_old, ratio_std_old;
-    double diff, tol;
-    int flag = 1;   /* assume convergence */
-
-    /* set old standard deviations to those currently stored in std */
-    rthin_std_old  = std->r0_thin_std;
-    zthin_std_old  = std->z0_thin_std;
-    rthick_std_old = std->r0_thick_std;
-    zthick_std_old = std->z0_thick_std;
-    ratio_std_old  = std->ratio_std;
-
-    /* get new standard deviations */
-    std->r0_thin_std  = calc_std(std->r0_thin, std->N_steps);
-    std->z0_thin_std  = calc_std(std->z0_thin, std->N_steps);
-    std->r0_thick_std = calc_std(std->r0_thick, std->N_steps);
-    std->z0_thick_std = calc_std(std->z0_thick, std->N_steps);
-    std->ratio_std    = calc_std(std->ratio, std->N_steps);
-
-    tol = std->tol;
-
-    /* if we don't meet any of the convergence criteria, multiply flag by 0 */
-    diff = fabs(std->r0_thin_std - rthin_std_old)/std->r0_thin_std;
-    if(diff>tol) flag*=0;
-
-    diff = fabs(std->z0_thin_std - zthin_std_old)/std->z0_thin_std;
-    if(diff>tol) flag*=0;
-
-    diff = fabs(std->r0_thick_std - rthick_std_old)/std->r0_thin_std;
-    if(diff>tol) flag*=0;
-
-    diff = fabs(std->z0_thick_std - zthick_std_old)/std->z0_thick_std;
-    if(diff>tol) flag*=0;
-
-    diff = fabs(std->ratio_std - ratio_std_old)/std->ratio_std;
-    if(diff>tol) flag*=0;
-
-    return flag;
-}
-
-
-/* ----------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------- */
 /* -------------------------------- MCMC --------------------------------- */
 /* ----------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------- */
 
 /* Run mcmc chain */
-void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
-    int upper_ind, int rank, int nprocs, char filename[256])
-{
+void run_mcmc(POINTING *plist, ARGS args, int lower_ind, int upper_ind, int rank, int nprocs, char filename[256]){
+
     int i=0;                /* mcmc index */
     int eff_counter = 0;    /* number of accepted steps */
     double eff;             /* number accepted / total */
@@ -255,9 +207,9 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
     int DOF = 0;            /* total degrees of freedom */
     int DOF_proc;           /* d.o.f. of each process */
     double chi2 = 0.0;      /* chi2 value for each process */
-    STD std;                /* stores info for previous 10000 steps */
-    int std_ind=0;          /* index for storing */
-    int conv_flag=0;        /* set=1 if we meet convergence criteria */
+    // STD std;                /* stores info for previous 10000 steps */
+    // int std_ind=0;          /* index for storing */
+    // int conv_flag=0;        /* set=1 if we meet convergence criteria */
 
     if (rank == 0){
         fprintf(stderr, "Start MCMC chain. Max steps = %d\n", args.max_steps);
@@ -277,14 +229,14 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
     if(rank==0) fprintf(stderr, "Initial weights set \n");
 
     /* get initial values of MM */
-    update_model(plist, N_bins, lower_ind, upper_ind);
+    update_model(plist, lower_ind, upper_ind);
 
     /* Calculate initial correlation value */
-    chi2 = calculate_chi2(plist, current, args.cov, args.frac, N_bins, lower_ind, upper_ind);
+    chi2 = calculate_chi2(plist, current, args.cov, args.frac, lower_ind, upper_ind);
     MPI_Allreduce(&chi2, &current.chi2, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 
     /* Degrees of freedom never change -- calculate once */
-    DOF_proc = degrees_of_freedom(plist, N_bins, lower_ind, upper_ind);
+    DOF_proc = degrees_of_freedom(plist, lower_ind, upper_ind);
     MPI_Allreduce(&DOF_proc, &DOF, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
     DOF -= args.N_params;
     current.chi2_red = current.chi2 / (double)DOF;
@@ -327,20 +279,6 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
     GSL_r = gsl_rng_alloc(GSL_T);
     gsl_rng_set(GSL_r, time(NULL));
 
-    /* Initialize standard deviation properites */
-    std.N_steps = args.std_steps;
-    std.tol = args.tol;
-    std.r0_thin_std  = 0.0;
-    std.z0_thin_std  = 0.0;
-    std.r0_thick_std = 0.0;
-    std.z0_thick_std = 0.0;
-    std.ratio_std    = 0.0;
-    std.r0_thin  = calloc(std.N_steps, sizeof(double));
-    std.z0_thin  = calloc(std.N_steps, sizeof(double));
-    std.r0_thick = calloc(std.N_steps, sizeof(double));
-    std.z0_thick = calloc(std.N_steps, sizeof(double));
-    std.ratio    = calloc(std.N_steps, sizeof(double));
-
     /* mcmc */
     while(i<args.max_steps){
         /* Have only step 0 take random walk and send new params to all procs */
@@ -353,10 +291,10 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
         set_weights(new, plist, lower_ind, upper_ind);
 
         /* get new MM values */
-        update_model(plist, N_bins, lower_ind, upper_ind);
+        update_model(plist, lower_ind, upper_ind);
 
         /* Calculate and gather chi2 */
-        chi2 = calculate_chi2(plist, new, args.cov, args.frac, N_bins, lower_ind, upper_ind);
+        chi2 = calculate_chi2(plist, new, args.cov, args.frac, lower_ind, upper_ind);
         MPI_Barrier(MPI_COMM_WORLD);
         MPI_Allreduce(&chi2, &new.chi2, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
         new.chi2_red = new.chi2 / (double)DOF;
@@ -394,18 +332,18 @@ void run_mcmc(POINTING *plist, ARGS args, int N_bins, int lower_ind,
         }
 
         /* Check mcmc convergence */
-        if(i>args.min_steps){
-            std.r0_thin[std_ind] = current.r0_thin;
-            std.z0_thin[std_ind] = current.z0_thin;
-            std.r0_thick[std_ind] = current.r0_thick;
-            std.z0_thick[std_ind] = current.z0_thick;
-            std.ratio[std_ind] = current.ratio;
-            std_ind += 1;
-            if(std_ind==std.N_steps){
-                conv_flag = check_convergence(&std);
-                std_ind=0;
-            }
-        }
+        // if(i>args.min_steps){
+        //     std.r0_thin[std_ind] = current.r0_thin;
+        //     std.z0_thin[std_ind] = current.z0_thin;
+        //     std.r0_thick[std_ind] = current.r0_thick;
+        //     std.z0_thick[std_ind] = current.z0_thick;
+        //     std.ratio[std_ind] = current.ratio;
+        //     std_ind += 1;
+        //     if(std_ind==std.N_steps){
+        //         conv_flag = check_convergence(&std);
+        //         std_ind=0;
+        //     }
+        // }
 
         // if(conv_flag==1){
         //     fprintf(stderr, "Convergence criteria met. Exiting on step %d\n", i);

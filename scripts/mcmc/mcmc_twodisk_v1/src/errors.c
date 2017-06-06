@@ -8,9 +8,7 @@
 /* ----------------------------------------------------------------------- */
 
 /* Calculate chi2 for a process's given slice of pointings */
-double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
-    int lower_ind, int upper_ind)
-{
+double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int lower_ind, int upper_ind){
 
     int i, j, k;
     double chi2 = 0.0;
@@ -23,23 +21,20 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
     for(i = lower_ind; i < upper_ind; i++){
 
         /* loop over bin rows */
-        for(j = 0; j < N_bins; j++){
+        for(j = 0; j < p[i].N_bins; j++){
 
             /* loop over bin column elements */
-            for(k = 0; k < N_bins; k++){
+            for(k = 0; k < p[i].N_bins; k++){
 
                 /* skip any bins where we have 0 counts */
                 /* atm, I only want to do this for noncovariance case */
                 if(cov==0){
                     if( p[i].rbin[j].DD == 0.0 ) continue;
-                    if( p[i].rbin[j].MM == 0.0 ) continue;
+                    // if( p[i].rbin[j].MM == 0.0 ) continue;
                     if( p[i].rbin[k].DD == 0.0 ) continue;
-                    if( p[i].rbin[k].MM == 0.0 ) continue;
-                    if( p[i].rbin[j].std_fid == 0.0 ) continue;
-                    if( p[i].rbin[k].std_fid == 0.0 ) continue;
-
-                    // tmp line to skip first bin
-                    if( j==0 || k==0 ) continue;
+                    // if( p[i].rbin[k].MM == 0.0 ) continue;
+                    // if( p[i].rbin[j].std_fid == 0.0 ) continue;
+                    // if( p[i].rbin[k].std_fid == 0.0 ) continue;
                 }
 
                 /* check if covariance or non-covariance */
@@ -86,10 +81,6 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
                     chi2_temp = ( ( ( corr_data_j - corr_model_j ) / sigma_j )
                         * ( ( corr_data_k - corr_model_k ) / sigma_k ) * r_jk );
                 }
-                // if(fabs(chi2_temp)>10000.0){
-                //     fprintf(stderr, "Chi2: %lf\t, sigma: %lf\t, ID: %s, bin: %d\n",
-                //         chi2_temp, sigma_k, p[i].ID, k);
-                // }
                 chi2 += chi2_temp;
             }
         }

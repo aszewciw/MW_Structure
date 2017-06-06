@@ -21,9 +21,6 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
     cl_args.z0_thick = 0.675;
     cl_args.ratio    = 0.053;
     cl_args.max_steps = 100000;
-    cl_args.min_steps = 30000;
-    cl_args.std_steps = 10000;
-    cl_args.tol  = 0.1;
     cl_args.frac = 0;
     cl_args.cov  = 0;
 
@@ -42,14 +39,8 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
             sscanf(arg_array[++cnt], "%lf", &cl_args.z0_thick);
         else if ( !strcmp(arg_array[cnt],"-a") )
             sscanf(arg_array[++cnt], "%lf", &cl_args.ratio);
-        else if ( !strcmp(arg_array[cnt],"-tol") )
-            sscanf(arg_array[++cnt], "%lf", &cl_args.tol);
         else if ( !strcmp(arg_array[cnt],"-max_s") )
             sscanf(arg_array[++cnt], "%d", &cl_args.max_steps);
-        else if ( !strcmp(arg_array[cnt],"-min_s") )
-            sscanf(arg_array[++cnt], "%d", &cl_args.min_steps);
-        else if ( !strcmp(arg_array[cnt],"-std_s") )
-            sscanf(arg_array[++cnt], "%d", &cl_args.std_steps);
         else if ( !strcmp(arg_array[cnt],"-frac") )
             sscanf(arg_array[++cnt], "%d", &cl_args.frac);
         else if ( !strcmp(arg_array[cnt],"-cov") )
@@ -65,17 +56,17 @@ ARGS parse_command_line( int n_args, char ** arg_array ){
         else if ( !strcmp(arg_array[cnt],"-dd") )
             cnt++;
         else if ( !strcmp(arg_array[cnt],"--help") || !strcmp(arg_array[cnt],"-h") ) {
-            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>] [-min_s <min_steps>]\n");
+            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>]\n");
             printf("\t[-rn <r0_thin>] [-zn <z0_thin>] [-rk <r0_thick>] [-zk <z0_thick>] [-frac <frac>] [-cov <cov>]\n");
-            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nmin_s=30000\nmax_s=100000\nfrac: 0\ncov: 0\n");
+            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.053\nmax_s=100000\nfrac: 0\ncov: 0\n");
             printf("No directory defaults exist. These must be passed!\n");
             exit(-1);
         }
         else{
             printf("\n***Error: Uncrecognized CL option %s\n\n", arg_array[cnt]);
-            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>] [-min_s <min_steps>]\n");
+            printf("Usage: ./run_mcmc [-fn <out_filename>] [-l_id <in_dir length>] [-id <in_dir>] [-N_p <n_params>] [-max_s <max_steps>]\n");
             printf("\t[-rn <r0_thin>] [-zn <z0_thin>] [-rk <r0_thick>] [-zk <z0_thick>] [-frac <frac>] [-cov <cov>]\n");
-            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.12\nmin_s=30000\nmax_s=100000\nfrac: 0\ncov: 0\n");
+            printf("Defaults:\nN_p: 5\nrn: 3.0\nzn: 0.3\nrk: 4.0\nzk: 1.2\na: 0.053\nmax_s=100000\nfrac: 0\ncov: 0\n");
             printf("No directory defaults exist. These must be passed!\n");
             exit(-1);
         }
@@ -121,22 +112,22 @@ void load_pointingID(int *N_plist, POINTING **plist, char in_dir[]){
 
 /* ----------------------------------------------------------------------- */
 
-/* Load number of bins. Bin edge values are not needed in chain. */
-int load_Nbins(char in_dir[]){
+// /* Load number of bins. Bin edge values are not needed in chain. */
+// int load_Nbins(char in_dir[]){
 
-    int N;
-    char bin_filename[256];
-    FILE *bin_file;
-    snprintf(bin_filename, 256, "%srbins.ascii.dat", in_dir);
-    if((bin_file=fopen(bin_filename,"r"))==NULL){
-        fprintf(stderr, "Error: Cannot open file %s \n", bin_filename);
-        exit(EXIT_FAILURE);
-    }
-    fscanf(bin_file, "%d", &N);
-    fclose(bin_file);
+//     int N;
+//     char bin_filename[256];
+//     FILE *bin_file;
+//     snprintf(bin_filename, 256, "%srbins.ascii.dat", in_dir);
+//     if((bin_file=fopen(bin_filename,"r"))==NULL){
+//         fprintf(stderr, "Error: Cannot open file %s \n", bin_filename);
+//         exit(EXIT_FAILURE);
+//     }
+//     fscanf(bin_file, "%d", &N);
+//     fclose(bin_file);
 
-    return N;
-}
+//     return N;
+// }
 
 /* ----------------------------------------------------------------------- */
 
@@ -190,28 +181,32 @@ void load_ZRW(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_d
 /* ----------------------------------------------------------------------- */
 
 /* Load data for each bin from a variety of files */
-void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank,
+void load_rbins(POINTING *plist, int lower_ind, int upper_ind, int rank,
     char in_dir[], char dd_dir[])
 {
 
     char filename[256];
     FILE *file;
-    int i, j;
+    int i, j, N_bins;
     RBIN *b;
 
     /* Loop over each pointing */
     for( i = lower_ind; i<upper_ind; i++ ){
 
-        /* Claim space for bin data */
-        b = calloc(N_bins, sizeof(RBIN));
-
-        /* First load DD counts */
-        /* Also assign Bin ID */
+        /* Get number of bins from dd file */
         snprintf(filename, 256, "%sDD_%s.dat", dd_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);
         }
+
+        fscanf(file, "%d", &N_bins);
+
+        /* Claim space for bin data */
+        b = calloc(N_bins, sizeof(RBIN));
+
+        /* First load DD counts and N_bins (first line) */
+        /* Also assign Bin ID */
         for( j=0; j<N_bins; j++ ){
             fscanf(file, "%lf", &b[j].DD);
             snprintf(b[j].binID, 3, "%d", j);
@@ -232,6 +227,7 @@ void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
 
         /* Assign values to plist elements */
         plist[i].rbin = b;
+        plist[i].N_bins = N_bins;
     }
     if(rank==0){
         fprintf(stderr, "DD counts loaded from %s\n", dd_dir);
@@ -242,19 +238,19 @@ void load_rbins(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
 /* ----------------------------------------------------------------------- */
 
 /* Load pairs for each bin in each l.o.s. */
-void load_pairs(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int rank,
-    char in_dir[])
-{
+void load_pairs(POINTING *plist, int lower_ind, int upper_ind, int rank, char in_dir[]){
 
     char pair_filename[256];
     FILE *pair_file;
-    int i, j;
+    int i, j, N_bins;
     unsigned int k, N;
     int *pair1;
     int *pair2;
 
     /* Loop over each pointing */
     for(i=lower_ind; i<upper_ind; i++){
+
+        N_bins = plist[i].N_bins;
 
         for(j=0; j<N_bins; j++){
             snprintf(pair_filename, 256, "%spair_indices_p%s_b%s.dat", in_dir,
@@ -290,18 +286,20 @@ void load_pairs(POINTING *plist, int N_bins, int lower_ind, int upper_ind, int r
 
 /* ----------------------------------------------------------------------- */
 /* load the inverted covariance matrix from mock pair counts */
-void load_inv_correlation(POINTING *plist, int N_bins, int lower_ind, int upper_ind,
+void load_inv_correlation(POINTING *plist, int lower_ind, int upper_ind,
     int rank, char in_dir[])
 {
 
     char invcor_filename[256];
     FILE *invcor_file;
-    int i, j, k;
+    int i, j, k, Nbins;
     INVCOR *row;
     double *col;
 
     /* Loop over each pointing */
     for(i=lower_ind; i<upper_ind; i++){
+
+        N_bins = plist[i].N_bins;
 
         /* First assign inverse correlation matrix terms */
 
