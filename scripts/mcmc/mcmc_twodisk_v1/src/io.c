@@ -292,7 +292,7 @@ void load_inv_correlation(POINTING *plist, int lower_ind, int upper_ind,
 
     char invcor_filename[256];
     FILE *invcor_file;
-    int i, j, k, Nbins;
+    int i, j, k, N_bins;
     INVCOR *row;
     double *col;
 
