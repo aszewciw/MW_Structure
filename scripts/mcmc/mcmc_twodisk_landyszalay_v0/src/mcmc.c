@@ -120,8 +120,7 @@ void update_model(POINTING *p, int lower_ind, int upper_ind){
                 p[i].rbin[j].MM_pair1, p[i].rbin[j].MM_pair2, MM_norm,
                 p[i].weight );
             p[i].rbin[j].MR = calculate_MR( p[i].rbin[j].N_MR,
-                p[i].rbin[j].MR_pair, p[i].rbin[j].MR_pair, MR_norm,
-                p[i].weight );
+                p[i].rbin[j].MR_pair, MR_norm, p[i].weight );
             p[i].rbin[j].model = p[i].rbin[j].MM - 2*p[i].rbin[j].MR;
         }
     }
@@ -137,7 +136,7 @@ int degrees_of_freedom(POINTING *p, int lower_ind, int upper_ind){
 
     for(i = lower_ind; i < upper_ind; i++){
         for(j = 0; j < p[i].N_bins; j++){
-            if( p[i].rbin[j].DD == 0.0 ) continue;
+            if( p[i].rbin[j].data == 0.0 ) continue;
             // if( p[i].rbin[j].std_fid == 0.0 ) continue;
             dof++;
         }
