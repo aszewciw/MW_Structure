@@ -182,7 +182,7 @@ void load_rbins(POINTING *plist, int lower_ind, int upper_ind, int rank,
         }
 
         fscanf(file, "%d", &N_bins);
-        fscanf(file, "%d", &p[i].N_rand)
+        fscanf(file, "%d", &plist[i].N_rand);
 
         /* Claim space for bin data */
         b = calloc(N_bins, sizeof(RBIN));
