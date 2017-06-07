@@ -195,7 +195,7 @@ int main(int argc, char **argv){
     fprintf(stderr, "Reading data .. \n");
 
     /* first read in the length of the list */
-    fscanf(data_file, "%d", &n_data2);
+    fscanf(data2_file, "%d", &n_data2);
 
     /* Claim an array for a list of pointing */
     data2 = calloc(n_data2, sizeof(POINT));
