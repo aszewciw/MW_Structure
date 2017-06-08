@@ -2,8 +2,8 @@
 
 cfname='mocks_cmd.txt';
 out_dir='./data/';
-nprocs=4;
-nmocks=2;
+nprocs=12;
+nmocks=1000;
 rn=69.627;
 zn=0.259;
 rk=4.881;
