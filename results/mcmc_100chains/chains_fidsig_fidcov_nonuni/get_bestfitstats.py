@@ -83,7 +83,7 @@ def main():
             # STATS[j]['median'][k]=m
             # STATS[j]['std'][k]=s
             # STATS[j]['normdiff'][k]=d
-            STATS[j]['bestfit'] = mc[j][min_ind]
+            STATS[j]['bestfit'][k] = mc[j][min_ind]
 
         best_chi2[k] = mc['chi2'][min_ind]
         truth_chi2[k] = mc['chi2'][0]
