@@ -39,7 +39,7 @@ def main():
 
     for ID in ID_list:
         ID = str(ID)
-        sys.stderr.write('On pointing {}'.format(ID))
+        sys.stderr.write('On pointing {}\n'.format(ID))
 
         dd_file = data_dir + 'dd_' + ID + '.dat'
         dd = np.genfromtxt(dd_file, unpack=True, usecols=[4])
