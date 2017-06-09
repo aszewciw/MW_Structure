@@ -34,7 +34,7 @@ def main():
     err_fid_dir = '/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_fid_errors/errors_data/'
     ID_file = '/fs1/szewciw/MW_Structure/results/mcmc_100chains/chains_fidsig_fidcov_nonuni/data/pointing_ID.dat'
 
-    ID_list = np.genfromtxt(ID_file, skip_header=1)
+    ID_list = np.genfromtxt(ID_file, skip_header=1, dtype=int)
 
 
     for ID in ID_list:
