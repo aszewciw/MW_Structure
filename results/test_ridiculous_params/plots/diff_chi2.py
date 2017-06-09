@@ -21,6 +21,8 @@ def compute_chi2(data, model, invcorr, sigma):
             Rij = invcorr[i,j]
             sigmai = sigma[i]
             sigmaj = sigma[j]
+            if(sigmai==0.0) continue
+            if(sigmaj==0.0) continue
 
             chi2 += (Di-Mi)*(Dj-Mj)*Rij/sigmai/sigmaj
 
