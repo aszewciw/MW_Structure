@@ -54,7 +54,7 @@ def main():
 
     for p in ID_list:
 
-        nonuni_file = nonuni_dir + 'mock_' + p + '.xyzw.dat'
+        nonuni_file = nonuni_dir + 'nonuniform_' + p + '.xyzw.dat'
 
         if not os.path.isfile(nonuni_file):
             sys.stderr.write('Error: ' + nonuni_file + ' does not exist.\n')
