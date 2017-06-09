@@ -88,15 +88,26 @@ def main():
         true_inv = linalg.inv(true_corr.values)
         rid_inv = linalg.inv(rid_corr.values)
 
-        chi2_true[0] = compute_chi2(dd, mm_true, fid_inv, fid_std)
-        chi2_true[1] = compute_chi2(dd, true_mean, fid_inv, fid_std)
-        chi2_true[2] = compute_chi2(dd, mm_true, true_inv, true_std)
-        chi2_true[3] = compute_chi2(dd, true_mean, true_inv, true_std)
+        chi2_true[0] += compute_chi2(dd, mm_true, fid_inv, fid_std)
+        chi2_true[1] += compute_chi2(dd, true_mean, fid_inv, fid_std)
+        chi2_true[2] += compute_chi2(dd, mm_true, true_inv, true_std)
+        chi2_true[3] += compute_chi2(dd, true_mean, true_inv, true_std)
 
-        chi2_rid[0] = compute_chi2(dd, mm_rid, fid_inv, fid_std)
-        chi2_rid[1] = compute_chi2(dd, rid_mean, fid_inv, fid_std)
-        chi2_rid[2] = compute_chi2(dd, mm_rid, rid_inv, rid_std)
-        chi2_rid[3] = compute_chi2(dd, rid_mean, rid_inv, rid_std)
+        chi2_rid[0] += compute_chi2(dd, mm_rid, fid_inv, fid_std)
+        chi2_rid[1] += compute_chi2(dd, rid_mean, fid_inv, fid_std)
+        chi2_rid[2] += compute_chi2(dd, mm_rid, rid_inv, rid_std)
+        chi2_rid[3] += compute_chi2(dd, rid_mean, rid_inv, rid_std)
+
+
+    print(chi2_rid)
+    print(chi2_true)
+
+    plt.figure(1)
+    x = np.arange(4) + 1
+
+    plt.plot(x, chi2_true, 'r')
+    plt.plot(x, chi2_rid, 'b')
+    plt.savefig('tmp.plot')
 
 
 
