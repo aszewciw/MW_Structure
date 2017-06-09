@@ -78,14 +78,17 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
                 /* hopefully for instances where I use the corr matrix sigma is
                 not 0...
                 */
-                if(sigma_j==0.0 || sigma_k==0.0){
-                    chi2_temp=0.0;
-                }
-                else{
-                    /* add contribution to chi2 from correlation matrix element */
-                    chi2_temp = ( ( ( corr_data_j - corr_model_j ) / sigma_j )
-                        * ( ( corr_data_k - corr_model_k ) / sigma_k ) * r_jk );
-                }
+                // if(sigma_j==0.0 || sigma_k==0.0){
+                //     chi2_temp=0.0;
+                // }
+                // else{
+                //      add contribution to chi2 from correlation matrix element
+                //     chi2_temp = ( ( ( corr_data_j - corr_model_j ) / sigma_j )
+                //         * ( ( corr_data_k - corr_model_k ) / sigma_k ) * r_jk );
+                // }
+                chi2_temp = ( ( ( corr_data_j - corr_model_j ) / sigma_j )
+                    * ( ( corr_data_k - corr_model_k ) / sigma_k ) * r_jk );
+
                 // if(fabs(chi2_temp)>10000.0){
                 //     fprintf(stderr, "Chi2: %lf\t, sigma: %lf\t, ID: %s, bin: %d\n",
                 //         chi2_temp, sigma_k, p[i].ID, k);
