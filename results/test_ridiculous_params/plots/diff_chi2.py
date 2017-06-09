@@ -105,11 +105,11 @@ def main():
     plt.figure(1)
     x = np.arange(4) + 1
 
-    plt.plot(x, chi2_true, 'r')
-    plt.plot(x, chi2_rid, 'b')
-    plt.savefig('tmp.png')
-
-
+    plt.plot(x, chi2_true, 'r', label='correct model')
+    plt.plot(x, chi2_rid, 'b', label='incorrect model')
+    plt.ylabel(r'$\chi^2$')
+    plt.legend(loc='upper left')
+    plt.savefig('different_chi2_comp.png')
 
 
 if __name__ == '__main__':
