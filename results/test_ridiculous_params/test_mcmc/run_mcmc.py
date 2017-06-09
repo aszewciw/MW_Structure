@@ -18,7 +18,7 @@ def main():
     cfname   = args_array[1]
     in_dir   = args_array[2]
     data_dir = args_array[3]
-    out_dir  = args_array[4]
+    ofname   = args_array[4]
     nprocs   = args_array[5]
     max_s    = args_array[6]
     tol      = args_array[7]
@@ -40,10 +40,10 @@ def main():
         sys.stderr.write('{} does not exist. Please make dir and fill with data.\n'.format(in_dir))
         sys.exit()
 
-    if not os.path.isdir(out_dir):
-        sys.stderr.write('{} does not exist. Making...\n'.format(out_dir))
-        cmd = 'mkdir ' + out_dir
-        os.system(cmd)
+    # if not os.path.isdir(out_dir):
+    #     sys.stderr.write('{} does not exist. Making...\n'.format(out_dir))
+    #     cmd = 'mkdir ' + out_dir
+    #     os.system(cmd)
 
     if not os.path.isdir(data_dir):
         sys.stderr.write('{} does not exist. Please make dir and fill with data.\n'.format(data_dir))

@@ -3,7 +3,7 @@
 cfname='mcmc_cmd.txt';
 indir='/fs1/szewciw/MW_Structure/results/mcmc_100chains/chains_fidsig_fidcov_nonuni/data/';
 datdir='./data/';
-outdir='./out_data/';
+ofname='results.dat';
 nprocs=16;
 max_s=10;
 tol=0.0;
@@ -16,7 +16,7 @@ a=0.736;
 
 rm $cfname
 
-python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $tol $cov $rn $zn $rk $zk $a
+python run_mcmc.py $cfname $indir $datdir $ofname $nprocs $max_s $tol $cov $rn $zn $rk $zk $a
 bash $cfname
 
 # Add information about run
