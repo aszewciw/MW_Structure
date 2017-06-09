@@ -67,5 +67,25 @@ def main():
         f.write(cmd)
         f.write('\n')
 
+        cmd = (
+            'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
+            + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
+            + ' -tol ' + tol + ' -dd ' + data_dir + ' -l_dd ' + str(len(data_dir))
+            + ' -cov ' + cov + ' -rn ' + rn + ' -zn ' + zn + ' -rk ' + rk
+            + ' -zk ' + zk + ' -a ' + a
+            )
+        f.write(cmd)
+        f.write('\n')
+
+        cmd = (
+            'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
+            + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
+            + ' -tol ' + tol + ' -dd ' + data_dir + ' -l_dd ' + str(len(data_dir))
+            + ' -cov ' + cov + ' -rn ' + rn + ' -zn ' + zn + ' -rk ' + rk
+            + ' -zk ' + zk + ' -a ' + a
+            )
+        f.write(cmd)
+        f.write('\n')
+
 if __name__ == '__main__':
     main()
