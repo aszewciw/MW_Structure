@@ -60,7 +60,7 @@ def main():
         cmd = (
             'time mpirun -n ' + nprocs + ' ' + exe_file + ' -fn ' + ofname
             + ' -l_id ' + str(len(in_dir)) + ' -id ' + in_dir + ' -max_s ' + max_s
-            + ' -tol ' + tol + ' -dd ' + dd_dir + ' -l_dd ' + str(len(dd_dir))
+            + ' -tol ' + tol + ' -dd ' + data_dir + ' -l_dd ' + str(len(dd_dir))
             + ' -cov ' + cov + ' -rn ' + rn + ' -zn ' + zn + ' -rk ' + rk
             + ' -zk ' + zk + ' -a ' + a
             )
