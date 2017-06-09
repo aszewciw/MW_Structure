@@ -74,7 +74,7 @@ def main():
                 sys.stderr.write('Error: ' + in_file + ' does not exist.\n')
                 continue
 
-            output_file = out_dir + 'mm_truth_' + p.ID + '.dat'
+            output_file = data_dir + 'mm_truth_' + p.ID + '.dat'
 
             cmd = pairs_file + ' ' + in_file + ' ' + bins_file + ' > ' + output_file
             f.write(cmd)
@@ -86,7 +86,7 @@ def main():
                 sys.stderr.write('Error: ' + in_file + ' does not exist.\n')
                 continue
 
-            output_file = out_dir + 'mm_ridiculous_' + p.ID + '.dat'
+            output_file = data_dir + 'mm_ridiculous_' + p.ID + '.dat'
 
             cmd = pairs_file + ' ' + in_file + ' ' + bins_file + ' > ' + output_file
             f.write(cmd)
