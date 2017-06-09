@@ -5,6 +5,7 @@ to each model and output a new xyzw file
 
 import os, sys
 import numpy as np
+from config import *
 
 #--------------------------------------------------------------------------
 
