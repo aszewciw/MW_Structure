@@ -6,7 +6,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def compute_chi2(data, model, invcov):
+def compute_chi2(data, model, invcorr, sigma):
 
     chi2 = 0.0
 
@@ -18,9 +18,11 @@ def compute_chi2(data, model, invcov):
             Dj = data[j]
             Mi = model[i]
             Mj = model[j]
-            Cij = invcov[i,j]
+            Rij = invcorr[i,j]
+            sigmai = sigma[i]
+            sigmaj = sigma[j]
 
-            chi2 += (Di-Mi)*(Dj-Mj)*Cij
+            chi2 += (Di-Mi)*(Dj-Mj)*Rij/sigmai/sigmaj
 
     return(chi2)
 
@@ -36,6 +38,9 @@ def main():
 
     ID_list = np.genfromtxt(ID_file, skip_header=1, dtype=int)
 
+
+    chi2_true = np.zeros(4)
+    chi2_rid = np.zeros(4)
 
     for ID in ID_list:
         ID = str(ID)
@@ -72,6 +77,29 @@ def main():
         # Fiducial mean and std
         stats_file = err_rid_dir + 'mean_std_' + ID + '.dat'
         rid_mean, rid_std = np.genfromtxt(stats_file, unpack=True)
+
+
+
+
+        # Not excluding any bins for now
+
+
+        fid_inv = linalg.inv(fid_corr.values)
+        true_inv = linalg.inv(true_corr.values)
+        rid_inv = linalg.inv(rid_corr.values)
+
+        chi2_true[0] = compute_chi2(dd, mm_true, fid_inv, fid_std)
+        chi2_true[1] = compute_chi2(dd, true_mean, fid_inv, fid_std)
+        chi2_true[2] = compute_chi2(dd, mm_true, true_inv, true_std)
+        chi2_true[3] = compute_chi2(dd, true_mean, true_inv, true_std)
+
+        chi2_rid[0] = compute_chi2(dd, mm_rid, fid_inv, fid_std)
+        chi2_rid[1] = compute_chi2(dd, rid_mean, fid_inv, fid_std)
+        chi2_rid[2] = compute_chi2(dd, mm_rid, rid_inv, rid_std)
+        chi2_rid[3] = compute_chi2(dd, rid_mean, rid_inv, rid_std)
+
+
+
 
 if __name__ == '__main__':
     main()
