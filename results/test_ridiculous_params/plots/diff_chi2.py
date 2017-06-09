@@ -107,7 +107,7 @@ def main():
 
     plt.plot(x, chi2_true, 'r')
     plt.plot(x, chi2_rid, 'b')
-    plt.savefig('tmp.plot')
+    plt.savefig('tmp.png')
 
 
 
