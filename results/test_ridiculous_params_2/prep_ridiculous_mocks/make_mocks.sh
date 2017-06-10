@@ -4,11 +4,11 @@ cfname='mocks_cmd.txt';
 out_dir='./data/';
 nprocs=12;
 nmocks=1000;
-rn=69.627;
-zn=0.259;
-rk=4.881;
-zk=0.691;
-a=0.736;
+rn=3.812;
+zn=0.207;
+rk=3.195;
+zk=0.631;
+a=0.137;
 
 rm $cfname
 rm -rf $out_dir
