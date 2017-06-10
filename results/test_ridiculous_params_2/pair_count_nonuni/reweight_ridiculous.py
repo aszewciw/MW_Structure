@@ -21,11 +21,11 @@ def gal_weights(Z, R):
     '''
 
     # Parameters
-    thick_s_height = 0.691
-    thick_s_length = 4.881
-    thin_s_height = 0.259
-    thin_s_length = 69.627
-    a = 0.736
+    thick_s_height = 0.631
+    thick_s_length = 3.195
+    thin_s_height = 0.207
+    thin_s_length = 3.812
+    a = 0.137
 
     weight = ( ( ( math.cosh(Z / 2 / thin_s_height) ) ** (-2) )
         * math.exp(-R / thin_s_length) +
