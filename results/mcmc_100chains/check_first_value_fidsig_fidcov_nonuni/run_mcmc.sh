@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
 cfname='mcmc_cmd.txt';
-indir='/fs1/szewciw/MW_Structure/results/mcmc_100chains/chains_fidsig_fidcov_nonuni/data';
+indir='/fs1/szewciw/MW_Structure/results/mcmc_100chains/chains_fidsig_fidcov_nonuni/data/';
 datdir='../prep_data_samps/data/';
 outdir='./out_data/';
 nprocs=16;
-max_s=2;
+max_s=1;
 tol=0.0;
 Ndata=100;
 cov=1;
