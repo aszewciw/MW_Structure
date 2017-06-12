@@ -108,7 +108,8 @@ def main():
     print(chi2_true)
     Nbins = 12
     Nlos = 152
-    dof = Nlos * Nbins
+    Nparams = 5
+    dof = Nlos * Nbins - Nparams
 
     pvalue_true = np.zeros(len(chi2_true))
     pvalue_rid = np.zeros(len(chi2_rid))
@@ -119,9 +120,17 @@ def main():
     plt.figure(1)
     x = np.arange(4) + 1
 
+    # Make chi2 plots
+    plt.plot(x, chi2_true, 'r', label='correct model')
+    plt.plot(x, chi2_rid, 'b', label='incorrect model')
+    plt.ylabel(r'$\chi^2$')
+    plt.legend(loc='upper left')
+    plt.savefig('chi2_comp.png')
+
+    # Make p-value plots
     plt.plot(x, pvalue_true, 'r', label='correct model')
     plt.plot(x, pvalue_rid, 'b', label='incorrect model')
-    plt.ylabel(r'$\chi^2$')
+    plt.ylabel(r'$P-value$')
     plt.legend(loc='upper left')
     plt.savefig('pvalue_comp.png')
 
