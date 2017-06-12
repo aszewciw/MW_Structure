@@ -142,7 +142,7 @@ def main():
         pvalue_rid[i] = chisqprob(chi2_rid[i], dof)
 
     plt.figure(1)
-    x = np.arange(4) + 1
+    x = np.arange(8) + 1
 
     # Make chi2 plots
     plt.plot(x, chi2_true, 'r', label='correct model')
