@@ -127,6 +127,8 @@ def main():
     plt.legend(loc='upper left')
     plt.savefig('chi2_comp.png')
 
+    plt.clf()
+
     # Make p-value plots
     plt.plot(x, pvalue_true, 'r', label='correct model')
     plt.plot(x, pvalue_rid, 'b', label='incorrect model')
