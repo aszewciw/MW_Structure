@@ -104,8 +104,8 @@ def main():
         chi2_rid[3] += compute_chi2(dd, rid_mean, rid_inv, rid_std)
 
 
-    # print(chi2_rid)
-    # print(chi2_true)
+    print(chi2_rid)
+    print(chi2_true)
     Nbins = 12
     Nlos = 152
     dof = Nlos * Nbins
