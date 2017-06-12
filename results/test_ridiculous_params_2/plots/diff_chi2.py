@@ -2,6 +2,7 @@ import sys, os
 import numpy as np
 import pandas as pd
 from scipy import linalg
+from scipy.stats import chisqprob
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -74,11 +75,11 @@ def main():
         stats_file = err_fid_dir + 'mean_std_' + ID + '.dat'
         fid_mean, fid_std = np.genfromtxt(stats_file, unpack=True)
 
-        # Fiducial mean and std
+        # True mean and std
         stats_file = err_true_dir + 'mean_std_' + ID + '.dat'
         true_mean, true_std = np.genfromtxt(stats_file, unpack=True)
 
-        # Fiducial mean and std
+        # Ridiculous mean and std
         stats_file = err_rid_dir + 'mean_std_' + ID + '.dat'
         rid_mean, rid_std = np.genfromtxt(stats_file, unpack=True)
 
@@ -105,15 +106,35 @@ def main():
 
     print(chi2_rid)
     print(chi2_true)
+    Nbins = 12
+    Nlos = 152
+    Nparams = 5
+    dof = Nlos * Nbins - Nparams
+
+    pvalue_true = np.zeros(len(chi2_true))
+    pvalue_rid = np.zeros(len(chi2_rid))
+    for i in range(len(chi2_true)):
+        pvalue_true[i] = chisqprob(chi2_true[i], dof)
+        pvalue_rid[i] = chisqprob(chi2_rid[i], dof)
 
     plt.figure(1)
     x = np.arange(4) + 1
 
+    # Make chi2 plots
     plt.plot(x, chi2_true, 'r', label='correct model')
     plt.plot(x, chi2_rid, 'b', label='incorrect model')
     plt.ylabel(r'$\chi^2$')
     plt.legend(loc='upper left')
-    plt.savefig('different_chi2_comp.png')
+    plt.savefig('chi2_comp.png')
+
+    plt.clf()
+
+    # Make p-value plots
+    plt.plot(x, pvalue_true, 'r', label='correct model')
+    plt.plot(x, pvalue_rid, 'b', label='incorrect model')
+    plt.ylabel(r'$P-value$')
+    plt.legend(loc='upper left')
+    plt.savefig('pvalue_comp.png')
 
 
 if __name__ == '__main__':

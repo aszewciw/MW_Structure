@@ -46,6 +46,10 @@ def main():
 
     chi2_true = np.zeros(4)
     chi2_rid = np.zeros(4)
+    Nbins = 12
+    Nlos = 152
+    Nparams = 5
+    N_excluded = 0
 
     for ID in ID_list:
         ID = str(ID)
@@ -75,19 +79,36 @@ def main():
         stats_file = err_fid_dir + 'mean_std_' + ID + '.dat'
         fid_mean, fid_std = np.genfromtxt(stats_file, unpack=True)
 
-        # Fiducial mean and std
+        # True mean and std
         stats_file = err_true_dir + 'mean_std_' + ID + '.dat'
         true_mean, true_std = np.genfromtxt(stats_file, unpack=True)
 
-        # Fiducial mean and std
+        # Ridiculous mean and std
         stats_file = err_rid_dir + 'mean_std_' + ID + '.dat'
         rid_mean, rid_std = np.genfromtxt(stats_file, unpack=True)
 
+        # Start exclusion of bins
+        exclude_list = []
+        for i in range(Nbins):
+            if dd[i] == 0.0:
+                exclude_list.append(i)
+                N_excluded+=1
 
-
-
-        # Not excluding any bins for now
-
+        np.delete(dd, exclude_list)
+        np.delete(mm_rid, exclude_list)
+        np.delete(mm_true, exclude_list)
+        np.delete(fid_mean, exclude_list)
+        np.delete(fid_std, exclude_list)
+        np.delete(true_mean, exclude_list)
+        np.delete(true_std, exclude_list)
+        np.delete(rid_mean, exclude_list)
+        np.delete(rid_std, exclude_list)
+        fid_corr = fid_corr.drop(exclude_list, axis=0)
+        fid_corr = fid_corr.drop(exclude_list, axis=1)
+        rid_corr = rid_corr.drop(exclude_list, axis=0)
+        rid_corr = rid_corr.drop(exclude_list, axis=1)
+        true_corr = true_corr.drop(exclude_list, axis=0)
+        true_corr = true_corr.drop(exclude_list, axis=1)
 
         fid_inv = linalg.inv(fid_corr.values)
         true_inv = linalg.inv(true_corr.values)
@@ -104,12 +125,7 @@ def main():
         chi2_rid[3] += compute_chi2(dd, rid_mean, rid_inv, rid_std)
 
 
-    print(chi2_rid)
-    print(chi2_true)
-    Nbins = 12
-    Nlos = 152
-    Nparams = 5
-    dof = Nlos * Nbins - Nparams
+    dof = Nlos * Nbins - Nparams - N_excluded
 
     pvalue_true = np.zeros(len(chi2_true))
     pvalue_rid = np.zeros(len(chi2_rid))
@@ -125,7 +141,7 @@ def main():
     plt.plot(x, chi2_rid, 'b', label='incorrect model')
     plt.ylabel(r'$\chi^2$')
     plt.legend(loc='upper left')
-    plt.savefig('chi2_comp.png')
+    plt.savefig('chi2_comp_rm0.png')
 
     plt.clf()
 
@@ -134,7 +150,7 @@ def main():
     plt.plot(x, pvalue_rid, 'b', label='incorrect model')
     plt.ylabel(r'$P-value$')
     plt.legend(loc='upper left')
-    plt.savefig('pvalue_comp.png')
+    plt.savefig('pvalue_comp_rm0.png')
 
 
 if __name__ == '__main__':
