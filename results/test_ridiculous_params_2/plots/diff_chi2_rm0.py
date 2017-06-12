@@ -44,8 +44,8 @@ def main():
     ID_list = np.genfromtxt(ID_file, skip_header=1, dtype=int)
 
 
-    chi2_true = np.zeros(4)
-    chi2_rid = np.zeros(4)
+    chi2_true = np.zeros(8)
+    chi2_rid = np.zeros(8)
     Nbins = 12
     Nlos = 152
     Nparams = 5
@@ -115,14 +115,22 @@ def main():
         rid_inv = linalg.inv(rid_corr.values)
 
         chi2_true[0] += compute_chi2(dd, mm_true, fid_inv, fid_std)
-        chi2_true[1] += compute_chi2(dd, true_mean, fid_inv, fid_std)
-        chi2_true[2] += compute_chi2(dd, mm_true, true_inv, true_std)
-        chi2_true[3] += compute_chi2(dd, true_mean, true_inv, true_std)
+        chi2_true[1] += compute_chi2(dd, mm_true, fid_inv, true_std)
+        chi2_true[2] += compute_chi2(dd, mm_true, true_inv, fid_std)
+        chi2_true[3] += compute_chi2(dd, mm_true, true_inv, true_std)
+        chi2_true[4] += compute_chi2(dd, true_mean, fid_inv, fid_std)
+        chi2_true[5] += compute_chi2(dd, true_mean, fid_inv, true_std)
+        chi2_true[6] += compute_chi2(dd, true_mean, true_inv, fid_std)
+        chi2_true[7] += compute_chi2(dd, true_mean, true_inv, true_std)
 
         chi2_rid[0] += compute_chi2(dd, mm_rid, fid_inv, fid_std)
-        chi2_rid[1] += compute_chi2(dd, rid_mean, fid_inv, fid_std)
-        chi2_rid[2] += compute_chi2(dd, mm_rid, rid_inv, rid_std)
-        chi2_rid[3] += compute_chi2(dd, rid_mean, rid_inv, rid_std)
+        chi2_rid[1] += compute_chi2(dd, mm_rid, fid_inv, rid_std)
+        chi2_rid[2] += compute_chi2(dd, mm_rid, rid_inv, fid_std)
+        chi2_rid[3] += compute_chi2(dd, mm_rid, rid_inv, rid_std)
+        chi2_rid[4] += compute_chi2(dd, rid_mean, fid_inv, fid_std)
+        chi2_rid[5] += compute_chi2(dd, rid_mean, fid_inv, rid_std)
+        chi2_rid[6] += compute_chi2(dd, rid_mean, rid_inv, fid_std)
+        chi2_rid[7] += compute_chi2(dd, rid_mean, rid_inv, rid_std)
 
 
     dof = Nlos * Nbins - Nparams - N_excluded
