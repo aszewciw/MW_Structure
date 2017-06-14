@@ -158,7 +158,6 @@ def main():
     # Make chi2 plots
     plt.plot(x, chi2_true, 'r', label='correct model')
     plt.plot(x, chi2_rid, 'b', label='incorrect model')
-    plt.axhline(y=0.05, color='g', linestyle='-', label='p=0.05')
     plt.ylabel(r'$\chi^2$')
     plt.legend(loc='upper left')
     plt.savefig('chi2_comp_rm0.png')
