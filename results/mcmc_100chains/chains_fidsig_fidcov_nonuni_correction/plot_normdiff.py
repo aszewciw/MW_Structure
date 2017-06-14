@@ -20,9 +20,6 @@ def make_bins(x, bwidth):
     bin_min=int(min(x))-1
     bin_max=int(max(x))+1+bwidth
 
-    bin_min = -5
-    bin_max = 5.5
-
     bins=np.arange(bin_min,bin_max,bwidth)
 
     return bins
@@ -72,8 +69,10 @@ def main():
         key = pd_keys[i]
         if key=='chi2':
             bwidth = 50
+            bins = make_bins(STATS[key], bwidth)
         else:
             bwidth = 0.5
+            bins = np.arange(-5,5.5,bwidth)
         plt.subplot(spnum+i)
         bins = make_bins(STATS[key], bwidth)
         n, b, patches = plt.hist(STATS[key], bins=bins,
