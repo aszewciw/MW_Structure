@@ -20,6 +20,9 @@ def make_bins(x, bwidth):
     bin_min=int(min(x))-1
     bin_max=int(max(x))+1+bwidth
 
+    bin_min = -5
+    bin_max = 5.5
+
     bins=np.arange(bin_min,bin_max,bwidth)
 
     return bins
@@ -48,7 +51,7 @@ def main():
     # Make a dictionary to store statistics calculated for each chain
     pd_keys=['r0_thin', 'z0_thin', 'r0_thick', 'z0_thick', 'ratio', 'chi2']
     # labels=[r'$r_{0,thin}$', r'$z_{0,thin}$', r'$r_{0,thick}$', r'$z_{0,thick}$', r'$n_{0,thick}/n_{0,thin}$', r'min($\chi^2$)']
-    labels=[r'$r_0$, thick', r'$z_0$, thin', r'$r_0$, thick', r'$z_0$, thick', 'a', r'min($\chi^2$)']
+    labels=[r'$r_0$, thin', r'$z_0$, thin', r'$r_0$, thick', r'$z_0$, thick', 'a', r'min($\chi^2$)']
     STATS={}
 
     # Load each column of the file into this dictionary
