@@ -97,8 +97,8 @@ def main():
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['normdiff'][i]))
-            f.write('{}\n'.format(best_chi2[i]))
+                f.write('{0:.6e}\t'.format(STATS[j]['normdiff'][i]))
+            f.write('{0:.6e}\n'.format(best_chi2[i]))
 
     stats_fname = data_dir + 'stds_100chains.dat'
     with open(stats_fname, 'w') as f:
