@@ -158,6 +158,7 @@ def main():
     # Make chi2 plots
     plt.plot(x, chi2_true, 'r', label='correct model')
     plt.plot(x, chi2_rid, 'b', label='incorrect model')
+    plt.axhline(y=0.05, color='g', linestyle='-', label='p=0.05')
     plt.ylabel(r'$\chi^2$')
     plt.legend(loc='upper left')
     plt.savefig('chi2_comp_rm0.png')
@@ -167,6 +168,8 @@ def main():
     # Make p-value plots
     plt.plot(x, pvalue_true, 'r', label='correct model')
     plt.plot(x, pvalue_rid, 'b', label='incorrect model')
+    plt.axhline(y=0.05, color='g', linestyle='-', label='p=0.05')
+
     plt.ylabel(r'$P-value$')
     plt.legend(loc='upper left')
     plt.savefig('pvalue_comp_rm0.png')
