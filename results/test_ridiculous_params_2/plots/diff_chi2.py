@@ -132,6 +132,7 @@ def main():
     # Make p-value plots
     plt.plot(x, pvalue_true, 'r', label='correct model')
     plt.plot(x, pvalue_rid, 'b', label='incorrect model')
+    plt.axhline(y=0.05, color='g', linestyle='-', label='p=0.05')
     plt.ylabel(r'$P-value$')
     plt.legend(loc='upper left')
     plt.savefig('pvalue_comp.png')
