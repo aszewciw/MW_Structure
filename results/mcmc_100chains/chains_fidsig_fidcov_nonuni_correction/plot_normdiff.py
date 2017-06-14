@@ -69,7 +69,7 @@ def main():
         key = pd_keys[i]
         if key=='p-value':
             bwidth = 0.05
-            bins = make_bins(STATS[key], bwidth)
+            bins = np.arange(0,1.05,0.05)
         else:
             bwidth = 0.5
             bins = np.arange(-5,5.5,bwidth)
