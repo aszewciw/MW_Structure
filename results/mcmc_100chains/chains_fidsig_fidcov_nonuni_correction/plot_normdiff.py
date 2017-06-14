@@ -74,7 +74,7 @@ def main():
             bwidth = 0.5
             bins = np.arange(-5,5.5,bwidth)
         plt.subplot(spnum+i)
-        bins = make_bins(STATS[key], bwidth)
+        # bins = make_bins(STATS[key], bwidth)
         n, b, patches = plt.hist(STATS[key], bins=bins,
             facecolor='green', alpha=0.7, label=labels[i])
         median = np.median(STATS[key])
@@ -91,7 +91,7 @@ def main():
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
         plt.axis([min(bins), max(bins), 0, 1.1*max(n)])
-        print(min(bins), max(bins))
+        # print(min(bins), max(bins))
         if i==4 or i==5:
             plt.xlabel(axis_label, fontsize=12)
         # Decide where to place legend
