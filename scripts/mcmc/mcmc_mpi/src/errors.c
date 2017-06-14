@@ -30,14 +30,14 @@ double calculate_chi2(POINTING *p, STEP c, int cov, int frac, int N_bins,
 
                 /* skip any bins where we have 0 counts */
                 /* atm, I only want to do this for noncovariance case */
-                // if(cov==0){
-                //     if( p[i].rbin[j].DD == 0.0 ) continue;
+                if(cov==0){
+                    if( p[i].rbin[j].DD == 0.0 ) continue;
+                    if( p[i].rbin[k].DD == 0.0 ) continue;
                 //     // if( p[i].rbin[j].MM == 0.0 ) continue;
-                //     if( p[i].rbin[k].DD == 0.0 ) continue;
                 //     // if( p[i].rbin[k].MM == 0.0 ) continue;
                 //     if( p[i].rbin[j].std_fid == 0.0 ) continue;
                 //     if( p[i].rbin[k].std_fid == 0.0 ) continue;
-                // }
+                }
 
                 /* check if covariance or non-covariance */
                 if(cov==0){   /* non-covariance */
