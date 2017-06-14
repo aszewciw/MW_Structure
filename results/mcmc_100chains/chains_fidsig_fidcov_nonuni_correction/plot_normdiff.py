@@ -91,6 +91,7 @@ def main():
         plt.axvline(median - median_err_minus, color='r', linestyle='--')
         plt.axvline(median + median_err_plus, color='r', linestyle='--')
         plt.axis([min(bins), max(bins), 0, 1.1*max(n)])
+        print(min(bins), max(bins))
         if i==4 or i==5:
             plt.xlabel(axis_label, fontsize=12)
         # Decide where to place legend
