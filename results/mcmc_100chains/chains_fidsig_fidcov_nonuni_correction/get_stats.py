@@ -48,6 +48,7 @@ def main():
     STATS['ratio']['true']=0.053
 
     best_chi2 = np.zeros(Nfiles)
+    truth_pvalue = np.zeros(Nfiles)
 
     # Load results of each chain and compute stats
     k = 0
@@ -84,6 +85,9 @@ def main():
             STATS[j]['normdiff'][k]=d
 
         best_chi2[k] = min(mc['chi2'])
+        true_chi2 = mc['chi2'][0]
+        true_dof  = int(true_chi2/mc['chi2_red'][0])
+        truth_pvalue[k] = chisqprob(true_chi2, true_dof)
         k+=1
 
 
@@ -93,12 +97,12 @@ def main():
         f.write('# ')
         for i in pd_keys:
             f.write('{}\t'.format(i))
-        f.write('best_chi2\n')
+        f.write('truth_pvalue\n')
 
         for i in range(Nfiles):
             for j in pd_keys:
                 f.write('{0:.6e}\t'.format(STATS[j]['normdiff'][i]))
-            f.write('{0:.6e}\n'.format(best_chi2[i]))
+            f.write('{0:.6e}\n'.format(truth_pvalue[i]))
 
     stats_fname = data_dir + 'stds_100chains.dat'
     with open(stats_fname, 'w') as f:
@@ -110,8 +114,8 @@ def main():
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['std'][i]))
-            f.write('{}\n'.format(best_chi2[i]))
+                f.write('{0:.6e}\t'.format(STATS[j]['std'][i]))
+            f.write('{0:.6e}\n'.format(best_chi2[i]))
 
     stats_fname = data_dir + 'medians_100chains.dat'
     with open(stats_fname, 'w') as f:
@@ -123,60 +127,8 @@ def main():
 
         for i in range(Nfiles):
             for j in pd_keys:
-                f.write('{}\t'.format(STATS[j]['median'][i]))
-            f.write('{}\n'.format(best_chi2[i]))
-
-
-    # # These don't really work because of binning
-
-    # # stats_type = 'std'
-    # # stats_type = 'median'
-    # stats_type = 'normdiff'
-
-    # if stats_type == 'std':
-    #     axis_label = 'std'
-    # elif stats_type == 'median':
-    #     axis_label = 'median'
-    # elif stats_type == 'normdiff':
-    #     axis_label = r'$\frac{true-median}{\sigma}$'
-
-
-    # # plot results
-    # plt.clf()
-    # plt.figure(1)
-
-    # # this is a good bin width for normdiff, but it doesn't work for the others
-    # bwidth=0.5
-
-    # spnum = 321
-
-    # for i in range(len(pd_keys)):
-    #     key = pd_keys[i]
-    #     plt.subplot(spnum+i)
-    #     bins = make_bins(STATS[key][stats_type], bwidth)
-    #     n, b, patches = plt.hist(STATS[key][stats_type], bins=bins, facecolor='green', alpha=0.7)
-    #     median = np.median(STATS[key][stats_type])
-    #     std_minus = np.percentile(STATS[key][stats_type], q=16)
-    #     std_plus = np.percentile(STATS[key][stats_type], q=84)
-    #     median_err_minus = (median-std_minus)/np.sqrt(Nfiles)
-    #     median_err_plus = (std_plus-median)/np.sqrt(Nfiles)
-    #     med_label = 'med='+str(np.round(median,2))
-    #     std_plt = np.round((std_plus-std_minus)/2.0, 2)
-    #     std_label = r'$\sigma$='+str(std_plt)
-    #     plt.axvline(median, color='r', linestyle='solid', label=med_label)
-    #     plt.axvline(std_minus, color='r', linestyle='solid', label=std_label)
-    #     plt.axvline(std_plus, color='r', linestyle='solid')
-    #     plt.axvline(median - median_err_minus, color='r', linestyle='--')
-    #     plt.axvline(median + median_err_plus, color='r', linestyle='--')
-    #     plt.ylabel(labels[i])
-    #     if i==3 or i==4:
-    #         plt.xlabel(axis_label, fontsize=16)
-    #     plt.legend(loc='upper right')
-    #     std_median = np.median(STATS[key]['std'])
-    #     sys.stderr.write('Median standard deviation for {} is {}\n'.format(key,std_median))
-
-    # # plt.tight_layout()
-    # plt.savefig(data_dir + stats_type + '.png')
+                f.write('{0:.6e}\t'.format(STATS[j]['median'][i]))
+            f.write('{0:.6e}\n'.format(best_chi2[i]))
 
 
 if __name__ == '__main__':

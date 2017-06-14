@@ -46,9 +46,9 @@ def main():
         sys.stderr.write('Error: {} does not exist.\n')
 
     # Make a dictionary to store statistics calculated for each chain
-    pd_keys=['r0_thin', 'z0_thin', 'r0_thick', 'z0_thick', 'ratio', 'chi2']
-    # labels=[r'$r_{0,thin}$', r'$z_{0,thin}$', r'$r_{0,thick}$', r'$z_{0,thick}$', r'$n_{0,thick}/n_{0,thin}$', r'min($\chi^2$)']
-    labels=[r'$r_0$, thin', r'$z_0$, thin', r'$r_0$, thick', r'$z_0$, thick', 'a', r'min($\chi^2$)']
+    pd_keys=['r0_thin', 'z0_thin', 'r0_thick', 'z0_thick', 'ratio', 'p-value']
+    # labels=[r'$r_0$, thin', r'$z_0$, thin', r'$r_0$, thick', r'$z_0$, thick', 'a', r'min($\chi^2$)']
+    labels=[r'$r_0$, thin', r'$z_0$, thin', r'$r_0$, thick', r'$z_0$, thick', 'a', 'p-value']
     STATS={}
 
     # Load each column of the file into this dictionary
@@ -57,7 +57,7 @@ def main():
         # (true-median)/std
         STATS[key]=np.genfromtxt(stats_fname, unpack=True, usecols=i)
 
-    axis_label = r'$\frac{true-median}{\sigma}$ or $min(\chi^2)$'
+    axis_label = r'$\frac{true-median}{\sigma}$ or Truth p-value'
 
     # plot results
     plt.clf()
@@ -67,8 +67,8 @@ def main():
 
     for i in range(len(pd_keys)):
         key = pd_keys[i]
-        if key=='chi2':
-            bwidth = 50
+        if key=='p-value':
+            bwidth = 0.05
             bins = make_bins(STATS[key], bwidth)
         else:
             bwidth = 0.5
