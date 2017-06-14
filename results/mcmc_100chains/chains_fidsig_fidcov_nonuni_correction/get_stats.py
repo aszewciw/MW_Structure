@@ -11,6 +11,8 @@ import pandas as pd
 import mw_utilities_python as mwu
 import sys, os
 import numpy as np
+from scipy.stats import chisqprob
+
 
 def main():
 
