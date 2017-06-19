@@ -177,7 +177,6 @@ int main(int argc, char **argv){
   /* Claim an array */
   POINT *rand;
   rand = calloc(n_rand, sizeof(POINT));
-  int i;
   for(i = 0; i < n_model; i++){
     fscanf(model_file, "%lf", &rand[i].x);
     fscanf(model_file, "%lf", &rand[i].y);
@@ -191,7 +190,7 @@ int main(int argc, char **argv){
 
   fprintf(stderr, "Start counting pairs... \n");
 
-  bin_pairs(points, n_model, model, n_rand, rand, n_bins, Nfetch);
+  bin_pairs(model, n_model, rand, n_rand, pairs, n_bins, Nfetch);
 
   fprintf(stderr, "Pairs binned. \n");
 
