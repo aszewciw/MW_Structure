@@ -30,7 +30,7 @@ def main():
         os.system(cmd)
 
     if not os.path.isdir(data_dir):
-        sys.stderr.write('{} does not exist Making directory...\n'.format(data_dir))
+        sys.stderr.write('{} does not exist. Making directory...\n'.format(data_dir))
         cmd = 'mkdir ' + data_dir
         os.system(cmd)
 
