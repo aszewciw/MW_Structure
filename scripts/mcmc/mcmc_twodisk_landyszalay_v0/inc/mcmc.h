@@ -36,7 +36,7 @@ typedef struct {
 /* Data for each radial bin */
 typedef struct {
   char binID[3];        /* ID for each radial bin */
-  double data;          /* segue pair counts */
+  double data;          /* DD - 2DR */
   double MM;            /* model model pair counts */
   double MR;            /* model random pair counts */
   double model;         /* MM - 2MR */
