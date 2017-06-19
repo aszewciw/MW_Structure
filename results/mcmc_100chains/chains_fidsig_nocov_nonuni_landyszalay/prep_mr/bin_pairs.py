@@ -68,34 +68,34 @@ def main():
     bins = np.genfromtxt(bins_file, skip_header=1)
     nbins = len(bins)
 
-    # Write command file
-    with open(cfname, 'w') as f:
-        for p in todo_list:
+    # # Write command file
+    # with open(cfname, 'w') as f:
+    #     for p in todo_list:
 
-            model_file = model_dir + 'nonuniform_' + p.ID + '.xyzw.dat'
+    #         model_file = model_dir + 'nonuniform_' + p.ID + '.xyzw.dat'
 
-            if not os.path.isfile(model_file):
-                sys.stderr.write('Error: ' + model_file + ' does not exist.\n')
-                continue
+    #         if not os.path.isfile(model_file):
+    #             sys.stderr.write('Error: ' + model_file + ' does not exist.\n')
+    #             continue
 
-            rand_file = rand_dir + 'uniform_' + p.ID + '.xyzw.dat'
+    #         rand_file = rand_dir + 'uniform_' + p.ID + '.xyzw.dat'
 
-            if not os.path.isfile(rand_file):
-                sys.stderr.write('Error: ' + rand_file + ' does not exist.\n')
-                continue
+    #         if not os.path.isfile(rand_file):
+    #             sys.stderr.write('Error: ' + rand_file + ' does not exist.\n')
+    #             continue
 
-            cmd = pairs_file + ' ' + model_file + ' ' + rand_file + ' ' + bins_file
-            f.write(cmd)
-            f.write('\n')
+    #         cmd = pairs_file + ' ' + model_file + ' ' + rand_file + ' ' + bins_file
+    #         f.write(cmd)
+    #         f.write('\n')
 
-            for i in range(nbins):
+    #         for i in range(nbins):
 
-                pair_file = './pairs_bin_' + str(i) + '.dat'
+    #             pair_file = './pairs_bin_' + str(i) + '.dat'
 
-                cmd = ('mv ' + pair_file + ' ' + out_dir + 'pair_indices_p' + p.ID
-                        + '_b' + str(i) + '.dat' )
-                f.write(cmd)
-                f.write('\n')
+    #             cmd = ('mv ' + pair_file + ' ' + out_dir + 'pair_indices_p' + p.ID
+    #                     + '_b' + str(i) + '.dat' )
+    #             f.write(cmd)
+    #             f.write('\n')
 
 if __name__ == '__main__':
     main()
