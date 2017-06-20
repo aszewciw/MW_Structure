@@ -2,9 +2,9 @@
 
 cfname=binned_cmd.txt;
 out_dir=./data/;
-bins_dir=../../prep_bins/;
-model_dir=../../prep_model_nonuniform/data/;
-rand_dir=../../prep_randoms/data/;
+bins_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_bins/;
+model_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_model_nonuniform/data/;
+rand_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_randoms/data/;
 
 rm $cfname
 rm -rf $out_dir
