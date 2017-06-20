@@ -22,7 +22,7 @@ typedef struct POINT{
 typedef struct PAIRS{
   double r_lower, r_upper, r_middle, bin_size;  /* bin dimensions */
   double r2_lower, r2_upper;                    /* squared bin edges */
-  int *pair1, *pair2;                           /* array of pair indices */
+  int *mod_ind;                                 /* array of pair indices */
   unsigned int N_pairs;                         /* number of pairs */
 } PAIRS;
 
@@ -60,15 +60,13 @@ void bin_pairs(POINT *model, int n_model, POINT *rand, int n_rand, PAIRS *pairs,
 
           /* increment pair count and record indices */
           h = pairs[k].N_pairs;
-          pairs[k].pair1[h] = i;
-          pairs[k].pair2[h] = j;
+          pairs[k].mod_ind[h] = i;
           pairs[k].N_pairs += 1;
 
           /* check if we need more memory */
           if(pairs[k].N_pairs%Nfetch==0){
             unsigned int n = pairs[k].N_pairs + Nfetch;
-            pairs[k].pair1 = realloc(pairs[k].pair1, n * sizeof(int));
-            pairs[k].pair2 = realloc(pairs[k].pair2, n * sizeof(int));
+            pairs[k].mod_ind = realloc(pairs[k].mod_ind, n * sizeof(int));
             fprintf(stderr, "Reallocation occured for bin index %d\n", k);
           }
           break;
@@ -89,7 +87,7 @@ void output_pairs(PAIRS *pairs, int n_bins){
     out_file = fopen(out_filename, "a");
     fprintf(out_file, "%u\n", pairs[k].N_pairs);
     for(i=0; i<pairs[k].N_pairs; i++){
-      fprintf(out_file, "%d\n", pairs[k].pair1[i]);
+      fprintf(out_file, "%d\n", pairs[k].mod_ind[i]);
     }
     fclose(out_file);
   }
@@ -144,8 +142,7 @@ int main(int argc, char **argv){
     pairs[k].r2_lower = pairs[k].r_lower * pairs[k].r_lower;
     pairs[k].r2_upper = pairs[k].r_upper * pairs[k].r_upper;
     pairs[k].N_pairs = 0;
-    pairs[k].pair1 = malloc(Nfetch * sizeof(int));
-    pairs[k].pair2 = malloc(Nfetch * sizeof(int));
+    pairs[k].mod_ind = malloc(Nfetch * sizeof(int));
   }
 
   fclose(bins_file);
@@ -199,8 +196,7 @@ int main(int argc, char **argv){
   fprintf(stderr, "File output.\n");
 
   for(k = 0; k < n_bins; k++){
-    free(pairs[k].pair1);
-    free(pairs[k].pair2);
+    free(pairs[k].mod_ind);
   }
 
   free(pairs);
