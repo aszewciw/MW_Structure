@@ -186,13 +186,14 @@ int main(int argc, char **argv){
   POINT *rand;
   rand = calloc(n_rand, sizeof(POINT));
   for(i = 0; i < n_model; i++){
-    fscanf(model_file, "%lf", &rand[i].x);
-    fscanf(model_file, "%lf", &rand[i].y);
-    fscanf(model_file, "%lf", &rand[i].z);
-    fscanf(model_file, "%lf", &rand[i].weight);
+    fscanf(rand_file, "%lf", &rand[i].x);
+    fscanf(rand_file, "%lf", &rand[i].y);
+    fscanf(rand_file, "%lf", &rand[i].z);
+    fscanf(rand_file, "%lf", &rand[i].weight);
   }
 
   fclose(rand_file);
+
   fprintf(stderr, "Done reading %s. %d particles read. \n", argv[2], n_rand );
 
 
