@@ -92,38 +92,11 @@ def main():
                     sys.stderr.write('Error: ' + rand_file + ' does not exist.\n')
                     continue
 
-                output_file = pairs_dir + 'dd_' + p.ID + '.dat'
+                output_file = pairs_dir + 'dr_' + p.ID + '.dat'
 
                 cmd = pairs_file + ' ' + data_file + ' ' + rand_file + ' ' + bins_file + ' > ' + output_file
                 f.write(cmd)
                 f.write('\n')
-
-    # # Write command file
-    # with open(cfname, 'w') as f:
-    #     for i in range(Nmocks):
-
-    #         out_dir = data_dir + 'sample_' + str(i) + '/'
-    #         if not os.path.isdir(out_dir):
-    #             cmd = 'mkdir ' + out_dir
-    #             f.write(cmd)
-    #             f.write('\n')
-
-    #         samp_dir = mocks_dir + 'sample_' + str(i) + '/'
-
-    #         for p in todo_list:
-
-    #             in_file = samp_dir + 'mock_' + p.ID + '.xyzw.dat'
-
-    #             if not os.path.isfile(in_file):
-    #                 sys.stderr.write('Error: ' + in_file + ' does not exist.\n')
-    #                 continue
-
-    #             output_file = out_dir + 'dd_' + p.ID + '.dat'
-
-    #             cmd = pairs_file + ' ' + in_file + ' ' + bins_file + ' > ' + output_file
-    #             f.write(cmd)
-    #             f.write('\n')
-
 
 if __name__ == '__main__':
     main()
