@@ -8,7 +8,7 @@ import numpy as np
 
 def main():
 
-    Nmocks = 1000
+    Nmocks = 1
     star_factor = 10
     dd_dir = '../../prep_fid_errors/data/'
     dr_dir = './data/'
@@ -72,10 +72,7 @@ def main():
 
             ddm2dr = dd - 2.0*dr
 
-            with open(out_file, 'w') as f:
-                f.write('{}\t{}\n'.format(len(dd), N_rand))
-                for d in ddm2dr:
-                    f.write('{0:.6e}\n'.format(d))
+            np.savetxt(out_file, ddm2dr, fmt='%.6e')
 
 if __name__ == '__main__':
     main()

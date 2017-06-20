@@ -48,7 +48,7 @@ def main():
 
             # Load counts for a single mock
             counts_file = pairs_dir + 'sample_' + str(i) + '/DDm2DR_' + ID + '.dat'
-            dd_all[i] = np.genfromtxt( counts_file, dtype=float, skip_header=1 )
+            dd_all[i] = np.genfromtxt( counts_file, dtype=float )
 
         # Output data
         output_filename = out_dir + 'normed_counts_all_' + ID + '.dat'
