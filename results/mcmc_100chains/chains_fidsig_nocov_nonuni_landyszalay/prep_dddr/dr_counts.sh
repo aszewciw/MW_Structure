@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cfname=binned_cmd.txt;
+cfname=dr_cmd.txt;
 out_dir=./data/;
 bins_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_bins/;
 data_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_data_samps/data/;
@@ -11,13 +11,13 @@ rm $cfname
 rm -rf $out_dir
 mkdir $out_dir
 
-python bin_pairs.py $cfname $out_dir $bins_dir $data_dir $rand_dir $Nmocks
+python dr_counts.py $cfname $out_dir $bins_dir $data_dir $rand_dir $Nmocks
 bash $cfname
 
 # Add information about run
-info_file=binned_info.txt;
+info_file=dr_info.txt;
 rm $info_file
-INFO="bin_pairs.sh was most recently run on:";
+INFO="dr_counts.sh was most recently run on:";
 echo $INFO > $info_file
 date >> $info_file
 
