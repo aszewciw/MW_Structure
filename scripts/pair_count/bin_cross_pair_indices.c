@@ -32,6 +32,7 @@ void output_pairs(PAIRS *, int );
 /* ------------------------------------------------------------------------- */
 
 /* assign indices to appropriate bins */
+
 void bin_pairs(POINT *model, int n_model, POINT *rand, int n_rand, PAIRS *pairs,
   int N_bins, int Nfetch){
 
@@ -96,6 +97,8 @@ void output_pairs(PAIRS *pairs, int n_bins){
 
 int main(int argc, char **argv){
 
+  fprintf(stderr, "Here 1\n");
+
   if (argc != 4){
     fprintf( stderr, "Usage:\n %s model_file rand_file bins_file\n", argv[0]);
     exit(EXIT_FAILURE);
@@ -122,6 +125,8 @@ int main(int argc, char **argv){
     exit(EXIT_FAILURE);
   }
 
+  fprintf(stderr, "Here 2\n");
+
   /* first read in number of bins */
   int n_bins;
   fscanf(bins_file, "%d", &n_bins);
@@ -147,6 +152,9 @@ int main(int argc, char **argv){
 
   fclose(bins_file);
 
+  fprintf(stderr, "Here 3\n");
+
+
   int n_model;
 
   /* first read in the length of the list */
@@ -164,6 +172,9 @@ int main(int argc, char **argv){
   }
 
   fclose(model_file);
+
+  fprintf(stderr, "Here 4\n");
+
   fprintf(stderr, "Done reading %s. %d particles read. \n", argv[1], n_model );
 
   int n_rand;
