@@ -37,16 +37,16 @@ def main():
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
-    pairs_file = exe_dir + 'bin_cross_pair_indices'
+    pairs_file = exe_dir + 'cross_pair_count'
 
     if not os.path.isfile(pairs_file):
         sys.stderr.write('{} does not exist. Compiling...\n'.format(pairs_file))
         # find system and use either icc or gcc
         current_sys = mwu.get_path.get_system()
         if current_sys=='bender':
-            cmd = 'bash ' + pairs_dir + 'icc_compile_cross_pair_indices.sh ' + pairs_dir
+            cmd = 'bash ' + pairs_dir + 'icc_compile_cross_pair_count.sh ' + pairs_dir
         elif current_sys=='Adams-MacBook-Pro-2':
-            cmd = 'bash ' + pairs_dir + 'gcc_compile_cross_pair_indices.sh ' + pairs_dir
+            cmd = 'bash ' + pairs_dir + 'gcc_compile_cross_pair_count.sh ' + pairs_dir
         else:
             raise ValueError('Unrecognized system...\n')
         os.system(cmd)
