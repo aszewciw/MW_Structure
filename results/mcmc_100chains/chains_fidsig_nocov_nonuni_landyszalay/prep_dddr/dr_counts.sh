@@ -5,7 +5,7 @@ out_dir=./data/;
 bins_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_bins/;
 data_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_data_samps/data/;
 rand_dir=/fs1/szewciw/MW_Structure/results/mcmc_100chains/prep_randoms/data/;
-Nmocks=1000;
+Nmocks=100;
 
 rm $cfname
 rm -rf $out_dir
