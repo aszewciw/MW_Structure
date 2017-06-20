@@ -92,7 +92,7 @@ def main():
                     sys.stderr.write('Error: ' + rand_file + ' does not exist.\n')
                     continue
 
-                output_file = pairs_dir + 'dd_' + p.ID + '.dat'
+                output_file = pairs_dir + 'dr_' + p.ID + '.dat'
 
                 cmd = pairs_file + ' ' + data_file + ' ' + rand_file + ' ' + bins_file + ' > ' + output_file
                 f.write(cmd)
