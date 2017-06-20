@@ -23,7 +23,7 @@ def main():
     # get directories of scripts, executables, and star files
     cleaned_dir = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
-    pairs_dir   = scripts_dir + 'cross_pair_count/'
+    pairs_dir   = scripts_dir + 'pair_count/'
     exe_dir = './bin/'
 
     # Check for dir/file existence
