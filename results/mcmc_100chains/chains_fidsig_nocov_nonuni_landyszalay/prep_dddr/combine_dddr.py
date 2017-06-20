@@ -39,6 +39,8 @@ def main():
 
     # Write command file
     for i in range(Nmocks):
+
+        sys.stderr.write('On sample {}/{}\n'.format(i,Nmocks))
         DD_dir  = dd_dir + 'sample_' + str(i) + '/'
 
         DR_dir  = dr_dir + 'sample_' + str(i) + '/'
