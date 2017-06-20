@@ -72,9 +72,6 @@ def main():
     with open(cfname, 'w') as f:
         for p in todo_list:
 
-            if p.ID != '0':
-                continue
-
             model_file = model_dir + 'nonuniform_' + p.ID + '.xyzw.dat'
 
             if not os.path.isfile(model_file):
