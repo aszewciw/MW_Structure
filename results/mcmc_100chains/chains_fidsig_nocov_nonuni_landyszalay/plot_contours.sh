@@ -16,6 +16,6 @@ mkdir $plots_dir;
 for i in $(seq 0 $lastfile);
 do
     data=./out_data/results_$i.dat;
-    pltname=$plots_dir/contours_$i.dat;
+    pltname=$plots_dir/contours_$i.png;
     python plot_contours.py $data $pltname $cut_frac $zn $rn $zk $rk $a
 done
