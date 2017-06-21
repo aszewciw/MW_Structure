@@ -54,7 +54,7 @@ def main():
 
     # Load results of each chain and compute stats
     k = 0
-    for i in range(100):
+    for i in range(13):
         if (i in bad_files):
             continue
         if(i%10==0):
