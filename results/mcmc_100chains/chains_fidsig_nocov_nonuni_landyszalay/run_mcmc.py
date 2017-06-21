@@ -21,7 +21,7 @@ def main():
     out_dir  = args_array[4]
     nprocs   = args_array[5]
     max_s    = args_array[6]
-    Ndata    = int(args_array[8])
+    Ndata    = int(args_array[7])
 
     # get directories of scripts and executables
     todo_dir = mwu.get_path.get_cleandata_path()
