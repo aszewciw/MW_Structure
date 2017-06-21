@@ -6,12 +6,11 @@ datdir=./prep_dddr/data/;
 outdir=./out_data/;
 nprocs=16;
 max_s=1;
-tol=0.0;
 Ndata=1;
 
 rm $cfname
 
-python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $tol $Ndata
+python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $Ndata
 bash $cfname
 
 # Add information about run

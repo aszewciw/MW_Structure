@@ -11,7 +11,7 @@ import numpy as np
 def main():
 
     # get command filename, out_dir, nprocs, nmocks
-    elements_needed = int(9)
+    elements_needed = int(8)
     args_array      = np.array(sys.argv)
     N_args          = len(args_array)
     assert(N_args == elements_needed)
@@ -21,7 +21,6 @@ def main():
     out_dir  = args_array[4]
     nprocs   = args_array[5]
     max_s    = args_array[6]
-    tol      = args_array[7]
     Ndata    = int(args_array[8])
 
     # get directories of scripts and executables
