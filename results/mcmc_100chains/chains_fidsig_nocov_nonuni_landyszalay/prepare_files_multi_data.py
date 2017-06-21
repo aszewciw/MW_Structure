@@ -82,7 +82,7 @@ def main():
             sys.stderr.write('Prep for pointing #{} of {} ..\n'.format(i, len(ID)))
 
         # get dd counts
-        for j in range(Ndata):
+        # for j in range(Ndata):
             # tmp_dir = data_dir + 'sample_' + str(j) + '/'
             # data_fname = tmp_dir + 'dd_' + i + '.dat'
             # dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
