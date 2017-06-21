@@ -29,7 +29,7 @@ def main():
     todo_dir = mwu.get_path.get_cleandata_path()
     scripts_dir = mwu.get_path.get_scripts_path()
     mcmc_dir = scripts_dir + 'mcmc/mcmc_prep/'
-    exe_file = './prepare_files_multi_data.py'
+    exe_file = './prepare_files_multi_data_correction.py'
 
     # create commands to be executed
     cmd =   (
