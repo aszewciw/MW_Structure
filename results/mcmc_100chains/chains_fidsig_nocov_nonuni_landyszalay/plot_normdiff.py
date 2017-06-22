@@ -95,12 +95,16 @@ def main():
         if i==4 or i==5:
             plt.xlabel(axis_label, fontsize=12)
         # Decide where to place legend
-        left = median - np.min(STATS[key])
-        right = np.max(STATS[key]) - median
-        if left>right:
-            loc='upper left'
-        else:
+        # left = median - np.min(STATS[key])
+        # right = np.max(STATS[key]) - median
+        # if left>right:
+        #     loc='upper left'
+        # else:
+        #     loc='upper right'
+        if median < 0.0:
             loc='upper right'
+        else:
+            loc='upper left'
         plt.legend(loc=loc, fontsize=6)
 
     plt.savefig(data_dir + 'normdiff' + '.png')
