@@ -28,7 +28,7 @@ def main():
         bad_files.append(j)
         sys.stderr.write('Skipping file {} \n'.format(j))
 
-    Nfiles=47 - Nskip
+    Nfiles=64 - Nskip
     data_dir='./out_data/'
 
     # Make a dictionary to store statistics calculated for each chain
@@ -54,7 +54,7 @@ def main():
 
     # Load results of each chain and compute stats
     k = 0
-    for i in range(47):
+    for i in range(64):
         if (i in bad_files):
             continue
         if(i%10==0):

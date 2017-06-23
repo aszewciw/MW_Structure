@@ -39,7 +39,7 @@ def main():
         bad_files.append(j)
         sys.stderr.write('Skipping file {} \n'.format(j))
 
-    Nfiles=47 - Nskip
+    Nfiles=64 - Nskip
 
     stats_fname='./out_data/normdiff_100chains.dat'
     if not os.path.isfile(stats_fname):
