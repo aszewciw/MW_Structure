@@ -90,22 +90,25 @@ def main():
             tmp_dir = data_dir + 'sample_' + str(j) + '/'
             data_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
             dd = np.genfromtxt(data_fname, skip_header=1)
+
             for k in range(nbins):
                 if dd[k] == 0.0:
                     bin_flags[k] = 1
 
-        # # get dd counts
-        # for j in range(Ndata):
-        #     tmp_dir = data_dir + 'sample_' + str(j) + '/'
-        #     data_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
-        #     dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
-        #     dd = dd[np.where(bin_flags!=1)]
+        # get dd counts
+        for j in range(Ndata):
+            tmp_dir = data_dir + 'sample_' + str(j) + '/'
+            data_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
+            dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
+            dd = dd[np.where(bin_flags!=1)]
 
-        #     out_fname = tmp_dir + 'DD_' + i + '.dat'
-        #     with open(out_fname, 'w') as f:
-        #         f.write('{}\n'.format(len(dd)))
-        #         for d in dd:
-        #             f.write('{0:.6e}\n'.format(d))
+            out_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
+            cmd='rm ' + out_fname
+            os.system(cmd)
+            with open(out_fname, 'w') as f:
+                f.write('{}\n'.format(len(dd)))
+                for d in dd:
+                    f.write('{0:.6e}\n'.format(d))
 
         # get mean and standard deviation files
         stats_fname = stats_dir + 'mean_std_' + i + '.dat'
