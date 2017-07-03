@@ -55,14 +55,13 @@ def main():
 
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
-    ID, Nrand = np.genfromtxt(todo_fname, usecols=[0,10], unpack=True, dtype=str, skip_header=1)
-    Nrand=int(Nrand)
+    ID, Nrand = np.genfromtxt(todo_fname, usecols=[0,10], unpack=True, dtype=int, skip_header=1)
     out_fname = out_dir + 'pointing_ID.dat'
     with open(out_fname, 'w') as f:
         f.write(str(len(ID)))
         f.write('\n')
         for i in ID:
-            f.write(i)
+            f.write(str(i))
             f.write('\n')
 
     # Check for existence of bins files and load number of bins
@@ -81,7 +80,7 @@ def main():
     # Prepare data for each l.o.s.
     for ind in range(len(ID)):
 
-        i = ID[ind]
+        i = str(ID[ind])
 
         if int(i) % 10 == 0:
             sys.stderr.write('Prep for pointing #{} of {} ..\n'.format(i, len(ID)))
