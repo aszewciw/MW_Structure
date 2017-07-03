@@ -23,8 +23,8 @@ typedef struct PAIRS{
   double r_lower, r_upper, r_middle, bin_size;  /* bin dimensions */
   double r2_lower, r2_upper;                    /* squared bin edges */
   int *mod_ind;                                 /* array of pair indices */
-  int *N_rand;                                  /* number of randoms paired with each mod_ind */
-  // unsigned int N_pairs;                         /* number of pairs */
+  // int *N_rand;                                  /* number of randoms paired with each mod_ind */
+  int *N_pairs;                         /* number of pairs */
 } PAIRS;
 
 /* ------------------------------------------------------------------------- */
