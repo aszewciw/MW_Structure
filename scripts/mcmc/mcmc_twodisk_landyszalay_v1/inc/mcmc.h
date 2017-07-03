@@ -88,7 +88,7 @@ double normalize_MM(double *weight, int N_stars);
 double normalize_MR(double *weight, int N_stars, int N_rand);
 double calculate_MM( unsigned int N_pairs, int *pair1, int *pair2, double MM_norm,
   double *weight );
-double calculate_MR( unsigned int N_pairs, int *pair, double MR_norm, double *weight );
+double calculate_MR( unsigned int N_pairs, int *pair, int *N_MR_pairs, double MR_norm, double *weight );
 void update_model(POINTING *p, int lower_ind, int upper_ind);
 int degrees_of_freedom(POINTING *p, int lower_ind, int upper_ind);
 void update_parameters(STEP p, STEP *n, gsl_rng * GSL_r);
