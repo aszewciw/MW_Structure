@@ -99,14 +99,16 @@ def main():
         for j in range(Ndata):
             tmp_dir = data_dir + 'sample_' + str(j) + '/'
             data_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
-            dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
+            # First get number of randoms
+            with open(data_fname, 'r') as f:
+                firstline=f.readline()
+                Nrand=int(firstline.strip()[1])
+            dd = np.genfromtxt(data_fname, skip_header=1)
             dd = dd[np.where(bin_flags!=1)]
 
-            out_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
-            cmd='rm ' + out_fname
-            os.system(cmd)
+            out_fname = tmp_dir + 'ddm2dr_' + i + '.dat'
             with open(out_fname, 'w') as f:
-                f.write('{}\n'.format(len(dd)))
+                f.write('{}\t{}\n'.format(len(dd), Nrand))
                 for d in dd:
                     f.write('{0:.6e}\n'.format(d))
 
