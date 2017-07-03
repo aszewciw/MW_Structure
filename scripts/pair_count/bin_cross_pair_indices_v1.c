@@ -77,7 +77,7 @@ void output_pairs(int n_model, PAIRS *pairs, int n_bins){
     out_file = fopen(out_filename, "a");
     fprintf(out_file, "%d\n", n_model);
     for(i=0; i<n_model; i++){
-      fprintf(out_file, "%d\t%d\n", pairs[k].mod_ind[i], pairs[k].N_pairs);
+      fprintf(out_file, "%d\t%d\n", pairs[k].mod_ind[i], pairs[k].N_pairs[i]);
     }
     fclose(out_file);
   }
