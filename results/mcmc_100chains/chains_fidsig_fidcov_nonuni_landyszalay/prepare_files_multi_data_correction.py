@@ -55,7 +55,8 @@ def main():
 
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
-    ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
+    ID, Nrand = np.genfromtxt(todo_fname, usecols=[0,10], unpack=True, dtype=str, skip_header=1)
+    Nrand=int(Nrand)
     out_fname = out_dir + 'pointing_ID.dat'
     with open(out_fname, 'w') as f:
         f.write(str(len(ID)))
@@ -78,7 +79,9 @@ def main():
     os.system(cmd)
 
     # Prepare data for each l.o.s.
-    for i in ID:
+    for ind in range(len(ID)):
+
+        i = ID[ind]
 
         if int(i) % 10 == 0:
             sys.stderr.write('Prep for pointing #{} of {} ..\n'.format(i, len(ID)))
@@ -99,78 +102,73 @@ def main():
         for j in range(Ndata):
             tmp_dir = data_dir + 'sample_' + str(j) + '/'
             data_fname = tmp_dir + 'DDm2DR_' + i + '.dat'
-            # First get number of randoms
-            with open(data_fname, 'r') as f:
-                firstline=f.readline()
-                Nrand=int(firstline.strip()[1])
             dd = np.genfromtxt(data_fname, skip_header=1)
             dd = dd[np.where(bin_flags!=1)]
 
             out_fname = tmp_dir + 'ddm2dr_' + i + '.dat'
             with open(out_fname, 'w') as f:
-                f.write('{}\t{}\n'.format(len(dd), Nrand))
+                f.write('{}\t{}\n'.format(len(dd), Nrand[ind]))
                 for d in dd:
                     f.write('{0:.6e}\n'.format(d))
+    #     # get mean and standard deviation files
+    #     stats_fname = stats_dir + 'mean_std_' + i + '.dat'
+    #     mean_std = np.genfromtxt(stats_fname)
+    #     mean_std = mean_std[np.where(bin_flags!=1)]
+    #     out_fname = out_dir + 'mean_std_' + i + '.dat'
+    #     np.savetxt(out_fname, mean_std, fmt='%.6e')
 
-        # get mean and standard deviation files
-        stats_fname = stats_dir + 'mean_std_' + i + '.dat'
-        mean_std = np.genfromtxt(stats_fname)
-        mean_std = mean_std[np.where(bin_flags!=1)]
-        out_fname = out_dir + 'mean_std_' + i + '.dat'
-        np.savetxt(out_fname, mean_std, fmt='%.6e')
+    #     # get inverse of correlation matrix
+    #     corr_fname = fid_dir + 'correlation_' + i + '.dat'
+    #     corr = pd.read_csv(corr_fname, sep='\s+', header=None)
+    #     corr = corr.drop(np.where(bin_flags==1)[0],axis=0)
+    #     corr = corr.drop(np.where(bin_flags==1)[0],axis=1)
 
-        # get inverse of correlation matrix
-        corr_fname = fid_dir + 'correlation_' + i + '.dat'
-        corr = pd.read_csv(corr_fname, sep='\s+', header=None)
-        corr = corr.drop(np.where(bin_flags==1)[0],axis=0)
-        corr = corr.drop(np.where(bin_flags==1)[0],axis=1)
+    #     inv_corr = linalg.inv(corr.values)
 
-        inv_corr = linalg.inv(corr.values)
+    #     out_fname = out_dir + 'inv_correlation_' + i + '.dat'
+    #     np.savetxt(out_fname, inv_corr, fmt='%.6e')
 
-        out_fname = out_dir + 'inv_correlation_' + i + '.dat'
-        np.savetxt(out_fname, inv_corr, fmt='%.6e')
+    #     # Copy and rename zrw file
+    #     uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
+    #     nonuni_fname = model_dir + 'nonuniform_' + i + '.ZRW.dat'
+    #     # Options: uniform or non-uniform file
+    #     if(os.path.isfile(uni_fname)):
+    #         model_fname = uni_fname
+    #     elif(os.path.isfile(nonuni_fname)):
+    #         model_fname = nonuni_fname
+    #     else:
+    #         sys.stderr.write('Error! Unrecognized model file. Exiting...\n')
+    #         sys.exit()
+    #     cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
+    #     os.system(cmd)
 
-        # Copy and rename zrw file
-        uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
-        nonuni_fname = model_dir + 'nonuniform_' + i + '.ZRW.dat'
-        # Options: uniform or non-uniform file
-        if(os.path.isfile(uni_fname)):
-            model_fname = uni_fname
-        elif(os.path.isfile(nonuni_fname)):
-            model_fname = nonuni_fname
-        else:
-            sys.stderr.write('Error! Unrecognized model file. Exiting...\n')
-            sys.exit()
-        cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
-        os.system(cmd)
+    #     # Copy pair files
+    #     k=0
+    #     for j in range(nbins):
+    #         if bin_flags[j]==1:
+    #             continue
+    #         pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
+    #         cmd = (
+    #             'cp ' + pair_fname + ' ' + out_dir + 'MM_pair_indices_p' + i
+    #             + '_b' + str(k) + '.dat'
+    #             )
+    #         os.system(cmd)
+    #         k+=1
 
-        # Copy pair files
-        k=0
-        for j in range(nbins):
-            if bin_flags[j]==1:
-                continue
-            pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
-            cmd = (
-                'cp ' + pair_fname + ' ' + out_dir + 'MM_pair_indices_p' + i
-                + '_b' + str(k) + '.dat'
-                )
-            os.system(cmd)
-            k+=1
+    #     k=0
+    #     for j in range(nbins):
+    #         if bin_flags[j]==1:
+    #             continue
+    #         pair_fname = mr_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
+    #         cmd = (
+    #             'cp ' + pair_fname + ' ' + out_dir + 'MR_pair_indices_p' + i
+    #             + '_b' + str(k) + '.dat'
+    #             )
+    #         os.system(cmd)
+    #         k+=1
 
-        k=0
-        for j in range(nbins):
-            if bin_flags[j]==1:
-                continue
-            pair_fname = mr_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
-            cmd = (
-                'cp ' + pair_fname + ' ' + out_dir + 'MR_pair_indices_p' + i
-                + '_b' + str(k) + '.dat'
-                )
-            os.system(cmd)
-            k+=1
-
-    sys.stderr.write('The folder {} has all data ready to run an mcmc.\n'
-                        .format(out_dir))
+    # sys.stderr.write('The folder {} has all data ready to run an mcmc.\n'
+    #                     .format(out_dir))
 
 if __name__ == '__main__':
     main()
