@@ -52,8 +52,8 @@ def main():
     # sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     # Make ID list from todo file
-    # todo_fname = todo_dir + 'todo_list.ascii.dat'
-    # ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
+    todo_fname = todo_dir + 'todo_list.ascii.dat'
+    ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
     # out_fname = out_dir + 'pointing_ID.dat'
     # with open(out_fname, 'w') as f:
     #     f.write(str(len(ID)))
