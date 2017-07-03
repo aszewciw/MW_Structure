@@ -7,10 +7,11 @@ outdir=./out_data/;
 nprocs=16;
 max_s=10000;
 Ndata=1;
+cov=1;
 
 rm $cfname
 
-python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $Ndata
+python run_mcmc.py $cfname $indir $datdir $outdir $nprocs $max_s $Ndata $cov
 bash $cfname
 
 # Add information about run
