@@ -29,7 +29,7 @@ typedef struct PAIRS{
 
 /* ------------------------------------------------------------------------- */
 void bin_pairs(POINT *, int, POINT *, int, PAIRS *, int);
-void output_pairs(PAIRS *, int );
+void output_pairs(int, PAIRS *, int );
 /* ------------------------------------------------------------------------- */
 
 /* assign indices to appropriate bins */
@@ -185,7 +185,7 @@ int main(int argc, char **argv){
 
   fprintf(stderr, "Pairs binned. \n");
 
-  output_pairs(pairs, n_bins);
+  output_pairs(n_model, pairs, n_bins);
 
   fprintf(stderr, "File output.\n");
 
