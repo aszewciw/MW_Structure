@@ -52,15 +52,15 @@ def main():
     sys.stderr.write('{} data realizations.\n'.format(Ndata))
 
     # Make ID list from todo file
-    todo_fname = todo_dir + 'todo_list.ascii.dat'
-    ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
-    out_fname = out_dir + 'pointing_ID.dat'
-    with open(out_fname, 'w') as f:
-        f.write(str(len(ID)))
-        f.write('\n')
-        for i in ID:
-            f.write(i)
-            f.write('\n')
+    # todo_fname = todo_dir + 'todo_list.ascii.dat'
+    # ID = np.genfromtxt(todo_fname, usecols=[0], unpack=True, dtype=str, skip_header=1)
+    # out_fname = out_dir + 'pointing_ID.dat'
+    # with open(out_fname, 'w') as f:
+    #     f.write(str(len(ID)))
+    #     f.write('\n')
+    #     for i in ID:
+    #         f.write(i)
+    #         f.write('\n')
 
     # Check for existence of bins files and load number of bins
     bins_fname = bins_dir + 'rbins.ascii.dat'
@@ -72,8 +72,8 @@ def main():
     nbins = len(bins)
 
     # Also, copy bins file to out_dir
-    cmd = 'cp ' + bins_fname + ' ' + out_dir
-    os.system(cmd)
+    # cmd = 'cp ' + bins_fname + ' ' + out_dir
+    # os.system(cmd)
 
     # Prepare data for each l.o.s.
     for i in ID:
@@ -81,54 +81,37 @@ def main():
         if int(i) % 10 == 0:
             sys.stderr.write('Prep for pointing #{} of {} ..\n'.format(i, len(ID)))
 
-        # get dd counts
-        # for j in range(Ndata):
-            # tmp_dir = data_dir + 'sample_' + str(j) + '/'
-            # data_fname = tmp_dir + 'dd_' + i + '.dat'
-            # dd = np.genfromtxt(data_fname, usecols=[4], unpack=True, skip_header=1)
-            # out_fname = tmp_dir + 'DD_' + i + '.dat'
-            # with open(out_fname, 'w') as f:
-            #     for d in dd:
-            #         f.write('{0:.6e}\n'.format(d))
+        # stats_fname = stats_dir + 'mean_std_' + i + '.dat'
+        # cmd = 'cp ' + stats_fname + ' ' + out_dir + 'mean_std_' + i + '.dat'
+        # os.system(cmd)
 
-        # get mean and standard deviation files
-        # stats_fname = stats_dir + 'stats_' + i + '.dat'
-        # mean, std = np.genfromtxt(stats_fname, usecols=[0,2], unpack=True)
-        # out_fname = out_dir + 'mean_std_' + i + '.dat'
-        # with open(out_fname, 'w') as f:
-        #     for j in range(len(mean)):
-        #         f.write('{0:.6e}\t{1:.6e}\n'.format(mean[j], std[j]))
-        stats_fname = stats_dir + 'mean_std_' + i + '.dat'
-        cmd = 'cp ' + stats_fname + ' ' + out_dir + 'mean_std_' + i + '.dat'
-        os.system(cmd)
+        # # copy inverse correlation matrix files
+        # corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
+        # cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
+        # os.system(cmd)
 
-        # copy inverse correlation matrix files
-        corr_fname = fid_dir + 'inv_correlation_' + i + '.dat'
-        cmd = 'cp ' + corr_fname + ' ' + out_dir + 'inv_correlation_' + i + '.dat'
-        os.system(cmd)
+        # # Copy and rename zrw file
+        # uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
+        # nonuni_fname = model_dir + 'nonuniform_' + i + '.ZRW.dat'
+        # # Options: uniform or non-uniform file
+        # if(os.path.isfile(uni_fname)):
+        #     model_fname = uni_fname
+        # elif(os.path.isfile(nonuni_fname)):
+        #     model_fname = nonuni_fname
+        # else:
+        #     sys.stderr.write('Error! Unrecognized model file. Exiting...\n')
+        #     sys.exit()
+        # cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
+        # os.system(cmd)
 
-        # Copy and rename zrw file
-        uni_fname = model_dir + 'uniform_' + i + '.ZRW.dat'
-        nonuni_fname = model_dir + 'nonuniform_' + i + '.ZRW.dat'
-        # Options: uniform or non-uniform file
-        if(os.path.isfile(uni_fname)):
-            model_fname = uni_fname
-        elif(os.path.isfile(nonuni_fname)):
-            model_fname = nonuni_fname
-        else:
-            sys.stderr.write('Error! Unrecognized model file. Exiting...\n')
-            sys.exit()
-        cmd = 'cp ' + model_fname + ' ' + out_dir + 'model_ZRW_' + i + '.dat'
-        os.system(cmd)
-
-        # Copy pair files
-        for j in range(nbins):
-            pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
-            cmd = (
-                'cp ' + pair_fname + ' ' + out_dir + 'MM_pair_indices_p' + i
-                + '_b' + str(j) + '.dat'
-                )
-            os.system(cmd)
+        # # Copy pair files
+        # for j in range(nbins):
+        #     pair_fname = model_dir + 'pair_indices_p' + i + '_b' + str(j) + '.dat'
+        #     cmd = (
+        #         'cp ' + pair_fname + ' ' + out_dir + 'MM_pair_indices_p' + i
+        #         + '_b' + str(j) + '.dat'
+        #         )
+        #     os.system(cmd)
 
         # Copy pair files
         for j in range(nbins):
