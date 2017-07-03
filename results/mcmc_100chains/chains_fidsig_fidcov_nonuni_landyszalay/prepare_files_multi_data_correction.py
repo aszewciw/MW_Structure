@@ -56,6 +56,7 @@ def main():
     # Make ID list from todo file
     todo_fname = todo_dir + 'todo_list.ascii.dat'
     ID, Nrand = np.genfromtxt(todo_fname, usecols=[0,10], unpack=True, dtype=int, skip_header=1)
+    Nrand *= 10
     out_fname = out_dir + 'pointing_ID.dat'
     with open(out_fname, 'w') as f:
         f.write(str(len(ID)))
