@@ -5,7 +5,7 @@ indir=./data/;
 datdir=./prep_dddr/data/;
 outdir=./out_data/;
 nprocs=16;
-max_s=10000;
+max_s=1000;
 Ndata=1;
 cov=1;
 
