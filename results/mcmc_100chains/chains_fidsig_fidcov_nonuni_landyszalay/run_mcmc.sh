@@ -7,7 +7,7 @@ outdir=./out_data/;
 nprocs=16;
 max_s=1000;
 Ndata=1;
-cov=1;
+cov=0;
 
 rm $cfname
 
