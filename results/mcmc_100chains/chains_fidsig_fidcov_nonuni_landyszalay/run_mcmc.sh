@@ -5,7 +5,7 @@ indir=./data/;
 datdir=./prep_dddr/data/;
 outdir=./out_data/;
 nprocs=16;
-max_s=1;
+max_s=10000;
 Ndata=1;
 
 rm $cfname
