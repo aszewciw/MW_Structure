@@ -175,7 +175,7 @@ void load_rbins(POINTING *plist, int lower_ind, int upper_ind, int rank,
     for( i = lower_ind; i<upper_ind; i++ ){
 
         /* Get number of bins and randoms from dd file */
-        snprintf(filename, 256, "%sDDm2DR_%s.dat", dd_dir, plist[i].ID);
+        snprintf(filename, 256, "%sddm2dr_%s.dat", dd_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);
