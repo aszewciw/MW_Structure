@@ -29,9 +29,10 @@ def main():
     # plot results
     plt.clf()
     plt.figure(1)
-    plt.plot(pvalue_est, pvalue_diff, 'bo')
+    plt.plot(pvalue_est, pvalue_diff, 'ko')
+    plt.title('P-value of "truth" using estimated vs correct errors')
     plt.xlabel(r'$P_{est}$')
-    plt.ylabel(r'$P_{est} - P_{true}$')
+    plt.ylabel(r'$P_{est} - P_{correct}$')
     plt.savefig('pvalue_comparison.png')
 
 
