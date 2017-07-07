@@ -8,7 +8,7 @@ import numpy as np
 
 def main():
 
-    Nmocks = 500
+    Nmocks = 1000
     star_factor = 10
     dd_dir = '../../prep_fid_errors_DATAPARAMS/data/'
     dr_dir = './data/'
