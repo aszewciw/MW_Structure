@@ -24,12 +24,14 @@ def main():
     # pvalue_true = np.genfromtxt('pvalue_truth_correct.dat')
     pvalue_true = pvalue_est/2
 
-    pvalue_diff = pvalue_true - pvalue_est
+    pvalue_diff = pvalue_est - pvalue_true
 
     # plot results
     plt.clf()
     plt.figure(1)
-    plt.plot(pvalue_est, pvalue_diff, 'ro')
+    plt.plot(pvalue_est, pvalue_diff, 'bo')
+    plt.xlabel(r'$P_{est}$')
+    plt.ylabel(r'$P_{est} - P_{true}$')
     plt.savefig('pvalue_comparison.png')
 
 
