@@ -40,8 +40,8 @@ def main():
     # Write command file
     for i in range(Nmocks):
 
-        if i <400: continue
-        if i>499: continue
+        if i <500: continue
+        if i>599: continue
 
         sys.stderr.write('On sample {}/{}\n'.format(i,Nmocks))
         DD_dir  = dd_dir + 'sample_' + str(i) + '/'
