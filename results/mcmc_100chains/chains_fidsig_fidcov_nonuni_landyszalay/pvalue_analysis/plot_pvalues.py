@@ -29,7 +29,7 @@ def main():
     # plot results
     plt.clf()
     plt.figure(1)
-    plt.scatter(pvalue_est, pvalue_diff, 'ro')
+    plt.plot(pvalue_est, pvalue_diff, 'ro')
     plt.savefig('pvalue_comparison.png')
 
 
