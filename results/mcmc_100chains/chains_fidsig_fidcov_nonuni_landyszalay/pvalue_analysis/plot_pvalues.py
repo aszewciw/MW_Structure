@@ -21,8 +21,8 @@ def main():
         sys.stderr.write('Error: {} does not exist.\n')
 
     pvalue_est = np.genfromtxt(stats_fname, unpack=True, usecols=5)
-    # pvalue_true = np.genfromtxt('pvalue_truth_correct.dat')
-    pvalue_true = pvalue_est/2
+    pvalue_true = np.genfromtxt('pvalue_truth_correct.dat')
+    # pvalue_true = pvalue_est/2
 
     pvalue_diff = pvalue_est - pvalue_true
 
