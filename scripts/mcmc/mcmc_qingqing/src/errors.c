@@ -31,7 +31,7 @@ double calculate_chi2(POINTING *p, int lower_ind, int upper_ind){
 void calculate_sigma(POINTING *p, int lower_ind, int upper_ind){
 
     double tol = 1e-8;
-    double sigmaDD, sigmaMM, DD, MM;
+    double sigmaDD, sigmaMM, DD, MM, f;
     int i, j;
 
     for(i = lower_ind; i < upper_ind; i++){
