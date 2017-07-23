@@ -26,7 +26,7 @@ def main():
         cmd = 'mkdir ' + out_dir
         os.system(cmd)
 
-    if not os.path.isdir(mock_dir):
+    if not os.path.isdir(uni_dir):
         sys.stderr.write('{} does not exist. Exiting...\n'.format(uni_dir))
         sys.exit()
 

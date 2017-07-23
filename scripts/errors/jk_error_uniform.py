@@ -73,7 +73,6 @@ def main():
         sys.stderr.write('Using already compiled file {}'.format(pairs_file))
 
 
-
     # Main loop
     for p in todo_list:
 
@@ -84,8 +83,8 @@ def main():
 
         # counting pairs for each jackknife sample and load pairs into array
         for i in range(N_jackknife):
-            jackknife_filename = jk_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.dat'
-            counts_filename = jk_dir + 'mock_' + p.ID + '_jk_' + str(i) + '.ddcounts.dat'
+            jackknife_filename = jk_dir + 'uniform_' + p.ID + '_jk_' + str(i) + '.dat'
+            counts_filename = jk_dir + 'uniform_' + p.ID + '_jk_' + str(i) + '.rrcounts.dat'
             cmd = (pairs_file + ' ' + jackknife_filename + ' ' + bins_filename
                    + ' > ' + counts_filename)
             os.system(cmd)
@@ -107,8 +106,9 @@ def main():
 
         output_filename = jk_dir + 'mean_std_' + p.ID + '.dat'
         np.savetxt(output_filename, jk_data, fmt='%1.6e')
-        frac_filename = jk_dir + 'frac_err_jk_DD_' + p.ID + '.dat'
+        frac_filename = jk_dir + 'frac_err_jk_RR_' + p.ID + '.dat'
         np.savetxt(output_filename, jk_data, fmt='%1.6e')
+
 
 if __name__ == '__main__':
     main()
