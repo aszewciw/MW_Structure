@@ -189,7 +189,7 @@ void load_rbins(POINTING *plist, int lower_ind, int upper_ind, int rank,
         fclose(file);
 
         /* load fractional errors for DD */
-        snprintf(filename, 256, "%sfrac_err_jk_DD%s.dat", in_dir, plist[i].ID);
+        snprintf(filename, 256, "%sfrac_err_jk_DD_%s.dat", dd_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);
@@ -200,7 +200,7 @@ void load_rbins(POINTING *plist, int lower_ind, int upper_ind, int rank,
         fclose(file);
 
         /* load fractional errors for RR */
-        snprintf(filename, 256, "%sfrac_err_jk_RR%s.dat", in_dir, plist[i].ID);
+        snprintf(filename, 256, "%sfrac_err_jk_RR_%s.dat", in_dir, plist[i].ID);
         if((file=fopen(filename,"r"))==NULL){
             fprintf(stderr, "Error: Cannot open file %s\n", filename);
             exit(EXIT_FAILURE);
