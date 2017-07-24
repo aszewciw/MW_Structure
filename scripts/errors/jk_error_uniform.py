@@ -107,7 +107,7 @@ def main():
         output_filename = jk_dir + 'mean_std_' + p.ID + '.dat'
         np.savetxt(output_filename, jk_data, fmt='%1.6e')
         frac_filename = jk_dir + 'frac_err_jk_RR_' + p.ID + '.dat'
-        np.savetxt(output_filename, jk_data, fmt='%1.6e')
+        np.savetxt(frac_filename, jk_frac, fmt='%1.6e')
 
 
 if __name__ == '__main__':
