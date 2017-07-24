@@ -4,8 +4,8 @@ cfname=prep_cmd.txt;
 out_dir=./data/;
 data_dir=../prep_data_samps/data/;
 model_dir=../prep_model_nonuniform/data/;
-dd_jk_dir=../prep_jk_frac_errors/data/data_mocks/;
-rr_jk_dir=../prep_jk_frac_errors/data/data_uniform/;
+dd_jk_dir=../prep_jk_frac_errors/data_mocks/;
+rr_jk_dir=../prep_jk_frac_errors/data_uniform/;
 bins_dir=../prep_bins/;
 Ndata=100;
 
