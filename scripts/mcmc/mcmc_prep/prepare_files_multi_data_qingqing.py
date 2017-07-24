@@ -90,7 +90,7 @@ def main():
                 for d in dd:
                     f.write('{0:.6e}\n'.format(d))
 
-            stats_fname = dd_jk_dir + 'frac_err_jk_DD_' + i + '.dat'
+            stats_fname = dd_jk_dir + 'sample_' + str(j) + '/frac_err_jk_DD_' + i + '.dat'
             cmd = 'cp ' + stats_fname + ' ' + tmp_dir + 'frac_err_jk_DD_' + i + '.dat'
             os.system(cmd)
 
