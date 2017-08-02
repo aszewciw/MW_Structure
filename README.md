@@ -17,4 +17,4 @@
 
 ## Please see the .ipynb (not yet produced) for a more detailed description of the project.
 
-## All scripts currently use the latest conda installation of packages in Python3 and have not been confirmed to be compatible with Python2
+### All scripts currently use the latest conda installation of packages in Python3 and have not been confirmed to be compatible with Python2
