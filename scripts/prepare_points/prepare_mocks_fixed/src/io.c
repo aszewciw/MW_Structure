@@ -198,9 +198,9 @@ void get_params( PARAMS *p, unsigned long int N ){
 
     /* constants for CDF */
     p->z0_cdf_const_thin = -p->z0_pdf_norm_thin * (p->z0_thin*tanh(p->z_min/p->z0_thin));
-    p->r0_cdf_const_thin = -p->r0_pdf_norm_thin * (-p->r0_thin*(p->r0_thin+p->r_min)*exp(-p->r_min/p->r_thin));
+    p->r0_cdf_const_thin = -p->r0_pdf_norm_thin * (-p->r0_thin*(p->r0_thin+p->r_min)*exp(-p->r_min/p->r0_thin));
     p->z0_cdf_const_thick = -p->z0_pdf_norm_thick * (p->z0_thick*tanh(p->z_min/p->z0_thick));
-    p->r0_cdf_const_thick = -p->r0_pdf_norm_thick * (-p->r0_thick*(p->r0_thick+p->r_min)*exp(-p->r_min/p->r_thick));
+    p->r0_cdf_const_thick = -p->r0_pdf_norm_thick * (-p->r0_thick*(p->r0_thick+p->r_min)*exp(-p->r_min/p->r0_thick));
 
 
     /* Get number of stars in each disk */
