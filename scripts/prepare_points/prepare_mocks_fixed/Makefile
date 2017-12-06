@@ -10,7 +10,7 @@ CFLAGS=-cc=icc -I$(INC_DIR) -Wall -xHost -O3 -vec_report2 -limf -lgsl -lgslcblas
 TARGET = $(BINDIR)/make_galaxy
 all: $(TARGET)
 
-make_galaxy: $(OBJDIR)/main.o $(OBJDIR)/io.o $(OBJDIR)/conversions.o $(OBJDIR)/mock.o
+$(BINDIR)/make_galaxy: $(OBJDIR)/main.o $(OBJDIR)/io.o $(OBJDIR)/conversions.o $(OBJDIR)/mock.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
