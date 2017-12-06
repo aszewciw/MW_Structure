@@ -6,7 +6,7 @@ BINDIR = bin
 
 # Compiler rules
 CC=mpicc
-CFLAGS=-cc=icc -I$(INCDIR) -Wall -xHost -O3 -vec_report2
+CFLAGS=-cc=icc -I$(INCDIR) -Wall -xHost -O3 -vec_report2 -limf -lgsl -lgslcblas
 # CC=gcc
 # CFLAGS=-I$(INCDIR) -Wall -O3
 
