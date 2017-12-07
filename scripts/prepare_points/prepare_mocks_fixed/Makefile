@@ -1,20 +1,16 @@
 
-SRCDIR = src
-INCDIR = inc
-OBJDIR = obj
-BINDIR = bin
-
 CC=mpicc
-CFLAGS=-cc=icc -I$(INC_DIR) -Wall -xHost -O3 -vec_report2 -limf -lgsl -lgslcblas
+CFLAGS=-cc=icc -I$(INC_DIR) -Wall -xHost -O3 -vec_report2
+CLINK= -limf -lgsl -lgslcblas
 
-TARGET = $(BINDIR)/make_galaxy
+TARGET = make_galaxy
 all: $(TARGET)
 
-$(BINDIR)/make_galaxy: $(OBJDIR)/main.o $(OBJDIR)/io.o $(OBJDIR)/conversions.o $(OBJDIR)/mock.o
-	$(CC) $(CFLAGS) -o $@ $^
+make_galaxy: main.o io.o conversions.o mock.o
+	$(CC) $(CFLAGS) -o $@ $^ $(CLINK)
 
 clean:
-	rm $(OBJDIR)/*.o
+	rm *.o
 	rm $(TARGET)
 
 # # Project subdirectories
